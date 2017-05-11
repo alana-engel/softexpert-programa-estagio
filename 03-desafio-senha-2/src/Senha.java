@@ -1,12 +1,11 @@
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 class Senha{
   public static void main(String[] args) {
     boolean acertou;
     NumerosGerados n = new NumerosGerados();
-     
-
     System.out.print("Voce tem 5 tentativas para adivinhar a senha"); 
     n.aleatorio(); // gera os numeros 
       for (int i=0; i<5; i++) {
@@ -27,23 +26,13 @@ class NumerosGerados{
   private int numeros[] = new int[5]; 
   private boolean valor;
   private Scanner entrada;
+  ArrayList<Integer> num = new ArrayList<Integer>();
   
   void aleatorio(){ // gera os numeros aleatórios 
-      Random random = new Random();
-      for (int i=0; i<numeros.length; i++) {
-          numeros[i] = random.nextInt(10);
-      } 
-      confereRepetido(); 
-  }
-
-  private void confereRepetido(){ // confere se os numeros gerados nao se repetem 
-      for (int i = 0; i <= 5; i++) {
-          for (int j = i + 1; j < 5; j++) {
-              if (numeros[j] == numeros[i]) {
-                    aleatorio(); 
-              }
-          }
-      }
+    for (int i = 1; i < 10; i++) { 
+        num.add(i);
+    }
+    Collections.shuffle(num);
   }
 
   void digiteSenha(){ // recebe a senha digitada
@@ -63,7 +52,6 @@ class NumerosGerados{
    
   }
 
-
   private boolean validaString(){
     boolean receb=false;
     boolean v = false;
@@ -76,18 +64,18 @@ class NumerosGerados{
       System.out.println("Digite 5 numeros");
     }
     return(v);
-}
+  }
 
   private void comparaSenha(){ // verifica se numeros digitados estão na senha
       valor=true;
       for (int i=0; i<numerosDigitados.length; i++) {
         boolean a=false;
-          if(numerosDigitados[i]==numeros[i]){
+          if(numerosDigitados[i]==(num.get(i))){
             System.out.print(numerosDigitados[i]);
           }
           else{
           for (int j = 0; j < 5; j++) {
-              if (numeros[j] == numerosDigitados[i]) {
+              if ((num.get(j)) == numerosDigitados[i]) {
                 a=true;
               }
           }
@@ -98,7 +86,7 @@ class NumerosGerados{
             System.out.print("*");
           } 
           }
-          if(numerosDigitados[i]!=numeros[i]){
+          if(numerosDigitados[i]!=(num.get(i))){
             valor=false;
           }
       } 
@@ -114,15 +102,13 @@ class NumerosGerados{
   void imprime(){ // Imprime na tela os numeros gerados
       System.out.print("\ngame over\nSenha gerada: "); 
       for (int i=0; i<5; i++) {
-           System.out.print(numeros[i]); 
+           System.out.print((num.get(i))); 
       }
   }
 
   private boolean campoNumerico(String campo){           
         return campo.matches("[0-9]+");   
+  }
 }
-}
-
-
 
 
