@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-class Senha1{
+class Senha{
   public static void main(String[] args) {
     boolean acertou;
     NumerosGerados n = new NumerosGerados();
