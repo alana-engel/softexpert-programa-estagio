@@ -1,12 +1,13 @@
+package outrasOperacoes;
 import java.io.Serializable;
 import java.util.Calendar;
 
 public class Data implements Serializable{
 	private static final long serialVersionUID = 1L;
-	int dia;
-	int mes;
-	int ano;
-	Calendar calendario = Calendar.getInstance();
+	public int dia;
+	public int mes;
+	public int ano;
+	static Calendar calendario = Calendar.getInstance();
 
 	void DataA() {  
 
@@ -19,7 +20,7 @@ public class Data implements Serializable{
 		ano = calendario.get(Calendar.YEAR);  
 
 	}  
-	boolean ComparaData() {  
+	public boolean ComparaData() {  
 		String entrada = ""+dia+"/"+mes+"/"+ano;  
 
 		String[] data = entrada.split("\\/");  
@@ -42,4 +43,30 @@ public class Data implements Serializable{
 		data=data+dia+"/"+mes+"/"+ano;
 		return data;
 	}
+	 public boolean verificaData(int dia, int mes, int ano){
+		 boolean dataValida = false;
+	      if(dia>31){
+	    	  dataValida= false;
+	        
+	      }
+	      else if(mes>12 || mes<1){
+	    	  dataValida= false;
+		         
+		      }
+		      else if(((mes==4)||(mes==6)||(mes==9)||(mes==11))&&(dia>30)) {
+		    	  dataValida= false;
+		         
+		      } 
+		      else if(mes==2){
+		        if(dia>28){
+		        	dataValida= false;
+
+		        } 
+		      }
+		      else{
+		    	  dataValida= true;
+	  			}
+	      return dataValida;
+	  }
+	
 }
