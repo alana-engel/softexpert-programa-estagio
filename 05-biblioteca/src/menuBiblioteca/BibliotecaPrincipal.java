@@ -7,7 +7,7 @@ public class BibliotecaPrincipal {
 	public static void main(String []args){
 		GravaEmArquivo grava = new GravaEmArquivo();
 		SubMenu1 menu =new SubMenu1();
-		
+
 		int opcao;
 		do{
 			opcao=Integer.parseInt(JOptionPane.showInputDialog(""

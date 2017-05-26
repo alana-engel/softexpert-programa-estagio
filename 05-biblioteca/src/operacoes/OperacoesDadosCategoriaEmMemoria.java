@@ -9,12 +9,12 @@ import outrasOperacoes.CodSequencial;
 
 public class OperacoesDadosCategoriaEmMemoria implements Acoes<Categoria>{
 
-private static List<Categoria> CadastroDeCategoria = new ArrayList<Categoria>();
+	private static List<Categoria> CadastroDeCategoria = new ArrayList<Categoria>();
 	Categoria categoria = new Categoria();
 	CodSequencial cod = new CodSequencial();
 	boolean achou = false;
 	int posicaoDoLivro;
-	
+
 	@Override
 	public boolean cadastra(Categoria c){
 		categoria=c;
@@ -30,7 +30,7 @@ private static List<Categoria> CadastroDeCategoria = new ArrayList<Categoria>();
 	public boolean altera(Categoria c, int posicao){
 		CadastroDeCategoria.get(posicao).setDescricao(c.getDescricao());  
 		return true;
-}
+	}
 	@Override
 	public Categoria busca(String dCategoria){
 		Categoria c = new Categoria();
@@ -44,15 +44,15 @@ private static List<Categoria> CadastroDeCategoria = new ArrayList<Categoria>();
 		}
 		return c;
 	}
-	
+
 	void posicaoLivro(int n){
 		posicaoDoLivro = n;
 	}
 	public int retornaPosicao(){
 		return posicaoDoLivro;
 	}
-	
-	
+
+
 	public boolean achou(){
 		return achou;
 	}
@@ -68,7 +68,7 @@ private static List<Categoria> CadastroDeCategoria = new ArrayList<Categoria>();
 		}
 		return exclui;
 	}
-	
+
 	public List<Categoria> getCadastroDeCategoria() {
 		return CadastroDeCategoria;
 	}

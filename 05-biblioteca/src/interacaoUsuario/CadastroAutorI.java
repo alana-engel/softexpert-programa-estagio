@@ -14,24 +14,24 @@ public class CadastroAutorI{
 	public void cadastra(){
 		Autor autor = new Autor();
 		String n=JOptionPane.showInputDialog("Digite o nome do autor: ");
-		 if(valida.verificaAutorJaCadastrado(n) == false){
-			 JOptionPane.showMessageDialog(null,"O autor ja está cadastrado.");
-		 }else{
-		if (n.isEmpty()) {
-			cadastra();
+		if(valida.verificaAutorJaCadastrado(n) == false){
+			JOptionPane.showMessageDialog(null,"O autor ja está cadastrado.");
 		}else{
-			autor.setNome(n);
-			autor.setDataDeNascimento(data.recebeDataAutor());
-			autor.setNacionalidade((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
+			if (n.isEmpty()) {
+				cadastra();
+			}else{
+				autor.setNome(n);
+				autor.setDataDeNascimento(data.recebeDataAutor());
+				autor.setNacionalidade((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
+			}
+			if(gravaAutor.cadastra(autor)==true){
+				JOptionPane.showMessageDialog(null, "Autor cadastrado.");
+			}else{
+				JOptionPane.showMessageDialog(null, "O Campo Nome do autor deve ser preenchido.");
+				cadastra();
+			}
 		}
-		if(gravaAutor.cadastra(autor)==true){
-			JOptionPane.showMessageDialog(null, "Autor Cadastrado.");
-		}else{
-			JOptionPane.showMessageDialog(null, "O Campo Nome do autor deve ser preenchido.");
-			cadastra();
-		}
-		 }
 	}
-	
-	
+
+
 }

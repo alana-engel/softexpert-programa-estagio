@@ -43,30 +43,30 @@ public class Data implements Serializable{
 		data=data+dia+"/"+mes+"/"+ano;
 		return data;
 	}
-	 public boolean verificaData(int dia, int mes, int ano){
-		 boolean dataValida = false;
-	      if(dia>31){
-	    	  dataValida= false;
-	        
-	      }
-	      else if(mes>12 || mes<1){
-	    	  dataValida= false;
-		         
-		      }
-		      else if(((mes==4)||(mes==6)||(mes==9)||(mes==11))&&(dia>30)) {
-		    	  dataValida= false;
-		         
-		      } 
-		      else if(mes==2){
-		        if(dia>28){
-		        	dataValida= false;
+	public boolean verificaData(int dia, int mes, int ano){
+		boolean dataValida = false;
+		if(dia>31){
+			dataValida= false;
 
-		        } 
-		      }
-		      else{
-		    	  dataValida= true;
-	  			}
-	      return dataValida;
-	  }
-	
+		}
+		else if(mes>12 || mes<1){
+			dataValida= false;
+
+		}
+		else if(((mes==4)||(mes==6)||(mes==9)||(mes==11))&&(dia>30)) {
+			dataValida= false;
+
+		} 
+		else if(mes==2){
+			if(dia>28){
+				dataValida= false;
+
+			} 
+		}
+		else{
+			dataValida= true;
+		}
+		return dataValida;
+	}
+
 }

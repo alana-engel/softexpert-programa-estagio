@@ -7,8 +7,8 @@ public class AdicionaCategoriaAoLivro {
 	public String retornaDescricaoCategoria(){
 		String dCategoria=(JOptionPane.showInputDialog("Digite a categoria do livro: "));
 		if (dCategoria.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Categoria não cadastrada, o campo Categoria deve ser preenchido.");
-			retornaDescricaoCategoria();
+			JOptionPane.showMessageDialog(null, "O campo Categoria deve ser preenchido.");
+			//retornaDescricaoCategoria();
 		}
 		return dCategoria;
 	}

@@ -9,7 +9,7 @@ import outrasOperacoes.ValidacaoRegistroExistente;
 
 
 public class CadastroCategoriaI{
-	
+
 	Acoes<Categoria> gravaCategoria= new OperacoesDadosCategoriaEmMemoria();
 	public void cadastra(){
 		ValidacaoRegistroExistente valida = new ValidacaoRegistroExistente();
@@ -17,15 +17,15 @@ public class CadastroCategoriaI{
 		Categoria c = new Categoria();
 		categoria=JOptionPane.showInputDialog("Digite a categoria a ser cadastrada: ");
 		if(valida.verificaCategoriaJaCadastrada(categoria) == false){
-			 JOptionPane.showMessageDialog(null,"A categoria ja está cadastrada.");
-		 }else{
-		c.setDescricao(categoria);
-		if(gravaCategoria.cadastra(c)==true){
-			JOptionPane.showMessageDialog(null, "Categoria Cadastrada.");
+			JOptionPane.showMessageDialog(null,"A categoria ja está cadastrada.");
 		}else{
-			JOptionPane.showMessageDialog(null, "O campo Categoria deve ser preenchido.");
-			cadastra();
-		}
+			c.setDescricao(categoria);
+			if(gravaCategoria.cadastra(c)==true){
+				JOptionPane.showMessageDialog(null, "Categoria cadastrada.");
+			}else{
+				JOptionPane.showMessageDialog(null, "O campo Categoria deve ser preenchido.");
+				cadastra();
+			}
 		}
 	}
 }

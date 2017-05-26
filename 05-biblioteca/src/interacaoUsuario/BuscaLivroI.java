@@ -11,8 +11,8 @@ import operacoes.OperacoesDadosLivrosEmMemoria;
 public class BuscaLivroI{
 	OperacoesDadosLivrosEmMemoria buscaLivro= new OperacoesDadosLivrosEmMemoria();
 	RecebeData data = new RecebeData();
-	
-	
+
+
 	public void buscaLivroCod(){
 		Livro livro =new Livro();
 		int n=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));
@@ -49,7 +49,7 @@ public class BuscaLivroI{
 		listaCategoria=buscaLivro.buscaCategoria(dcategoria);
 		boolean achou=buscaLivro.achou();
 		if (!achou){
-			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o livro");
+			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o livro.");
 		}
 		else{
 			String imp="";

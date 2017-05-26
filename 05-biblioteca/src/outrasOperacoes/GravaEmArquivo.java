@@ -20,7 +20,7 @@ public class GravaEmArquivo {
 	OperacoesDadosLivrosEmMemoria gravaLivro= new OperacoesDadosLivrosEmMemoria();
 	OperacoesDadosCategoriaEmMemoria gravaCategoria= new OperacoesDadosCategoriaEmMemoria();
 	OperacoesDadosAutorEmMemoria gravaAutor= new OperacoesDadosAutorEmMemoria();
-	
+
 	public void gravaDadosArquivoLivro(){
 		try{
 			ObjectOutputStream grava = new ObjectOutputStream(new FileOutputStream("CadastroDeLivros.dat"));

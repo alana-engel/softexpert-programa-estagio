@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 import outrasOperacoes.Data;
 
 public class RecebeData {
-	
+
 	public Data recebeDataLivro(){
 		Data data = new Data();
 		String dia=JOptionPane.showInputDialog("Data de aquisição. Digite o dia: ");

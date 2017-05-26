@@ -14,9 +14,9 @@ public class BuscaCategoriaI{
 		String dCategoria=(JOptionPane.showInputDialog("Digite a categoria: "));
 		c=buscaCategoria.busca(dCategoria);
 		boolean achou=buscaCategoria.achou();
-		
+
 		if (!achou){
-			JOptionPane.showMessageDialog(null,"Não foi possível encontrar a categoria");
+			JOptionPane.showMessageDialog(null,"Não foi possível encontrar a categoria.");
 		}
 		else{
 

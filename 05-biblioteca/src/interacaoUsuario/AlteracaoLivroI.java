@@ -10,7 +10,7 @@ import operacoes.OperacoesDadosLivrosEmMemoria;
 public class AlteracaoLivroI{
 	RecebeData data = new RecebeData();
 	OperacoesDadosLivrosEmMemoria gravaLivro= new OperacoesDadosLivrosEmMemoria();
-	
+
 	public void altera(){
 		Livro livro =new Livro();
 		int cod=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));
@@ -34,11 +34,11 @@ public class AlteracaoLivroI{
 			livro.setLista(gravaLivro.adicionaAutoresAoLivro());
 			livro.setCategoria(gravaLivro.adicionaCategoria());
 			if(gravaLivro.altera(livro, posicao)==true){
-				JOptionPane.showMessageDialog(null, "Livro Alterado.");
+				JOptionPane.showMessageDialog(null, "Livro alterado.");
 			}else{
 				JOptionPane.showMessageDialog(null, "Livro não alterado, os campos Titulo e Local devem ser preenchidos.");
 			}
 		}
 	}
-	
+
 }

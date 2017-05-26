@@ -44,7 +44,7 @@ public class SubMenu1 {
 			}
 		}while(opcao!=4);
 	}
-	
+
 	public void menuAlterar(){
 		int opcao;
 		do{
@@ -60,7 +60,7 @@ public class SubMenu1 {
 			}
 		}while(opcao!=4);
 	}
-	
+
 	public void menuBuscar(){
 		int opcao;
 		do{
@@ -76,7 +76,7 @@ public class SubMenu1 {
 			}
 		}while(opcao!=4);
 	}
-	
+
 	public void menuExcluir(){
 		int opcao;
 		do{
@@ -92,5 +92,5 @@ public class SubMenu1 {
 			}
 		}while(opcao!=4);
 	}
-		
+
 }

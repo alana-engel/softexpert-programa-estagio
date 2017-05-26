@@ -13,18 +13,18 @@ public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 	CodSequencial cod = new CodSequencial();
 	int posicaoDoLivro;
 	boolean achou = false;
-	
+
 	@Override
 	public boolean cadastra(Autor registro) {
-			registro.setCodAutores(cod.codAutor());
-			CadastroDeAutores.add(registro);
-			return true;
+		registro.setCodAutores(cod.codAutor());
+		CadastroDeAutores.add(registro);
+		return true;
 	}
 
 	@Override
 	public boolean altera(Autor autor, int posicao){
 		if(autor.getNome().isEmpty()){
-			
+
 		}else{
 			CadastroDeAutores.get(posicao).setNome(autor.getNome());  
 		}
@@ -34,26 +34,26 @@ public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 	}
 	@Override
 	public Autor busca(String nAutor){
-			Autor autor = new Autor();
-			for (int i=0;i<CadastroDeAutores.size();i++){
-				if (CadastroDeAutores.get(i).getNome().equalsIgnoreCase(nAutor)) {
-					autor = CadastroDeAutores.get(i);
-					achou = true;
-					posicaoDoLivro=i;
-				}
+		Autor autor = new Autor();
+		for (int i=0;i<CadastroDeAutores.size();i++){
+			if (CadastroDeAutores.get(i).getNome().equalsIgnoreCase(nAutor)) {
+				autor = CadastroDeAutores.get(i);
+				achou = true;
+				posicaoDoLivro=i;
 			}
-			return autor;
 		}
-		void posicaoLivro(int n){
-			posicaoDoLivro = n;
-		}
-		public int retornaPosicao(){
-			return posicaoDoLivro;
-		}
-		
-		public boolean achou(){
-			return achou;
-		}
+		return autor;
+	}
+	void posicaoLivro(int n){
+		posicaoDoLivro = n;
+	}
+	public int retornaPosicao(){
+		return posicaoDoLivro;
+	}
+
+	public boolean achou(){
+		return achou;
+	}
 	public List<Autor> getCadastroDeAutores() {
 		return CadastroDeAutores;
 	}

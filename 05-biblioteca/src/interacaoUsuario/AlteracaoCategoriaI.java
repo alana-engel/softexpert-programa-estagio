@@ -18,29 +18,29 @@ public class AlteracaoCategoriaI{
 		String dCategoria=(JOptionPane.showInputDialog("Digite a categoria: "));
 		c=buscaCategoria.busca(dCategoria);
 		boolean achou=buscaCategoria.achou();
-		
+
 		if (!achou){
-			JOptionPane.showMessageDialog(null,"Não foi possível encontrar a categoria");
+			JOptionPane.showMessageDialog(null,"Não foi possível encontrar a categoria.");
 		}
 		else{
 			String categoria="";
 			categoria=JOptionPane.showInputDialog("Digite a nova categoria do livro: ");
 			c.setDescricao(categoria);
 			if(gravaCategoria.altera(c, posicao)==true){
-				JOptionPane.showMessageDialog(null, "Categoria Alterada.");
+				JOptionPane.showMessageDialog(null, "Categoria alterada.");
 			}else{
 				JOptionPane.showMessageDialog(null, "O campo Categoria deve ser preenchido.");
 				altera();
 			}
-			
+
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 }

@@ -11,9 +11,9 @@ public class CadastroLivroI{
 
 	RecebeData data = new RecebeData();
 	OperacoesDadosLivrosEmMemoria gravaLivro= new OperacoesDadosLivrosEmMemoria();
-	
+
 	public void cadastra(){
-		
+
 		Livro livro = new Livro();
 		livro.setTitulo(JOptionPane.showInputDialog("Digite o titulo do livro: "));
 		livro.setResumo(JOptionPane.showInputDialog("Digite o resumo do livro: "));

@@ -21,17 +21,17 @@ public class AlteracaoAutorI{
 		else{
 			String n = "";
 			n=JOptionPane.showInputDialog("Digite o nome do autor: ");
-				autor.setNome(n);
-				autor.setDataDeNascimento(data.recebeDataAutor());
-				autor.setNacionalidade((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
-			
+			autor.setNome(n);
+			autor.setDataDeNascimento(data.recebeDataAutor());
+			autor.setNacionalidade((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
+
 			if(gravaAutor.altera(autor, posicao)==true){
 				JOptionPane.showMessageDialog(null, "Autor Cadastrado.");
 			}else{
 				JOptionPane.showMessageDialog(null, "O Campo Nome do autor deve ser preenchido.");
 			}
 		}
-	
+
 	}
-	
+
 }
