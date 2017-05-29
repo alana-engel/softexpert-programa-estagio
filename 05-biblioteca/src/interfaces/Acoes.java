@@ -1,7 +1,5 @@
 package interfaces;
 
-
-
 public interface Acoes<T> {
 
 	boolean cadastra(T registro);
@@ -11,5 +9,4 @@ public interface Acoes<T> {
 	boolean altera(T registro, int posicao);
 
 	T busca(String nomeRegistro);
-
 }

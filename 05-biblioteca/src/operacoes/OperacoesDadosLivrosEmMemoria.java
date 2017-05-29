@@ -110,16 +110,13 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 		return c1;
 	}
 	public boolean remove(String TLivro){
-		boolean exclui = false;
 		for (int i=0;i<getCadastroDeLivros().size();i++){
 			if (getCadastroDeLivros().get(i).getTitulo().equalsIgnoreCase(TLivro)) {
 				getCadastroDeLivros().remove(i);
-				exclui= true;
-			}else{
-				exclui= false;
+				return true;
 			}
 		}
-		return exclui;
+		return false;
 	}
 
 

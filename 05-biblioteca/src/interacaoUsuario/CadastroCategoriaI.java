@@ -7,7 +7,6 @@ import interfaces.Acoes;
 import operacoes.OperacoesDadosCategoriaEmMemoria;
 import outrasOperacoes.ValidacaoRegistroExistente;
 
-
 public class CadastroCategoriaI{
 
 	Acoes<Categoria> gravaCategoria= new OperacoesDadosCategoriaEmMemoria();
@@ -16,11 +15,11 @@ public class CadastroCategoriaI{
 		String categoria="";
 		Categoria c = new Categoria();
 		categoria=JOptionPane.showInputDialog("Digite a categoria a ser cadastrada: ");
-		if(valida.verificaCategoriaJaCadastrada(categoria) == false){
+		if(!valida.verificaCategoriaJaCadastrada(categoria)){
 			JOptionPane.showMessageDialog(null,"A categoria ja está cadastrada.");
 		}else{
 			c.setDescricao(categoria);
-			if(gravaCategoria.cadastra(c)==true){
+			if(gravaCategoria.cadastra(c)){
 				JOptionPane.showMessageDialog(null, "Categoria cadastrada.");
 			}else{
 				JOptionPane.showMessageDialog(null, "O campo Categoria deve ser preenchido.");

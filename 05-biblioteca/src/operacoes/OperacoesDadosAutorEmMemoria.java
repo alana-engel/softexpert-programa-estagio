@@ -62,15 +62,13 @@ public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 	}
 	@Override
 	public boolean remove(String nAutor){
-		boolean exclui = false;
+	
 		for (int i=0;i<CadastroDeAutores.size();i++){
 			if (CadastroDeAutores.get(i).getNome().equalsIgnoreCase(nAutor)) {
 				CadastroDeAutores.remove(i);
-				exclui = true;
-			}else{
-				exclui = false;
+				return true;
 			}
 		}
-		return exclui;
+		return false;
 	}
 }

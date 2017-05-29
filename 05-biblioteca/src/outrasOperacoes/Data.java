@@ -1,5 +1,6 @@
 package outrasOperacoes;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class Data implements Serializable{
@@ -47,20 +48,16 @@ public class Data implements Serializable{
 		boolean dataValida = false;
 		if(dia>31){
 			dataValida= false;
-
 		}
 		else if(mes>12 || mes<1){
 			dataValida= false;
-
 		}
-		else if(((mes==4)||(mes==6)||(mes==9)||(mes==11))&&(dia>30)) {
+		else if(Arrays.asList(4,6,9,11).contains(mes)&&(dia>30)) {
 			dataValida= false;
-
 		} 
 		else if(mes==2){
 			if(dia>28){
 				dataValida= false;
-
 			} 
 		}
 		else{

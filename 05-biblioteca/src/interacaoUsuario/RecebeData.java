@@ -11,8 +11,6 @@ public class RecebeData {
 		String mes = JOptionPane.showInputDialog("Digite o mes: ");
 		String ano = JOptionPane.showInputDialog("Digite o ano: ");
 		if (dia.isEmpty() || mes.isEmpty() || ano.isEmpty()) {
-
-
 		}else{
 			int diaInt=Integer.parseInt(dia);
 			int mesInt = Integer.parseInt(mes);
@@ -22,19 +20,17 @@ public class RecebeData {
 			data.ano = anoInt;
 			boolean validaData = data.verificaData(diaInt, mesInt, anoInt);
 			boolean valida = data.ComparaData();
-			if(validaData == false){
+			if(!validaData){
 				JOptionPane.showMessageDialog(null,"Data inválida.");
 				data = new Data();
 				recebeDataLivro();
-			}else if(valida == false){
+			}else if(!valida){
 				JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
 				data = new Data();
 				recebeDataLivro();
 			}
 		}
 		return data;
-
-
 	}
 	public Data recebeDataAutor(){
 		Data data = new Data();
@@ -43,7 +39,6 @@ public class RecebeData {
 		String ano = JOptionPane.showInputDialog("Digite o ano: ");
 		if (dia.isEmpty() || mes.isEmpty() || ano.isEmpty()) {
 
-
 		}else{
 			int diaInt=Integer.parseInt(dia);
 			int mesInt = Integer.parseInt(mes);
@@ -53,18 +48,16 @@ public class RecebeData {
 			data.ano = anoInt;
 			boolean validaData = data.verificaData(diaInt, mesInt, anoInt);
 			boolean valida = data.ComparaData();
-			if(validaData == false){
+			if(!validaData){
 				JOptionPane.showMessageDialog(null,"Data inválida.");
 				data = new Data();
 				recebeDataLivro();
-			}else if(valida == false){
+			}else if(!valida){
 				JOptionPane.showMessageDialog(null,"A data de nascimento nao pode ser superior a data atual.");
 				data = new Data();
 				recebeDataAutor();
 			}
 		}
 		return data;
-
 	}
-
 }

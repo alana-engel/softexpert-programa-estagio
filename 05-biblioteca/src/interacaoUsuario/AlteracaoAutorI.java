@@ -19,19 +19,16 @@ public class AlteracaoAutorI{
 			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o autor.");
 		}
 		else{
-			String n = "";
-			n=JOptionPane.showInputDialog("Digite o nome do autor: ");
+			String n=JOptionPane.showInputDialog("Digite o nome do autor: ");
 			autor.setNome(n);
 			autor.setDataDeNascimento(data.recebeDataAutor());
 			autor.setNacionalidade((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
 
-			if(gravaAutor.altera(autor, posicao)==true){
+			if(gravaAutor.altera(autor, posicao)){
 				JOptionPane.showMessageDialog(null, "Autor Cadastrado.");
 			}else{
 				JOptionPane.showMessageDialog(null, "O Campo Nome do autor deve ser preenchido.");
 			}
 		}
-
 	}
-
 }

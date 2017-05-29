@@ -23,10 +23,7 @@ public class AdicionaAutorAoLivro {
 		String qntdade=JOptionPane.showInputDialog("Digite a quantidade de autores: ");
 		if(qntdade.isEmpty()){
 			JOptionPane.showMessageDialog(null, "Preencha a quantidade de autores.");
-
 		}
-
 		return qntdade;
-
 	}
 }	

@@ -58,15 +58,15 @@ public class OperacoesDadosCategoriaEmMemoria implements Acoes<Categoria>{
 	}
 	@Override
 	public boolean remove(String dcategoria){
-		boolean exclui = false;
+		
 		for (int i=0;i<CadastroDeCategoria.size();i++){
 			if (CadastroDeCategoria.get(i).getDescricao().equalsIgnoreCase(dcategoria)) {
 				CadastroDeCategoria.remove(i);
-				exclui = true;
-			}else
-				exclui =false;
+				return true;
+			}
 		}
-		return exclui;
+		return false;
+		
 	}
 
 	public List<Categoria> getCadastroDeCategoria() {

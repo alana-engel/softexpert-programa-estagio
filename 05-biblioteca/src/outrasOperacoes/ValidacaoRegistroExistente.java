@@ -13,7 +13,6 @@ public class ValidacaoRegistroExistente {
 		if(achou==true){
 			return false;
 		}
-
 		return true;
 	}
 	public boolean verificaCategoriaJaCadastrada(String c){
@@ -22,7 +21,6 @@ public class ValidacaoRegistroExistente {
 		if(achou==true){
 			return false;
 		}
-
 		return true;
 	}
 }
