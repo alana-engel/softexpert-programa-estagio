@@ -1,38 +1,41 @@
 import java.util.Scanner;
 
-enum Operacao1{
-	SOMA(1){
+enum Operacao{
+	SOMA(1, "Soma"){
 		@Override
 		public double calcula(double num1, double num2) {
 			return num1 + num2;
 		}
 	},
-	SUBTRACAO(2){
+	SUBTRACAO(2, "Subtração"){
 		@Override
 		public double calcula(double num1, double num2) {
 			return num1 - num2;
 		}
 	},
-	MULTIPLICACAO(3){
+	MULTIPLICACAO(3, "Multiplicação"){
 		@Override
 		public double calcula(double num1, double num2) {
 			return num1 * num2;
 		}
 	},
-	DIVISAO(4){
+	DIVISAO(4, "Divisão"){
 		@Override
 		public double calcula(double num1, double num2) {
 			return num1 / num2;
 		}
 	};
 	private int codigo;
-    private Operacao1(int codigo){ 
+	private String descricao;
+    private Operacao(int codigo, String descricao){ 
         this.codigo = codigo;
+        this.descricao = descricao;
     }
 	public abstract double calcula(double num1, double num2);
-	public static Operacao1 porCodigo(int codigo)
+	
+	public static Operacao porCodigo(int codigo)
 	{
-	    for (Operacao1 op : values()) {
+	    for (Operacao op : values()) {
 	        if (op.codigo == codigo)
 	            return op;
 	    }
@@ -41,6 +44,11 @@ enum Operacao1{
 	public int getCodigo() {
 		return codigo;
 	}
+	@Override
+	public String toString()
+	{
+	    return descricao;
+	}
 }
 
 public class Calculadora {
@@ -48,14 +56,11 @@ public class Calculadora {
 
 	public static void main(String[] args) {
 		int num1, num2;
-		Operacao1 op= null;
-			System.out.println("Opcoes de Operacao");
-			System.out.println("1. Soma");
-			System.out.println("2. Subtracao");
-			System.out.println("3. Multiplicacao");
-			System.out.println("4. Divisao");
+		Operacao op= null;
+		for (Operacao operacao : Operacao.values())
+		    System.out.printf("%d - %s%n", operacao.getCodigo(), operacao);
 			System.out.print("Escolha a operação: ");
-			op = Operacao1.porCodigo(Integer.parseInt(entrada.nextLine()));
+			op = Operacao.porCodigo(Integer.parseInt(entrada.nextLine()));
 			System.out.print("Qual o primeiro numero: ");
 			num1 = entrada.nextInt();
 			System.out.print("Qual o segundo numero: ");
