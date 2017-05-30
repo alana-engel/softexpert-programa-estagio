@@ -1,0 +1,50 @@
+package br.com.softexpert.biblioteca.interacaousuario;
+
+import javax.swing.JOptionPane;
+
+import br.com.softexpert.biblioteca.operacoesregistros.OperacoesDadosLivrosEmMemoria;
+import br.com.softexpert.biblioteca.outrasoperacoes.Data;
+import br.com.softexpert.biblioteca.registros.Livro;
+
+
+public class CadastroLivroI{
+	private Data operacoesData = new Data();
+	private OperacoesDadosLivrosEmMemoria operacoesLivro= new OperacoesDadosLivrosEmMemoria();
+	private RecebeQnt qnt = new RecebeQnt();
+	
+	public void cadastra(){
+
+		Livro livro = new Livro();
+		livro.setTitulo(JOptionPane.showInputDialog("Digite o titulo do livro: "));
+		livro.setResumo(JOptionPane.showInputDialog("Digite o resumo do livro: "));
+		String pag=JOptionPane.showInputDialog("Digite a quantidade de páginas: ");
+		if(pag.isEmpty()){
+			livro.setQntPaginas(0);
+		}else{
+			livro.setQntPaginas(Integer.parseInt(pag));
+		}
+		livro.setLocal(JOptionPane.showInputDialog("Digite o Local:"));
+		String data = JOptionPane.showInputDialog("Digite a data de aquisição dd/MM/yyyy:");
+		if(data.isEmpty())
+			data = "01/01/01";
+		if(operacoesData.ComparaData(data)){
+			livro.setDataDeAquisicao(operacoesData.retornaDataTransformada(data));
+		}else{
+			JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
+		}
+		String q = qnt.recebeQntAutores();
+		if(q.isEmpty()){
+			do{
+				q = qnt.recebeQntAutores();
+			}while(q.isEmpty());
+		}
+		livro.setLista(operacoesLivro.adicionaAutoresAoLivro(q));
+		livro.setCategoria(operacoesLivro.adicionaCategoria());
+		if(operacoesLivro.cadastra(livro)){
+			JOptionPane.showMessageDialog(null, "Livro cadastrado.");
+		}else{
+			JOptionPane.showMessageDialog(null, "Livro não cadastrado, os campos Titulo e Local devem ser preenchidos.");
+		}
+	}
+
+}
