@@ -48,8 +48,6 @@ public class OperacoesDadosCategoriaEmMemoria implements Acoes<Categoria>{
 	public int retornaPosicao(){
 		return posicaoDoLivro;
 	}
-
-
 	public boolean achou(){
 		return achou;
 	}

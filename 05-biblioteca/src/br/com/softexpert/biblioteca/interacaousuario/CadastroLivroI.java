@@ -1,5 +1,6 @@
 package br.com.softexpert.biblioteca.interacaousuario;
 
+
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.biblioteca.operacoesregistros.OperacoesDadosLivrosEmMemoria;
@@ -13,7 +14,8 @@ public class CadastroLivroI{
 	private RecebeQnt qnt = new RecebeQnt();
 	
 	public void cadastra(){
-
+		String data;
+		boolean dataT=false;
 		Livro livro = new Livro();
 		livro.setTitulo(JOptionPane.showInputDialog("Digite o titulo do livro: "));
 		livro.setResumo(JOptionPane.showInputDialog("Digite o resumo do livro: "));
@@ -24,14 +26,20 @@ public class CadastroLivroI{
 			livro.setQntPaginas(Integer.parseInt(pag));
 		}
 		livro.setLocal(JOptionPane.showInputDialog("Digite o Local:"));
-		String data = JOptionPane.showInputDialog("Digite a data de aquisição dd/MM/yyyy:");
-		if(data.isEmpty())
-			data = "01/01/01";
-		if(operacoesData.ComparaData(data)){
-			livro.setDataDeAquisicao(operacoesData.retornaDataTransformada(data));
-		}else{
-			JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
-		}
+		do{
+			data = JOptionPane.showInputDialog("Digite a data de aquisição no formato dd/MM/yyyy:");
+			if(data.isEmpty()){
+				data = "01/01/01";
+				dataT=true;
+			}else{
+			dataT=operacoesData.dataTransformada(data);
+			}
+			}while(dataT==false);
+			if(operacoesData.ComparaData(operacoesData.retornaDataTransformada(data))){
+				livro.setDataDeAquisicao(operacoesData.retornaDataTransformada(data));
+			}else{
+				JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
+			}
 		String q = qnt.recebeQntAutores();
 		if(q.isEmpty()){
 			do{

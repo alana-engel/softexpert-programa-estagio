@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class Data implements Serializable{
 	private static final long serialVersionUID = 1L;
 	public int dia;
@@ -24,31 +23,34 @@ public class Data implements Serializable{
 		ano = calendario.get(Calendar.YEAR);  
 
 	}  
-	
+	public boolean dataTransformada(String data){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
+		try {
+			sdf.parse(data);
+		} catch (ParseException e) {
+			return false;
+		}
+		return true;
+}
 	public Date retornaDataTransformada(String data){
+	
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date d = null;
 		try {
 			d =sdf.parse(data);
 		} catch (ParseException e) {
-			System.err.println("Erro ao transformar a data");
-		}
-		System.out.println(sdf.format(d));
+			System.err.println("Erro");
 		
+		}
 		return d;
 		
 }
-	public boolean ComparaData(String entrada) {  
+	public boolean ComparaData(Date entrada) {  
 
-		String[] data = entrada.split("\\/");  
-		Calendar dataC = Calendar.getInstance();  
-		dataC.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data[0]));  
-		dataC.set(Calendar.MONTH, Integer.parseInt(data[1])-1);  
-		dataC.set(Calendar.YEAR, Integer.parseInt(data[2]));  
-		dataC.set(Calendar.HOUR, 0);
-		dataC.set(Calendar.MINUTE,0);
-		dataC.set(Calendar.SECOND, 0);
-		dataC.set(Calendar.MILLISECOND,0);
+		Calendar dataC = Calendar.getInstance(); 
+		dataC.setTime(entrada);
+
 		if(calendario.compareTo(dataC)>=0){
 			return true;
 		}else{

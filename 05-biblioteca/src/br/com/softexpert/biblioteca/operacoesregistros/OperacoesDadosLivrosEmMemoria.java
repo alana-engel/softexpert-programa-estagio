@@ -26,8 +26,7 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 		CodSequencial cod = new CodSequencial();
 		registro.setCodLivro(cod.codLivro());
 		registro.setCodigoDeBarras(cod.codBarras());
-
-		if (registro.getTitulo().isEmpty() || registro.getLocal().isEmpty()) {
+		if (registro.getTitulo().isEmpty() || registro.getLocal().isEmpty()){
 			return false;
 		}else{
 			CadastroDeLivros.add(registro);
@@ -42,7 +41,6 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 		int q=Integer.parseInt(qnt);
 		for(int i=0;i<q;i++){
 			a = comparaAutores(a, cadastroDeAutor);
-		
 		listaAutores.add(a);
 		}
 		return listaAutores;
@@ -52,7 +50,6 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 		boolean achou = false;
 		adicionaAutorAoLivro.recebeNomeAutor();
 		for (int j=0;j<gravaAutor.getCadastroDeAutores().size();j++){
-
 			if (gravaAutor.getCadastroDeAutores().get(j).getNome().equalsIgnoreCase(adicionaAutorAoLivro.retornaNomeAutor())) {
 				a = gravaAutor.getCadastroDeAutores().get(j);
 				achou = true;

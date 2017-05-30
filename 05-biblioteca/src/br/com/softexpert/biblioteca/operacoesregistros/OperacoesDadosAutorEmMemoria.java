@@ -34,6 +34,7 @@ public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 	@Override
 	public Autor busca(String nAutor){
 		Autor autor = new Autor();
+		achou=false;
 		for (int i=0;i<CadastroDeAutores.size();i++){
 			if (CadastroDeAutores.get(i).getNome().equalsIgnoreCase(nAutor)) {
 				autor = CadastroDeAutores.get(i);

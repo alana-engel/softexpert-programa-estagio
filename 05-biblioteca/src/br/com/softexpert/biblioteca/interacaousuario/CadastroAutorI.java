@@ -1,4 +1,5 @@
 package br.com.softexpert.biblioteca.interacaousuario;
+
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.biblioteca.interfaces.Acoes;
@@ -13,6 +14,8 @@ public class CadastroAutorI{
 	private Acoes<Autor> operacoesAutor= new OperacoesDadosAutorEmMemoria();
 	private Data operacoesData = new Data();
 	public void cadastra(){
+		boolean dataT=false;
+		String data;
 		Autor autor = new Autor();
 		String n=JOptionPane.showInputDialog("Digite o nome do autor: ");
 		if(!valida.verificaAutorJaCadastrado(n)){
@@ -22,10 +25,16 @@ public class CadastroAutorI{
 				cadastra();
 			}else{
 				autor.setNome(n);
-				String data = JOptionPane.showInputDialog("Digite a data de nascimento:");
-				if(data.isEmpty())
+				do{
+				data = JOptionPane.showInputDialog("Digite a data de nascimento no formato dd/MM/yyyy:");
+				if(data.isEmpty()){
 					data = "01/01/01";
-				if(operacoesData.ComparaData(data)){
+					dataT=true;
+				}else{
+				dataT=operacoesData.dataTransformada(data);
+				}
+				}while(dataT==false);
+				if(operacoesData.ComparaData(operacoesData.retornaDataTransformada(data))){
 					autor.setDataDeNascimento(operacoesData.retornaDataTransformada(data));
 				}else{
 					JOptionPane.showMessageDialog(null,"A data de nascimento não pode ser superior a data atual.");

@@ -13,6 +13,8 @@ public class AlteracaoLivroI{
 	private Data operacoesData = new Data();
 	
 	public void altera(){
+		String data;
+		boolean dataT=false;
 		Livro livro =new Livro();
 		int cod=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));
 		livro=operacoesLivro.buscaCod(cod);
@@ -31,14 +33,20 @@ public class AlteracaoLivroI{
 				livro.setQntPaginas(Integer.parseInt(pag));
 			}
 			livro.setLocal(JOptionPane.showInputDialog("Digite o Local:"));
-			String data = JOptionPane.showInputDialog("Digite a data de aquisição:");
-			if(data.isEmpty())
-				data = "01/01/01";
-			if(operacoesData.ComparaData(data)){
-				livro.setDataDeAquisicao(operacoesData.retornaDataTransformada(data));
-			}else{
-				JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
-			}
+			do{
+				data = JOptionPane.showInputDialog("Digite a data de aquisição no formato dd/MM/yyyy:");
+				if(data.isEmpty()){
+					data = "01/01/01";
+					dataT=true;
+				}else{
+				dataT=operacoesData.dataTransformada(data);
+				}
+				}while(dataT==false);
+				if(operacoesData.ComparaData(operacoesData.retornaDataTransformada(data))){
+					livro.setDataDeAquisicao(operacoesData.retornaDataTransformada(data));
+				}else{
+					JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
+				}
 			
 			String q = qnt.recebeQntAutores();
 			if(q.isEmpty()){
