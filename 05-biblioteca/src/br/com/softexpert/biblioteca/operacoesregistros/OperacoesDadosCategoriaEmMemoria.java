@@ -12,8 +12,6 @@ public class OperacoesDadosCategoriaEmMemoria implements Acoes<Categoria>{
 	private static List<Categoria> CadastroDeCategoria = new ArrayList<Categoria>();
 	private Categoria categoria = new Categoria();
 	private CodSequencial cod = new CodSequencial();
-	private boolean achou = false;
-	private int posicaoDoLivro;
 
 	@Override
 	public boolean cadastra(Categoria c){
@@ -34,23 +32,22 @@ public class OperacoesDadosCategoriaEmMemoria implements Acoes<Categoria>{
 	@Override
 	public Categoria busca(String dCategoria){
 		Categoria c = new Categoria();
-		achou= false;
 		for (int i=0;i<CadastroDeCategoria.size();i++){
 			if (CadastroDeCategoria.get(i).getDescricao().equalsIgnoreCase(dCategoria)) {
 				c = CadastroDeCategoria.get(i);
-				achou = true;
-				posicaoDoLivro = i;
 			}
 		}
 		return c;
 	}
+	public int verificaSeCategoriaExisteRetornaPosicao(String dCategoria){
+		for (int i=0;i<CadastroDeCategoria.size();i++){
+			if (CadastroDeCategoria.get(i).getDescricao().equalsIgnoreCase(dCategoria)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 
-	public int retornaPosicao(){
-		return posicaoDoLivro;
-	}
-	public boolean achou(){
-		return achou;
-	}
 	@Override
 	public boolean remove(String dcategoria){
 		

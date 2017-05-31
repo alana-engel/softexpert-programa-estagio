@@ -19,8 +19,7 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 	private static List<Livro> CadastroDeLivros = new ArrayList<Livro>();
 	private AdicionaAutorAoLivro  adicionaAutorAoLivro = new AdicionaAutorAoLivro();
 	private boolean achou = true;
-	private int posicaoDoLivro;
-	
+	private OperacoesDadosAutorEmMemoria operacoesAutor= new OperacoesDadosAutorEmMemoria();
 	@Override
 	public boolean cadastra(Livro registro) {
 		CodSequencial cod = new CodSequencial();
@@ -35,37 +34,38 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 	}
 	
 	public List<Autor> adicionaAutoresAoLivro(String qnt){
-
+		OperacoesDadosAutorEmMemoria gravaAutor= new OperacoesDadosAutorEmMemoria();
 		Autor a = new Autor();
-		CadastroAutorI cadastroDeAutor = new CadastroAutorI();
 		List<Autor> listaAutores = new ArrayList<>();
 		int q=Integer.parseInt(qnt);
 		for(int i=0;i<q;i++){
-			a = verificaAutorParaAdicionar(a, cadastroDeAutor);
+		String nome = adicionaAutorAoLivro.recebeNomeAutor();
+		int existe=operacoesAutor.verificaSeAutorExisteRetornaPosicao(nome);
+		int p=existe;
+			if(p!=-1){
+				a = gravaAutor.getCadastroDeAutores().get(p);
+			}
+			else{
+			a = verificaAutorParaAdicionar(a,p, nome);
+			}
 		listaAutores.add(a);
 		}
 		return listaAutores;
 	}
-	private Autor verificaAutorParaAdicionar(Autor a, CadastroAutorI cadastroDeAutor) {
-		OperacoesDadosAutorEmMemoria gravaAutor= new OperacoesDadosAutorEmMemoria();
+	private Autor verificaAutorParaAdicionar(Autor a, int p, String nome) {
 		boolean achou = false;
-		adicionaAutorAoLivro.recebeNomeAutor();
-		for (int j=0;j<gravaAutor.getCadastroDeAutores().size();j++){
-			if (gravaAutor.getCadastroDeAutores().get(j).getNome().equalsIgnoreCase(adicionaAutorAoLivro.retornaNomeAutor())) {
-				a = gravaAutor.getCadastroDeAutores().get(j);
-				achou = true;
-			}
-		}
 		if (!achou){
-			a = cadastrarAutorNaoEncontrado(a, cadastroDeAutor, gravaAutor);
+			a = cadastrarAutorNaoEncontrado(a,p, nome);
 		}
 		return a;
 	}
-	private Autor cadastrarAutorNaoEncontrado(Autor a, CadastroAutorI cadastroDeAutor, OperacoesDadosAutorEmMemoria gravaAutor) {
-		adicionaAutorAoLivro.retornaMensagemAutorNaoEncontrado();
+	private Autor cadastrarAutorNaoEncontrado(Autor a, int p, String nome) {
+		OperacoesDadosAutorEmMemoria gravaAutor= new OperacoesDadosAutorEmMemoria();
+		CadastroAutorI cadastroDeAutor = new CadastroAutorI();
+		cadastroDeAutor.retornaMensagemAutorNaoEncontrado();
 		cadastroDeAutor.cadastra();
 		for (int j=0;j<gravaAutor.getCadastroDeAutores().size();j++){
-			if (gravaAutor.getCadastroDeAutores().get(j).getNome().equalsIgnoreCase(adicionaAutorAoLivro.retornaNomeAutor())) {
+			if (gravaAutor.getCadastroDeAutores().get(j).getNome().equalsIgnoreCase(nome)) {
 				a = gravaAutor.getCadastroDeAutores().get(j);
 				achou = true;
 			}
@@ -150,6 +150,15 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 	public Livro busca(String nomeRegistro) {
 		return null;
 	}
+	public int verificaSeLivroExisteRetornaPosicao(int n){
+		for (int i=0;i<CadastroDeLivros.size();i++){
+			if (CadastroDeLivros.get(i).getCodLivro()==n) {
+				CadastroDeLivros.get(i);
+				return i;
+			}
+		}
+		return -1;
+	}
 	public Livro buscaCod(int n){
 		Livro livro = new Livro();
 		achou=false;
@@ -157,7 +166,6 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 			if (CadastroDeLivros.get(i).getCodLivro()==n) {
 				livro = CadastroDeLivros.get(i);
 				achou = true;
-				posicaoDoLivro=i;
 			}
 		}
 		return livro;
@@ -208,9 +216,6 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 	
 	public boolean achou(){
 		return achou;
-	}
-	public int retornaPosicao(){
-		return posicaoDoLivro;
 	}
 
 	

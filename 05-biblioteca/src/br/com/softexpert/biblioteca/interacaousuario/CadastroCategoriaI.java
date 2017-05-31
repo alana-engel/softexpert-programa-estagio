@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import br.com.softexpert.biblioteca.interfaces.Acoes;
 import br.com.softexpert.biblioteca.operacoesregistros.OperacoesDadosCategoriaEmMemoria;
-import br.com.softexpert.biblioteca.outrasoperacoes.ValidacaoRegistroExistente;
+
 import br.com.softexpert.biblioteca.registros.Categoria;
 
 public class CadastroCategoriaI{
@@ -12,12 +12,10 @@ public class CadastroCategoriaI{
 	private Acoes<Categoria> operacoesCategoria= new OperacoesDadosCategoriaEmMemoria();
 	
 	public void cadastra(){
-		ValidacaoRegistroExistente valida = new ValidacaoRegistroExistente();
-		String categoria="";
 		Categoria c = new Categoria();
-		categoria=JOptionPane.showInputDialog("Digite a categoria a ser cadastrada: ");
-		if(!valida.verificaCategoriaJaCadastrada(categoria)){
-			JOptionPane.showMessageDialog(null,"A categoria ja está cadastrada.");
+		String categoria=JOptionPane.showInputDialog("Digite a categoria a ser cadastrada: ");
+		if(((OperacoesDadosCategoriaEmMemoria) operacoesCategoria).verificaSeCategoriaExisteRetornaPosicao(categoria)!=-1){
+			JOptionPane.showMessageDialog(null,"A categoria ja está cadastrado.");
 		}else{
 			c.setDescricao(categoria);
 			if(operacoesCategoria.cadastra(c)){

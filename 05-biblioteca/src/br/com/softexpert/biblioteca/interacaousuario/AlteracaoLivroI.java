@@ -11,17 +11,14 @@ public class AlteracaoLivroI{
 	private OperacoesDadosLivrosEmMemoria operacoesLivro= new OperacoesDadosLivrosEmMemoria();
 	private RecebeQnt qnt = new RecebeQnt();
 	private Data operacoesData = new Data();
-	
 	public void altera(){
 		String data;
 		boolean dataT=false;
 		Livro livro =new Livro();
 		int cod=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));
-		livro=operacoesLivro.buscaCod(cod);
-		int posicao =operacoesLivro.retornaPosicao();
-		boolean achou=operacoesLivro.achou();
-		if (!achou){
-			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o livro.");
+		int existe = operacoesLivro.verificaSeLivroExisteRetornaPosicao(cod);
+		if (existe==-1){
+			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o Livro.");
 		}
 		else{
 			livro.setTitulo(JOptionPane.showInputDialog("Digite o titulo do livro: "));
@@ -54,9 +51,10 @@ public class AlteracaoLivroI{
 					q = qnt.recebeQntAutores();
 				}while(q.isEmpty());
 			}
+		
 			livro.setLista(operacoesLivro.adicionaAutoresAoLivro(q));
 			livro.setCategoria(operacoesLivro.adicionaCategoria());
-			if(operacoesLivro.altera(livro, posicao)==true){
+			if(operacoesLivro.altera(livro, existe)==true){
 				JOptionPane.showMessageDialog(null, "Livro alterado.");
 			}else{
 				JOptionPane.showMessageDialog(null, "Livro não alterado, os campos Titulo e Local devem ser preenchidos.");

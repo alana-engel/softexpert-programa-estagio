@@ -12,7 +12,6 @@ public class CadastroLivroI{
 	private Data operacoesData = new Data();
 	private OperacoesDadosLivrosEmMemoria operacoesLivro= new OperacoesDadosLivrosEmMemoria();
 	private RecebeQnt qnt = new RecebeQnt();
-	
 	public void cadastra(){
 		String data;
 		boolean dataT=false;
@@ -46,6 +45,8 @@ public class CadastroLivroI{
 				q = qnt.recebeQntAutores();
 			}while(q.isEmpty());
 		}
+		//String nomeAutor=(JOptionPane.showInputDialog("Digite o nome do autor: "));
+		//int existe=operacoesAutor.verificaSeAutorExisteRetornaPosicao(nomeAutor);
 		livro.setLista(operacoesLivro.adicionaAutoresAoLivro(q));
 		livro.setCategoria(operacoesLivro.adicionaCategoria());
 		if(operacoesLivro.cadastra(livro)){

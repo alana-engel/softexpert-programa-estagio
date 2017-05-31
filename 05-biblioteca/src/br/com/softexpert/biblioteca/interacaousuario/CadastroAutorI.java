@@ -47,4 +47,8 @@ public class CadastroAutorI{
 			}
 		}
 	}
+	public void retornaMensagemAutorNaoEncontrado(){
+		JOptionPane.showMessageDialog(null,"Não foi possível encontrar o autor, um novo autor será cadastrado.");
+
+	}
 }
