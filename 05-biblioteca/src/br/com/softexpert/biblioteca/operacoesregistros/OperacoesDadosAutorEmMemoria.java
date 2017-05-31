@@ -39,7 +39,7 @@ public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 		}
 		return autor;
 	}
-	
+
 	public int verificaSeAutorExisteRetornaPosicao(String nAutor){
 		for (int i=0;i<CadastroDeAutores.size();i++){
 			if (CadastroDeAutores.get(i).getNome().equalsIgnoreCase(nAutor)) {
@@ -48,10 +48,10 @@ public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 		}
 		return -1;
 	}
-	
+
 	@Override
 	public boolean remove(String nAutor){
-	
+
 		for (int i=0;i<CadastroDeAutores.size();i++){
 			if (CadastroDeAutores.get(i).getNome().equalsIgnoreCase(nAutor)) {
 				CadastroDeAutores.remove(i);
@@ -60,12 +60,12 @@ public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 		}
 		return false;
 	}
-	
+
 	public List<Autor> getCadastroDeAutores() {
 		return CadastroDeAutores;
 	}
 	public  void setCadastroDeAutores(List<Autor> cadastroDeAutores) {
 		CadastroDeAutores = cadastroDeAutores;
 	}
-	
+
 }

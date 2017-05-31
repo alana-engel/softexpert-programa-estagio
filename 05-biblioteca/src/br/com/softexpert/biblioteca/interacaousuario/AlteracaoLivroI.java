@@ -11,9 +11,8 @@ public class AlteracaoLivroI{
 	private OperacoesDadosLivrosEmMemoria operacoesLivro= new OperacoesDadosLivrosEmMemoria();
 	private RecebeQnt qnt = new RecebeQnt();
 	private Data operacoesData = new Data();
+
 	public void altera(){
-		String data;
-		boolean dataT=false;
 		Livro livro =new Livro();
 		int cod=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));
 		int existe = operacoesLivro.verificaSeLivroExisteRetornaPosicao(cod);
@@ -30,28 +29,13 @@ public class AlteracaoLivroI{
 				livro.setQntPaginas(Integer.parseInt(pag));
 			}
 			livro.setLocal(JOptionPane.showInputDialog("Digite o Local:"));
-			do{
-				data = JOptionPane.showInputDialog("Digite a data de aquisição no formato dd/MM/yyyy:");
-				if(data.isEmpty()){
-					data = "01/01/01";
-					dataT=true;
-				}else{
-				dataT=operacoesData.dataTransformada(data);
-				}
-				}while(dataT==false);
-				if(operacoesData.ComparaData(operacoesData.retornaDataTransformada(data))){
-					livro.setDataDeAquisicao(operacoesData.retornaDataTransformada(data));
-				}else{
-					JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
-				}
-			
+			recebeDataAquisicao(livro);
 			String q = qnt.recebeQntAutores();
 			if(q.isEmpty()){
 				do{
 					q = qnt.recebeQntAutores();
 				}while(q.isEmpty());
 			}
-		
 			livro.setLista(operacoesLivro.adicionaAutoresAoLivro(q));
 			livro.setCategoria(operacoesLivro.adicionaCategoria());
 			if(operacoesLivro.altera(livro, existe)==true){
@@ -59,6 +43,25 @@ public class AlteracaoLivroI{
 			}else{
 				JOptionPane.showMessageDialog(null, "Livro não alterado, os campos Titulo e Local devem ser preenchidos.");
 			}
+		}
+	}
+
+	private void recebeDataAquisicao(Livro livro) {
+		String data;
+		boolean dataT;
+		do{
+			data = JOptionPane.showInputDialog("Digite a data de aquisição no formato dd/MM/yyyy:");
+			if(data.isEmpty()){
+				data = "01/01/01";
+				dataT=true;
+			}else{
+				dataT=operacoesData.dataTransformada(data);
+			}
+		}while(dataT==false);
+		if(operacoesData.ComparaData(operacoesData.retornaDataTransformada(data))){
+			livro.setDataDeAquisicao(operacoesData.retornaDataTransformada(data));
+		}else{
+			JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
 		}
 	}
 }

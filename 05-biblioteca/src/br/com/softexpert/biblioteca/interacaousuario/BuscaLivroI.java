@@ -9,8 +9,8 @@ import br.com.softexpert.biblioteca.registros.Livro;
 
 
 public class BuscaLivroI{
-    private OperacoesDadosLivrosEmMemoria operacoesLivro= new OperacoesDadosLivrosEmMemoria();
-	
+	private OperacoesDadosLivrosEmMemoria operacoesLivro= new OperacoesDadosLivrosEmMemoria();
+
 	public void buscaLivroCod(){
 		Livro livro =new Livro();
 		int n=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));

@@ -35,6 +35,7 @@ public class GravaEmArquivo {
 
 		gravaDadosAutor();
 		gravaDadosCategoria();
+		
 	}
 	private void gravaDadosCategoria() {
 		try{

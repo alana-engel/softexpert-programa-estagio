@@ -10,10 +10,10 @@ import br.com.softexpert.biblioteca.registros.Categoria;
 public class CadastroCategoriaI{
 
 	private Acoes<Categoria> operacoesCategoria= new OperacoesDadosCategoriaEmMemoria();
-	
+
 	public void cadastra(){
 		Categoria c = new Categoria();
-		String categoria=JOptionPane.showInputDialog("Digite a categoria a ser cadastrada: ");
+		String categoria =recebeDescricaoCategoria();
 		if(((OperacoesDadosCategoriaEmMemoria) operacoesCategoria).verificaSeCategoriaExisteRetornaPosicao(categoria)!=-1){
 			JOptionPane.showMessageDialog(null,"A categoria ja está cadastrado.");
 		}else{
@@ -25,5 +25,15 @@ public class CadastroCategoriaI{
 				cadastra();
 			}
 		}
+	}
+	public String recebeDescricaoCategoria(){
+		String dCategoria=(JOptionPane.showInputDialog("Digite a categoria do livro: "));
+		if (dCategoria.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "O campo Categoria deve ser preenchido.");
+		}
+		return dCategoria;
+	}
+	public void retornaMensagemCategoriaNaoEncontrado(){
+		JOptionPane.showMessageDialog(null,"Não foi possível encontrar a categoria, uma nova categoria será cadastrada.");
 	}
 }

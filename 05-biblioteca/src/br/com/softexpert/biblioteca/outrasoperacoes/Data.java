@@ -40,7 +40,7 @@ public class Data implements Serializable{
 		try {
 			d =sdf.parse(data);
 		} catch (ParseException e) {
-			System.err.println("Erro");
+			//System.err.println("Erro");
 		
 		}
 		return d;

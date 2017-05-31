@@ -31,22 +31,20 @@ public class CadastroLivroI{
 				data = "01/01/01";
 				dataT=true;
 			}else{
-			dataT=operacoesData.dataTransformada(data);
+				dataT=operacoesData.dataTransformada(data);
 			}
-			}while(dataT==false);
-			if(operacoesData.ComparaData(operacoesData.retornaDataTransformada(data))){
-				livro.setDataDeAquisicao(operacoesData.retornaDataTransformada(data));
-			}else{
-				JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
-			}
+		}while(dataT==false);
+		if(operacoesData.ComparaData(operacoesData.retornaDataTransformada(data))){
+			livro.setDataDeAquisicao(operacoesData.retornaDataTransformada(data));
+		}else{
+			JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
+		}
 		String q = qnt.recebeQntAutores();
 		if(q.isEmpty()){
 			do{
 				q = qnt.recebeQntAutores();
 			}while(q.isEmpty());
 		}
-		//String nomeAutor=(JOptionPane.showInputDialog("Digite o nome do autor: "));
-		//int existe=operacoesAutor.verificaSeAutorExisteRetornaPosicao(nomeAutor);
 		livro.setLista(operacoesLivro.adicionaAutoresAoLivro(q));
 		livro.setCategoria(operacoesLivro.adicionaCategoria());
 		if(operacoesLivro.cadastra(livro)){

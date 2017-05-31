@@ -6,7 +6,7 @@ import br.com.softexpert.biblioteca.operacoesregistros.OperacoesDadosCategoriaEm
 
 public class BuscaCategoriaI{
 	private OperacoesDadosCategoriaEmMemoria operacoesCategoria= new OperacoesDadosCategoriaEmMemoria();
-	
+
 	public void busca(){
 		String dCategoria=(JOptionPane.showInputDialog("Digite a categoria: "));
 		int existe=operacoesCategoria.verificaSeCategoriaExisteRetornaPosicao(dCategoria);
