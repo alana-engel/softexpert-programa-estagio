@@ -33,6 +33,7 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 		}
 		return true;
 	}
+	
 	public List<Autor> adicionaAutoresAoLivro(String qnt){
 
 		Autor a = new Autor();
@@ -40,12 +41,12 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 		List<Autor> listaAutores = new ArrayList<>();
 		int q=Integer.parseInt(qnt);
 		for(int i=0;i<q;i++){
-			a = comparaAutores(a, cadastroDeAutor);
+			a = verificaAutorParaAdicionar(a, cadastroDeAutor);
 		listaAutores.add(a);
 		}
 		return listaAutores;
 	}
-	private Autor comparaAutores(Autor a, CadastroAutorI cadastroDeAutor) {
+	private Autor verificaAutorParaAdicionar(Autor a, CadastroAutorI cadastroDeAutor) {
 		OperacoesDadosAutorEmMemoria gravaAutor= new OperacoesDadosAutorEmMemoria();
 		boolean achou = false;
 		adicionaAutorAoLivro.recebeNomeAutor();
@@ -56,17 +57,22 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 			}
 		}
 		if (!achou){
-			adicionaAutorAoLivro.retornaMensagemAutorNaoEncontrado();
-			cadastroDeAutor.cadastra();
-			for (int j=0;j<gravaAutor.getCadastroDeAutores().size();j++){
-				if (gravaAutor.getCadastroDeAutores().get(j).getNome().equalsIgnoreCase(adicionaAutorAoLivro.retornaNomeAutor())) {
-					a = gravaAutor.getCadastroDeAutores().get(j);
-					achou = true;
-				}
+			a = cadastrarAutorNaoEncontrado(a, cadastroDeAutor, gravaAutor);
+		}
+		return a;
+	}
+	private Autor cadastrarAutorNaoEncontrado(Autor a, CadastroAutorI cadastroDeAutor, OperacoesDadosAutorEmMemoria gravaAutor) {
+		adicionaAutorAoLivro.retornaMensagemAutorNaoEncontrado();
+		cadastroDeAutor.cadastra();
+		for (int j=0;j<gravaAutor.getCadastroDeAutores().size();j++){
+			if (gravaAutor.getCadastroDeAutores().get(j).getNome().equalsIgnoreCase(adicionaAutorAoLivro.retornaNomeAutor())) {
+				a = gravaAutor.getCadastroDeAutores().get(j);
+				achou = true;
 			}
 		}
 		return a;
 	}
+	
 	public Categoria adicionaCategoria(){
 		AdicionaCategoriaAoLivro adicionaCategoriaAoLivro = new AdicionaCategoriaAoLivro();
 		OperacoesDadosCategoriaEmMemoria gravaCategoria= new OperacoesDadosCategoriaEmMemoria();
@@ -78,6 +84,12 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 				dCategoria=adicionaCategoriaAoLivro.retornaDescricaoCategoria();
 			}while(dCategoria.isEmpty());
 		}
+		c1 = verificaCategoriaParaAdicionar(adicionaCategoriaAoLivro, gravaCategoria, c1, cadastroCategoria, dCategoria);
+		return c1;
+	}
+	private Categoria verificaCategoriaParaAdicionar(AdicionaCategoriaAoLivro adicionaCategoriaAoLivro,
+			OperacoesDadosCategoriaEmMemoria gravaCategoria, Categoria c1, CadastroCategoriaI cadastroCategoria,
+			String dCategoria) {
 		boolean achou = false;
 		for (int i=0;i<gravaCategoria.getCadastroDeCategoria().size();i++){
 			if (gravaCategoria.getCadastroDeCategoria().get(i).getDescricao().equalsIgnoreCase(dCategoria)) {
@@ -86,18 +98,26 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 			}
 		}
 		if (!achou){
-			adicionaCategoriaAoLivro.retornaMensagemCategoriaNaoEncontrado();
+			c1 = cadastraCategoriaNaoEncontrada(adicionaCategoriaAoLivro, gravaCategoria, c1, cadastroCategoria, dCategoria);
+		}
+		return c1;
+	}
+	private Categoria cadastraCategoriaNaoEncontrada(AdicionaCategoriaAoLivro adicionaCategoriaAoLivro,
+			OperacoesDadosCategoriaEmMemoria gravaCategoria, Categoria c1, CadastroCategoriaI cadastroCategoria,
+			String dCategoria) {
+		adicionaCategoriaAoLivro.retornaMensagemCategoriaNaoEncontrado();
 
-			cadastroCategoria.cadastra();
-			for (int i=0;i<gravaCategoria.getCadastroDeCategoria().size();i++){
-				if (gravaCategoria.getCadastroDeCategoria().get(i).getDescricao().equalsIgnoreCase(dCategoria)) {
-					c1 = gravaCategoria.getCadastroDeCategoria().get(i);
-					achou = true;
-				}
+		cadastroCategoria.cadastra();
+		for (int i=0;i<gravaCategoria.getCadastroDeCategoria().size();i++){
+			if (gravaCategoria.getCadastroDeCategoria().get(i).getDescricao().equalsIgnoreCase(dCategoria)) {
+				c1 = gravaCategoria.getCadastroDeCategoria().get(i);
+				achou = true;
 			}
 		}
 		return c1;
 	}
+	
+	
 	public boolean remove(String TLivro){
 		for (int i=0;i<getCadastroDeLivros().size();i++){
 			if (getCadastroDeLivros().get(i).getTitulo().equalsIgnoreCase(TLivro)) {
@@ -107,6 +127,8 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 		}
 		return false;
 	}
+	
+	
 	@Override
 	public boolean altera(Livro registro, int posicao) {
 		if(registro.getTitulo().isEmpty()){
@@ -122,6 +144,8 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 			return true;
 		}
 	}
+	
+	
 	@Override
 	public Livro busca(String nomeRegistro) {
 		return null;
@@ -133,7 +157,7 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 			if (CadastroDeLivros.get(i).getCodLivro()==n) {
 				livro = CadastroDeLivros.get(i);
 				achou = true;
-				posicaoLivro(i);
+				posicaoDoLivro=i;
 			}
 		}
 		return livro;
@@ -180,16 +204,16 @@ public class OperacoesDadosLivrosEmMemoria implements Acoes<Livro> {
 			}
 		}
 	}
+	
+	
 	public boolean achou(){
 		return achou;
-	}
-	void posicaoLivro(int n){
-		posicaoDoLivro = n;
 	}
 	public int retornaPosicao(){
 		return posicaoDoLivro;
 	}
 
+	
 	public List<Livro> getCadastroDeLivros() {
 		return CadastroDeLivros;
 	}

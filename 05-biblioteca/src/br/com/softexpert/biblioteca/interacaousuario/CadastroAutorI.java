@@ -5,12 +5,10 @@ import javax.swing.JOptionPane;
 import br.com.softexpert.biblioteca.interfaces.Acoes;
 import br.com.softexpert.biblioteca.operacoesregistros.OperacoesDadosAutorEmMemoria;
 import br.com.softexpert.biblioteca.outrasoperacoes.Data;
-import br.com.softexpert.biblioteca.outrasoperacoes.ValidacaoRegistroExistente;
 import br.com.softexpert.biblioteca.registros.Autor;
 
 public class CadastroAutorI{
 
-	private ValidacaoRegistroExistente valida = new ValidacaoRegistroExistente();
 	private Acoes<Autor> operacoesAutor= new OperacoesDadosAutorEmMemoria();
 	private Data operacoesData = new Data();
 	public void cadastra(){
@@ -18,7 +16,7 @@ public class CadastroAutorI{
 		String data;
 		Autor autor = new Autor();
 		String n=JOptionPane.showInputDialog("Digite o nome do autor: ");
-		if(!valida.verificaAutorJaCadastrado(n)){
+		if(((OperacoesDadosAutorEmMemoria) operacoesAutor).verificaSeAutorExisteRetornaPosicao(n)!=-1){
 			JOptionPane.showMessageDialog(null,"O autor ja está cadastrado.");
 		}else{
 			if (n.isEmpty()) {

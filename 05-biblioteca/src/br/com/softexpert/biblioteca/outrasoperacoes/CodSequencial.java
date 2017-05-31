@@ -3,8 +3,8 @@ package br.com.softexpert.biblioteca.outrasoperacoes;
 public class CodSequencial {
 	static int codL=0;
 	static int codB=0;
-	static int codC=0;
-	static int codA=0;
+	static int codC=-1;
+	static int codA=-1;
 	
 	public int codLivro(){
 		codL=codL+1;

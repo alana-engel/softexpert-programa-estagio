@@ -10,8 +10,6 @@ import br.com.softexpert.biblioteca.registros.Autor;
 public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 	private static List<Autor> CadastroDeAutores = new ArrayList<Autor>();
 	private CodSequencial cod = new CodSequencial();
-	private int posicaoDoLivro;
-	private boolean achou = false;
 
 	@Override
 	public boolean cadastra(Autor registro) {
@@ -34,30 +32,23 @@ public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 	@Override
 	public Autor busca(String nAutor){
 		Autor autor = new Autor();
-		achou=false;
 		for (int i=0;i<CadastroDeAutores.size();i++){
 			if (CadastroDeAutores.get(i).getNome().equalsIgnoreCase(nAutor)) {
 				autor = CadastroDeAutores.get(i);
-				achou = true;
-				posicaoDoLivro=i;
 			}
 		}
 		return autor;
 	}
 	
-	public int retornaPosicao(){
-		return posicaoDoLivro;
+	public int verificaSeAutorExisteRetornaPosicao(String nAutor){
+		for (int i=0;i<CadastroDeAutores.size();i++){
+			if (CadastroDeAutores.get(i).getNome().equalsIgnoreCase(nAutor)) {
+				return i;
+			}
+		}
+		return -1;
 	}
-
-	public boolean achou(){
-		return achou;
-	}
-	public List<Autor> getCadastroDeAutores() {
-		return CadastroDeAutores;
-	}
-	public  void setCadastroDeAutores(List<Autor> cadastroDeAutores) {
-		CadastroDeAutores = cadastroDeAutores;
-	}
+	
 	@Override
 	public boolean remove(String nAutor){
 	
@@ -69,4 +60,12 @@ public class OperacoesDadosAutorEmMemoria implements Acoes<Autor>{
 		}
 		return false;
 	}
+	
+	public List<Autor> getCadastroDeAutores() {
+		return CadastroDeAutores;
+	}
+	public  void setCadastroDeAutores(List<Autor> cadastroDeAutores) {
+		CadastroDeAutores = cadastroDeAutores;
+	}
+	
 }

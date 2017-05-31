@@ -13,15 +13,16 @@ public class AlteracaoAutorI{
 		String data;
 		boolean dataT=false;
 		Autor autor = new Autor();
-		int posicao =operacoesAutor.retornaPosicao();
 		String nAutor=(JOptionPane.showInputDialog("Digite o nome do autor: "));
-		autor=operacoesAutor.busca(nAutor);
-		boolean achou=operacoesAutor.achou();
-		if (!achou){
+		int existe = operacoesAutor.verificaSeAutorExisteRetornaPosicao(nAutor);
+		if (existe==-1){
 			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o autor.");
 		}
 		else{
 			String n=JOptionPane.showInputDialog("Digite o nome do autor: ");
+			if(((OperacoesDadosAutorEmMemoria) operacoesAutor).verificaSeAutorExisteRetornaPosicao(n)!=-1){
+				JOptionPane.showMessageDialog(null,"O autor ja está cadastrado.");
+			}else{
 			autor.setNome(n);
 			do{
 				data = JOptionPane.showInputDialog("Digite a data de nascimento no formato dd/MM/yyyy:");
@@ -39,10 +40,11 @@ public class AlteracaoAutorI{
 				}
 				autor.setNacionalidade((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
 
-			if(operacoesAutor.altera(autor, posicao)){
+			if(operacoesAutor.altera(autor, existe)){
 				JOptionPane.showMessageDialog(null, "Autor Cadastrado.");
 			}else{
 				JOptionPane.showMessageDialog(null, "O Campo Nome do autor deve ser preenchido.");
+			}
 			}
 		}
 	}
