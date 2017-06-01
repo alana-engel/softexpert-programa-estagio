@@ -20,7 +20,8 @@ public class GravaEmArquivo {
 	OperacoesDadosLivrosEmMemoria gravaLivro= new OperacoesDadosLivrosEmMemoria();
 	OperacoesDadosCategoriaEmMemoria gravaCategoria= new OperacoesDadosCategoriaEmMemoria();
 	OperacoesDadosAutorEmMemoria gravaAutor= new OperacoesDadosAutorEmMemoria();
-
+	CodSequencial codigo = new CodSequencial();
+	
 	public void gravaDadosArquivoLivro(){
 		try{
 			ObjectOutputStream grava = new ObjectOutputStream(new FileOutputStream("CadastroDeLivros.dat"));
@@ -31,10 +32,47 @@ public class GravaEmArquivo {
 			System.out.print("Erro: " + e);
 			System.exit(1);
 		}
-		JOptionPane.showMessageDialog(null,"Dados gravados no arquivo 'CadastroDeLivros.dat'");
 
 		gravaDadosAutor();
 		gravaDadosCategoria();
+		
+		try{
+			ObjectOutputStream grava = new ObjectOutputStream(new FileOutputStream("CodigoC.dat"));
+			grava.writeObject(codigo.codCategoria());
+			grava.close();
+		}
+		catch(Exception e){
+			System.out.print("Erro: " + e);
+			System.exit(1);
+		}
+		try{
+			ObjectOutputStream grava = new ObjectOutputStream(new FileOutputStream("CodigoL.dat"));
+			grava.writeObject(codigo.codLivro());
+			grava.close();
+		}
+		catch(Exception e){
+			System.out.print("Erro: " + e);
+			System.exit(1);
+		}
+		try{
+			ObjectOutputStream grava = new ObjectOutputStream(new FileOutputStream("CodigoB.dat"));
+			grava.writeObject(codigo.codBarras());
+			grava.close();
+		}
+		catch(Exception e){
+			System.out.print("Erro: " + e);
+			System.exit(1);
+		}
+		try{
+			ObjectOutputStream grava = new ObjectOutputStream(new FileOutputStream("CodigoA.dat"));
+			grava.writeObject(codigo.codAutor());
+			grava.close();
+		}
+		catch(Exception e){
+			System.out.print("Erro: " + e);
+			System.exit(1);
+		}
+
 		
 	}
 	private void gravaDadosCategoria() {
@@ -47,7 +85,7 @@ public class GravaEmArquivo {
 			System.out.print("Erro: " + e);
 			System.exit(1);
 		}
-		JOptionPane.showMessageDialog(null,"Dados gravados no arquivo 'CadastroDeCategoria.dat'");
+	
 	}
 	private void gravaDadosAutor() {
 		try{
@@ -59,7 +97,8 @@ public class GravaEmArquivo {
 			System.out.print("Erro: " + e);
 			System.exit(1);
 		}
-		JOptionPane.showMessageDialog(null,"Dados gravados no arquivo 'CadastroDeAutores.dat'");
+	
+		
 	}
 	public void pegaDadosArquivoLivro(){
 		try{
@@ -72,10 +111,51 @@ public class GravaEmArquivo {
 			System.out.print("Erro----->: " + e);
 			System.exit(1);
 		}
-		JOptionPane.showMessageDialog(null,"Dados lidos do arquivo 'CadastroDeLivros.dat'");
+		
 
 		pegaDadosAutor();
 		pegaDadosCategoria();
+		
+		try{
+			FileInputStream cod= new FileInputStream("CodigoC.dat");
+			ObjectInputStream codS = new ObjectInputStream(cod);
+			codigo.codCategoria();
+			codS.close();
+		}
+		catch(Exception e){
+			System.out.print("Erro----->: " + e);
+			System.exit(1);
+		}
+		try{
+			FileInputStream cod= new FileInputStream("CodigoA.dat");
+			ObjectInputStream codS = new ObjectInputStream(cod);
+			codigo.codAutor();
+			codS.close();
+		}
+		catch(Exception e){
+			System.out.print("Erro----->: " + e);
+			System.exit(1);
+		}
+		try{
+			FileInputStream cod= new FileInputStream("CodigoL.dat");
+			ObjectInputStream codS = new ObjectInputStream(cod);
+			codigo.codLivro();
+			codS.close();
+		}
+		catch(Exception e){
+			System.out.print("Erro----->: " + e);
+			System.exit(1);
+		}
+		try{
+			FileInputStream cod= new FileInputStream("CodigoB.dat");
+			ObjectInputStream codS = new ObjectInputStream(cod);
+			codigo.codBarras();
+			codS.close();
+		}
+		catch(Exception e){
+			System.out.print("Erro----->: " + e);
+			System.exit(1);
+		}
 	}
 	private void pegaDadosCategoria() {
 		try{
@@ -101,7 +181,7 @@ public class GravaEmArquivo {
 			System.out.print("Erro----->: " + e);
 			System.exit(1);
 		}
-		JOptionPane.showMessageDialog(null,"Dados lidos do arquivo 'CadastroDeAutores.dat'");
+	
 	}
 
 }
