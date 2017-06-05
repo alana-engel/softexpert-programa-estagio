@@ -7,17 +7,16 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import br.com.softexpert.library.entity.Category;
-import br.com.softexpert.library.operations.memory.CategoriesInMemory;
+import br.com.softexpert.library.repository.Repository;
 
 public class CategoriesInFile {
 
-	CategoriesInMemory save= new CategoriesInMemory();
-	
+	Repository repository = new Repository();
 	void saveCategoryInFile() {
 		
 		try{
 			ObjectOutputStream s = new ObjectOutputStream(new FileOutputStream("categories.dat"));
-			s.writeObject(save.getCategories());
+			s.writeObject(repository.getCategories());
 			s.close();
 		}
 		catch(Exception e){
@@ -32,7 +31,7 @@ public class CategoriesInFile {
 		try{
 			FileInputStream category= new FileInputStream("categories.dat");
 			ObjectInputStream categories = new ObjectInputStream(category);
-			save.setCategories((ArrayList<Category>) categories.readObject());
+			repository.setCategories((ArrayList<Category>) categories.readObject());
 			categories.close();
 		}
 		catch(Exception e){

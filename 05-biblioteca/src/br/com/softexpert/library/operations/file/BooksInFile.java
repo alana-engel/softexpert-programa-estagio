@@ -8,16 +8,17 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import br.com.softexpert.library.entity.Book;
-import br.com.softexpert.library.operations.memory.BooksInMemory;
+
+import br.com.softexpert.library.repository.Repository;
 
 public class BooksInFile {
+	Repository repository = new Repository();
 
-	BooksInMemory save= new BooksInMemory();
 	
 	void saveBooksInFile() {
 		try{
 			ObjectOutputStream s = new ObjectOutputStream(new FileOutputStream("books.dat"));
-			s.writeObject(save.getBooks());
+			s.writeObject(repository.getBooks());
 			s.close();
 		}
 		catch(Exception e){
@@ -30,7 +31,7 @@ public class BooksInFile {
 		try{
 			FileInputStream book= new FileInputStream("books.dat");
 			ObjectInputStream books = new ObjectInputStream(book);
-			save.setBooks((ArrayList<Book>) books.readObject());
+			repository.setBooks((ArrayList<Book>) books.readObject());
 			books.close();
 		}
 		catch(Exception e){

@@ -1,14 +1,12 @@
 package br.com.softexpert.library.operations.memory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.interfaces.Authors;
 import br.com.softexpert.library.library.CreateRecordException;
+import br.com.softexpert.library.repository.Repository;
 
 public class AuthorsInMemory implements Authors{
-	private static List<Author> authors = new ArrayList<Author>();
+	Repository repository = new Repository();
 	private SequentialCode cod = new SequentialCode();
 
 	@Override
@@ -17,7 +15,7 @@ public class AuthorsInMemory implements Authors{
 				throw new CreateRecordException("Não foi possível cadastrar o autor. Preencha o campo Nome.");
 		} 
 		author.setSequentialCode(cod.authorCode());
-		authors.add(author);
+		repository.getAuthors().add(author);
 		return true;
 	}
 
@@ -26,26 +24,26 @@ public class AuthorsInMemory implements Authors{
 		if(author.getName().isEmpty()){
 
 		}else{
-			authors.get(position).setName(author.getName());  
+			repository.getAuthors().get(position).setName(author.getName());  
 		}
-		authors.get(position).setBirthday(author.getBirthday());
-		authors.get(position).setNationality(author.getNationality());
+		repository.getAuthors().get(position).setBirthday(author.getBirthday());
+		repository.getAuthors().get(position).setNationality(author.getNationality());
 		return true;
 	}
 	@Override
 	public Author search(String name){
 		Author author = new Author();
-		for (int i=0;i<authors.size();i++){
-			if (authors.get(i).getName().equalsIgnoreCase(name)) {
-				author = authors.get(i);
+		for (int i=0;i<repository.getAuthors().size();i++){
+			if (repository.getAuthors().get(i).getName().equalsIgnoreCase(name)) {
+				author = repository.getAuthors().get(i);
 			}
 		}
 		return author;
 	}
 
 	public int checkIfAuthorExists(String name){
-		for (int i=0;i<authors.size();i++){
-			if (authors.get(i).getName().equalsIgnoreCase(name)) {
+		for (int i=0;i<repository.getAuthors().size();i++){
+			if (repository.getAuthors().get(i).getName().equalsIgnoreCase(name)) {
 				return i;
 			}
 		}
@@ -55,21 +53,12 @@ public class AuthorsInMemory implements Authors{
 	@Override
 	public boolean delete(String name){
 
-		for (int i=0;i<authors.size();i++){
-			if (authors.get(i).getName().equalsIgnoreCase(name)) {
-				authors.remove(i);
+		for (int i=0;i<repository.getAuthors().size();i++){
+			if (repository.getAuthors().get(i).getName().equalsIgnoreCase(name)) {
+				repository.getAuthors().remove(i);
 				return true;
 			}
 		}
 		return false;
 	}
-
-	public void setAuthors(List<Author> authors) {
-		AuthorsInMemory.authors = authors;
-	}
-
-	public List<Author> getAuthors() {
-		return authors;
-	}
-
 }

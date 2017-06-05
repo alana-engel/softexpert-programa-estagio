@@ -2,11 +2,11 @@ package br.com.softexpert.library.library;
 
 import java.util.Collections;
 
-import br.com.softexpert.library.operations.memory.BooksInMemory;
+import br.com.softexpert.library.repository.Repository;
 
 public class Order {
-	private BooksInMemory bookOperations= new BooksInMemory();
+	Repository repository = new Repository();
 	public void ordena(){
-		Collections.sort(bookOperations.getBooks());
+		Collections.sort(repository.getBooks());
 	}
 }

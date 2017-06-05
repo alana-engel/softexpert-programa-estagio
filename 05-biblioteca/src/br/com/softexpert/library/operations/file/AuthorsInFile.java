@@ -7,16 +7,15 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import br.com.softexpert.library.entity.Author;
-import br.com.softexpert.library.operations.memory.AuthorsInMemory;
+import br.com.softexpert.library.repository.Repository;
 
 public class AuthorsInFile {
-	AuthorsInMemory save= new AuthorsInMemory();
-	
+	Repository repository = new Repository();
 
 	void saveAuthorsInFile() {
 		try{
 			ObjectOutputStream s = new ObjectOutputStream(new FileOutputStream("authors.dat"));
-			s.writeObject(save.getAuthors());
+			s.writeObject(repository.getAuthors());
 			s.close();
 		}
 		catch(Exception e){
@@ -32,7 +31,7 @@ public class AuthorsInFile {
 		try{
 			FileInputStream author= new FileInputStream("authors.dat");
 			ObjectInputStream authors = new ObjectInputStream(author);
-			save.setAuthors((ArrayList<Author>) authors.readObject());
+			repository.setAuthors((ArrayList<Author>) authors.readObject());
 			authors.close();
 		}
 		catch(Exception e){

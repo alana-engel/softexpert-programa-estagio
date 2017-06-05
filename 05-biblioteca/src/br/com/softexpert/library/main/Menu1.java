@@ -70,7 +70,7 @@ public class Menu1 {
 					+ "3-Buscar Autor\n"
 					+ "4-Voltar"));
 			switch(option){
-			case 1:menu.menuFindBook();break;
+			case 1:menu.menuSearchBook();break;
 			case 2:searchCategory.search();break;
 			case 3:searchAuthor.search();break;
 			}

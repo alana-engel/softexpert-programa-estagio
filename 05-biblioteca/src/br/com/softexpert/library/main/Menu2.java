@@ -8,7 +8,7 @@ import br.com.softexpert.library.user.book.SearchBook;
 public class Menu2 {
 	private SearchBook searchBook = new SearchBook();
 	private Order order = new Order();
-	public void menuFindBook(){
+	public void menuSearchBook(){
 		order.ordena();
 		int option=0;
 		do{

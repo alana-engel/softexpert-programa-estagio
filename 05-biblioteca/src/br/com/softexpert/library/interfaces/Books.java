@@ -18,8 +18,4 @@ public interface Books extends Operations<Book>{
 	
 	boolean found();
 	
-	List<Book> getBooks();
-	
-	void setBooks(List<Book> books);
-	
 }

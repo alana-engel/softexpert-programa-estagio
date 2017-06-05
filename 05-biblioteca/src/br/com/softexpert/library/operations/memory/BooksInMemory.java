@@ -8,16 +8,17 @@ import br.com.softexpert.library.entity.Book;
 import br.com.softexpert.library.entity.Category;
 import br.com.softexpert.library.interfaces.Books;
 import br.com.softexpert.library.library.CreateRecordException;
+import br.com.softexpert.library.repository.Repository;
 import br.com.softexpert.library.user.author.CreateAuthor;
 import br.com.softexpert.library.user.book.Pages;
 import br.com.softexpert.library.user.category.CreateCategory;
 
 public class BooksInMemory implements Books {
-	private static List<Book> books = new ArrayList<Book>();
+	
 	private CreateAuthor createAuthor = new CreateAuthor();
 	private boolean found = true;
 	private Pages pages = new Pages();
-
+	Repository repository = new Repository();
 	@Override
 	public boolean create(Book book) {
 		SequentialCode cod = new SequentialCode();
@@ -33,7 +34,7 @@ public class BooksInMemory implements Books {
 			}
 			return false;
 		}else{
-			books.add(book);
+			repository.getBooks().add(book);
 		}
 		return true;
 	}
@@ -57,7 +58,7 @@ public class BooksInMemory implements Books {
 			String nome = createAuthor.getName();
 			int p=authorOperations.checkIfAuthorExists(nome);
 			if(p!=-1){
-				a = authorOperations.getAuthors().get(p);
+				a = repository.getAuthors().get(p);
 			}
 			else{
 				a = createAuthor(a,p, nome);
@@ -67,12 +68,11 @@ public class BooksInMemory implements Books {
 		return authorsList;
 	}
 	private Author createAuthor(Author a, int p, String name) {
-		AuthorsInMemory authorOperations= new AuthorsInMemory();
 		createAuthor.returnMessage();
 		createAuthor.create();
-		for (int j=0;j<authorOperations.getAuthors().size();j++){
-			if (authorOperations.getAuthors().get(j).getName().equalsIgnoreCase(name)) {
-				a = authorOperations.getAuthors().get(j);
+		for (int j=0;j<repository.getAuthors().size();j++){
+			if (repository.getAuthors().get(j).getName().equalsIgnoreCase(name)) {
+				a = repository.getAuthors().get(j);
 				found = true;
 			}
 		}
@@ -91,7 +91,7 @@ public class BooksInMemory implements Books {
 		}
 		int p=categoryOperations.checkIfCategoryExists(description);
 		if(p!=-1){
-			c1 = categoryOperations.getCategories().get(p);
+			c1 = repository.getCategories().get(p);
 		}
 		else{
 			c1 = createCategory(p, description);
@@ -100,15 +100,14 @@ public class BooksInMemory implements Books {
 	}
 	private Category createCategory(int p, String description) {
 		CreateCategory createCategory = new CreateCategory();
-		CategoriesInMemory categoryOperations= new CategoriesInMemory();
 		Category c1 = new Category();
 		createCategory.returnMessage();
 
 		createCategory.create();
-		for (int i=0;i<categoryOperations.getCategories().size();i++){
-			if (categoryOperations.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
+		for (int i=0;i<repository.getCategories().size();i++){
+			if (repository.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
 
-				c1= categoryOperations.getCategories().get(i);
+				c1= repository.getCategories().get(i);
 				found = true;
 			}
 		}
@@ -117,9 +116,9 @@ public class BooksInMemory implements Books {
 
 
 	public boolean delete(String title){
-		for (int i=0;i<getBooks().size();i++){
-			if (getBooks().get(i).getTitle().equalsIgnoreCase(title)) {
-				getBooks().remove(i);
+		for (int i=0;i<repository.getBooks().size();i++){
+			if (repository.getBooks().get(i).getTitle().equalsIgnoreCase(title)) {
+				repository.getBooks().remove(i);
 				return true;
 			}
 		}
@@ -132,13 +131,13 @@ public class BooksInMemory implements Books {
 		if(book.getTitle().isEmpty()){
 			return false;
 		}else{
-			books.get(position).setTitulo(book.getTitle());
-			books.get(position).setResumo(book.getSummary());
-			books.get(position).setPages(book.getPages());
-			books.get(position).setLocation(book.getLocation());
-			books.get(position).setAcquisition(book.getAcquisition());
-			books.get(position).setAuthorsList(addAuthor(qPages()));
-			books.get(position).setCategory(addCategory());
+			repository.getBooks().get(position).setTitulo(book.getTitle());
+			repository.getBooks().get(position).setResumo(book.getSummary());
+			repository.getBooks().get(position).setPages(book.getPages());
+			repository.getBooks().get(position).setLocation(book.getLocation());
+			repository.getBooks().get(position).setAcquisition(book.getAcquisition());
+			repository.getBooks().get(position).setAuthorsList(addAuthor(qPages()));
+			repository.getBooks().get(position).setCategory(addCategory());
 			return true;
 		}
 	}
@@ -152,9 +151,9 @@ public class BooksInMemory implements Books {
 	public Book searchByCode(int code){
 		Book book = new Book();
 		found=false;
-		for (int i=0;i<books.size();i++){
-			if (books.get(i).getSequentialCode()==code) {
-				book = books.get(i);
+		for (int i=0;i<repository.getBooks().size();i++){
+			if (repository.getBooks().get(i).getSequentialCode()==code) {
+				book = repository.getBooks().get(i);
 				found = true;
 			}
 		}
@@ -163,9 +162,9 @@ public class BooksInMemory implements Books {
 	public List<Book> searchByTitle(String title){
 		found=false;
 		List<Book> listByTitle = new ArrayList<>();
-		for (int i=0;i<books.size();i++){
-			if (books.get(i).getTitle().contains(title)) {
-				listByTitle.add(books.get(i));
+		for (int i=0;i<repository.getBooks().size();i++){
+			if (repository.getBooks().get(i).getTitle().contains(title)) {
+				listByTitle.add(repository.getBooks().get(i));
 				found = true;
 			}
 		}
@@ -174,9 +173,9 @@ public class BooksInMemory implements Books {
 	public List<Book> searchByCategory(String category){
 		found=false;
 		List<Book> listByCategory = new ArrayList<>();
-		for (int i=0;i<books.size();i++){
-			if (books.get(i).getCategory().getDescription().equalsIgnoreCase(category)) {
-				listByCategory.add(books.get(i));
+		for (int i=0;i<repository.getBooks().size();i++){
+			if (repository.getBooks().get(i).getCategory().getDescription().equalsIgnoreCase(category)) {
+				listByCategory.add(repository.getBooks().get(i));
 				found = true;
 			}
 		}
@@ -186,8 +185,8 @@ public class BooksInMemory implements Books {
 		List<Book> listByAuthor = new ArrayList<>();
 		List<Author> list = new ArrayList<>();
 		found = false;
-		for (int i=0;i<books.size();i++){
-			list=books.get(i).getAuthorsList();
+		for (int i=0;i<repository.getBooks().size();i++){
+			list=repository.getBooks().get(i).getAuthorsList();
 			buscaNomeAutor(name, listByAuthor, list, i);
 		}
 		return listByAuthor;
@@ -197,15 +196,15 @@ public class BooksInMemory implements Books {
 		for (int j=0;j<list.size();j++){
 			a=list.get(j);
 			if (a.getName().equalsIgnoreCase(name)) {
-				listByAuthor.add(books.get(i));
+				listByAuthor.add(repository.getBooks().get(i));
 				found = true;
 			}
 		}
 	}
 	public int checkIfBookExists(int n){
-		for (int i=0;i<books.size();i++){
-			if (books.get(i).getSequentialCode()==n) {
-				books.get(i);
+		for (int i=0;i<repository.getBooks().size();i++){
+			if (repository.getBooks().get(i).getSequentialCode()==n) {
+				repository.getBooks().get(i);
 				return i;
 			}
 		}
@@ -216,11 +215,4 @@ public class BooksInMemory implements Books {
 		return found;
 	}
 
-
-	public List<Book> getBooks() {
-		return books;
-	}
-	public void setBooks(List<Book> books) {
-		BooksInMemory.books = books;
-	}	
 }
