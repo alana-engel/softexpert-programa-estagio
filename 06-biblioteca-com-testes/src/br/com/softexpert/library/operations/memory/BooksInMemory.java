@@ -34,10 +34,8 @@ public class BooksInMemory implements Books {
 		}
 		return true;
 	}
-	private String barcode(Book book, int code){
-		
+	private void barcode(Book book, int code){
 		book.setBarcode(bcode.getBarcode(code));
-		return "A";
 	}
 	public String qAuthors() {
 		String q = qAuthors.getQuantityOfAuthors();
