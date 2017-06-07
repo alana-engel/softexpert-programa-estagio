@@ -15,8 +15,8 @@ public class Barcode {
 		return companyCode;
 	}
 
-	private String getProductCode(){
-		String cod ="0"+5;
+	private String getProductCode(int n){
+		String cod ="0"+n;
 		int len = cod.length();  
 		while(len<4){
 		       cod="0"+cod;
@@ -26,8 +26,8 @@ public class Barcode {
 		return productCode;
 	}
 	
-	public String getChecker(){
-		String all =getCountryCode()+getCompanyCode()+getProductCode();
+	public String getBarcode(int n){
+		String all =getCountryCode()+getCompanyCode()+getProductCode(n);
 		char nine = all.charAt(8);
 		char ten = all.charAt(9);
 		char eleven = all.charAt(10);
@@ -42,7 +42,7 @@ public class Barcode {
 			results++;
 		}
 		String checker =""+c;
-		String barcode=getCountryCode()+" "+getCompanyCode()+" "+getProductCode()+" "+checker;
+		String barcode=getCountryCode()+" "+getCompanyCode()+" "+getProductCode(n)+" "+checker;
 		return barcode;
 	
 	}

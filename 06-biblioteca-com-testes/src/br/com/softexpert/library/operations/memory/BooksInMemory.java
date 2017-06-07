@@ -7,6 +7,7 @@ import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.entity.Book;
 import br.com.softexpert.library.entity.Category;
 import br.com.softexpert.library.interfaces.Books;
+import br.com.softexpert.library.library.Barcode;
 import br.com.softexpert.library.library.CreateRecordException;
 import br.com.softexpert.library.repository.Repository;
 import br.com.softexpert.library.user.author.CreateAuthor;
@@ -18,21 +19,26 @@ public class BooksInMemory implements Books {
 	private CreateAuthor createAuthor = new CreateAuthor();
 	private QAuthors qAuthors = new QAuthors();
 	Repository repository = new Repository();
+	Barcode bcode=new Barcode();
 	
 	@Override
 	public boolean create(Book book) {
 		SequentialCode cod = new SequentialCode();
 		book.setSequencialCode(cod.bookCode());
-		book.setBarcode(cod.barcode());
+		int code =book.getSequentialCode();
+		barcode(book, code);
 		if (book.getTitle().isEmpty() || book.getLocation().isEmpty()|| book.getAuthorsList()==null || book.getCategory().getDescription()==null){
 				throw new CreateRecordException("Não foi possível cadastrar o Livro. Verifique os campos preenchidos.");
-		
 		}else{
 			repository.getBooks().add(book);
 		}
 		return true;
 	}
-
+	private String barcode(Book book, int code){
+		
+		book.setBarcode(bcode.getBarcode(code));
+		return "A";
+	}
 	public String qAuthors() {
 		String q = qAuthors.getQuantityOfAuthors();
 		if(q.isEmpty()){

@@ -10,7 +10,7 @@ public class Book  implements Comparable<Book>, Serializable{
 	private int sequentialCode;
 	private String title;
 	private String summary;
-	private int barcode;
+	private String barcode;
 	private int pages;
 	private String location;
 	private Date acquisition;
@@ -40,11 +40,11 @@ public class Book  implements Comparable<Book>, Serializable{
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	public int getBarcode() {
+	public String getBarcode() {
 		return barcode;
 	}
-	public void setBarcode(int barcode) {
-		this.barcode = barcode;
+	public void setBarcode(String string) {
+		this.barcode = string;
 	}
 	public int getPages() {
 		return pages;
