@@ -36,8 +36,7 @@ public class CreateBook{
 		}else{
 			JOptionPane.showMessageDialog(null,"A data de aquisição não pode ser superior a data atual.");
 		}
-		
-		book.setAuthorsList(books.addAuthor(books.qPages()));
+		book.setAuthorsList(books.addAuthor(books.qAuthors()));
 		book.setCategory(books.addCategory());
 		if(books.create(book)){
 			JOptionPane.showMessageDialog(null, "Livro cadastrado.");

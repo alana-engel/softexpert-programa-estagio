@@ -25,7 +25,7 @@ public class Book  implements Comparable<Book>, Serializable{
 	public int getSequentialCode() {
 		return sequentialCode;
 	}
-	public void setCodLivro(int sequentialCode) {
+	public void setSequencialCode(int sequentialCode) {
 		this.sequentialCode = sequentialCode;
 	}
 	public String getTitle() {

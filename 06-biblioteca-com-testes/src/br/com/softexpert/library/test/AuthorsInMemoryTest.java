@@ -26,7 +26,7 @@ public class AuthorsInMemoryTest {
 	public void testNotCreateAuthor() throws RuntimeException{	
 		Author author = new Author();
 		author.setName("");
-		authorsInMemory.create(author);
+		assertTrue(authorsInMemory.create(author));
 	}
 
 	@Test
@@ -54,15 +54,14 @@ public class AuthorsInMemoryTest {
 		authorsInMemory.search("Alana");
 	}
 
-	@Test
-	public void testNotUpdateAuthor(){
+	@Test(expected = CreateRecordException.class)
+	public void testNotUpdateAuthor()throws RuntimeException{
 		Author author = new Author();
 		author.setName("Alana");
 		authorsInMemory.create(author);
 		Author author2 = new Author();
 		author2.setName("");
 		assertTrue(authorsInMemory.update(author2,0));
-		authorsInMemory.search("Alana");
 	}
 
 	@Test(expected = CreateRecordException.class)
@@ -89,7 +88,7 @@ public class AuthorsInMemoryTest {
 	}
 	
 	@Test
-	public void testCheckIfCategoryNotExists(){
+	public void testCheckIfAuthorNotExists(){
 		assertTrue(authorsInMemory.checkIfAuthorExists("teste nao existe")==-1);
 	}
 }

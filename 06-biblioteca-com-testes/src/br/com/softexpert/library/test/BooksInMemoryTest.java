@@ -1,5 +1,7 @@
 package br.com.softexpert.library.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -17,9 +19,8 @@ import br.com.softexpert.library.operations.memory.BooksInMemory;
 public class BooksInMemoryTest {
 	BooksInMemory booksInMemory= new BooksInMemory();
 	DateOperations d = new DateOperations();
-	
 	@Test
-	public void testCreateAuthor(){
+	public void testCreateBook(){ 
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
@@ -49,7 +50,7 @@ public class BooksInMemoryTest {
 		book.setLocation("Local");
 		book.setAuthorsList(list);
 		book.setAcquisition(d.getConvertedDate("10/06/2000"));
-		booksInMemory.create(book);
+		assertTrue(booksInMemory.create(book));
 	}
 	
 	@Test(expected = CreateRecordException.class)
@@ -64,7 +65,7 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(null);
 		book.setCategory(category);
 		book.setAcquisition(d.getConvertedDate("10/06/2000"));
-		booksInMemory.create(book);
+		assertTrue(booksInMemory.create(book));
 	}
 	
 	
@@ -104,75 +105,215 @@ public class BooksInMemoryTest {
 		booksInMemory.create(book);
 	}
 	
-	/*@Test(expected = CreateRecordException.class)
-	public void testNotCreateAuthor() throws RuntimeException{	
-		Author author = new Author();
-		author.setName("");
-		booksInMemory.create(author);
+	@Test 
+	public void testAddAuthor(){
+		
 	}
-
-	@Test
-	public void testSearchAuthor(){
+	
+	@Test 
+	public void testAddCategory(){
+		
+	}
+	
+	@Test//
+	public void testUpdateBook() {//
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
-		booksInMemory.create(author);
-		assertEquals(booksInMemory.search("Alana"),author);
+		List<Author> list = new ArrayList<>();
+		list.add(author);
+		Category category = new Category();
+		category.setDescription("descricao categoria");
+		Book book = new Book();
+		book.setTitle("livro");
+		book.setLocation("Local");
+		book.setAuthorsList(list);
+		book.setCategory(category);
+		assertTrue(booksInMemory.create(book));
+		int n=book.getSequentialCode();
+		Book book2 = new Book();
+		book2.setTitle("titulo2");
+		book2.setLocation("Local2");
+		book2.setAuthorsList(list);
+		book2.setCategory(category);
+		assertTrue(booksInMemory.update(book2,n));
+		booksInMemory.searchByTitle("titulo2");
+	}
+
+	@Test (expected = CreateRecordException.class)
+	public void testNotUpdateAuthor()throws RuntimeException{
+		Author author = new Author();
+		author.setName("Alana");
+		author.setNationality("b");
+		List<Author> list = new ArrayList<>();
+		list.add(author);
+		Category category = new Category();
+		category.setDescription("descricao categoria");
+		Book book = new Book();
+		book.setTitle("livro");
+		book.setLocation("Local");
+		book.setAuthorsList(list);
+		book.setCategory(category);
+		assertTrue(booksInMemory.create(book));
+		int n=book.getSequentialCode();
+		Book book2 = new Book();
+		book2.setTitle("titulo2");
+		book2.setLocation("");
+		book2.setAuthorsList(list);
+		book2.setCategory(category);
+		assertTrue(booksInMemory.update(book2,n));
+	}
+	
+	@Test
+	public void testSearchBookByCode(){
+		Author author1 = new Author();
+		author1.setName("Ana");
+		author1.setNationality("b");
+		List<Author> listAuthors = new ArrayList<>();
+		listAuthors.add(author1);
+		Category category1 = new Category();
+		category1.setDescription("descr");
+		Book book2 = new Book();
+		book2.setTitle("livro8");
+		book2.setLocation("Local");
+		book2.setAuthorsList(listAuthors);
+		book2.setCategory(category1);
+		//book2.setSequencialCode(cod.bookCode());
+		booksInMemory.create(book2);
+		int n=book2.getSequentialCode();
+		assertEquals(booksInMemory.searchByCode(n),book2);
 	}
 	
 	@Test(expected = CreateRecordException.class)
-	public void testAuthorNotFound() throws RuntimeException {
-		booksInMemory.search("test");
+	public void testSearchBookByCodeNotFound() throws RuntimeException {
+		booksInMemory.searchByCode(500000);
 	}
-
-	@Test(expected = CreateRecordException.class)
-	public void testUpdateAuthor() throws RuntimeException{
+	
+	@Test
+	public void testSearchBookByTitle(){
 		Author author = new Author();
-		author.setName("Alana");
-		booksInMemory.create(author);
-		Author author2 = new Author();
-		author2.setName("Ana");
-		assertTrue(booksInMemory.update(author2,0));
-		booksInMemory.search("Alana");
+		author.setName("Alana2");
+		author.setNationality("b2");
+		List<Author> list = new ArrayList<>();
+		list.add(author);
+		Category category = new Category();
+		category.setDescription("descricao categoria2");
+		Book book = new Book();
+		book.setTitle("livro2");
+		book.setLocation("l2");
+		book.setAuthorsList(list);
+		book.setCategory(category);
+		book.setAcquisition(d.getConvertedDate("10/06/2000"));
+		booksInMemory.create(book);
+		List<Book> listBook = new ArrayList<>();
+		listBook.add(book);
+		assertEquals(booksInMemory.searchByTitle("livro2"),listBook);
+	}
+	
+	@Test(expected = CreateRecordException.class)
+	public void testSearchBookByTitleNotFound() throws RuntimeException {
+		booksInMemory.searchByTitle("test");
 	}
 
 	@Test
-	public void testNotUpdateAuthor(){
+	public void testSearchBookByCategory(){
 		Author author = new Author();
-		author.setName("Alana");
-		booksInMemory.create(author);
-		Author author2 = new Author();
-		author2.setName("");
-		assertTrue(booksInMemory.update(author2,0));
-		booksInMemory.search("Alana");
+		author.setName("Alana3");
+		author.setNationality("b3");
+		List<Author> list = new ArrayList<>();
+		list.add(author);
+		Category category = new Category();
+		category.setDescription("des3");
+		Book book = new Book();
+		book.setTitle("livro3");
+		book.setLocation("l");
+		book.setAuthorsList(list);
+		book.setCategory(category);
+		book.setAcquisition(d.getConvertedDate("10/06/2000"));
+		booksInMemory.create(book);
+		List<Book> listBook = new ArrayList<>();
+		listBook.add(book);
+		assertEquals(booksInMemory.searchByCategory("des3"),listBook);
+	}
+	
+	@Test(expected = CreateRecordException.class)
+	public void testSearchBookByCategoryNotFound() throws RuntimeException {
+		booksInMemory.searchByCategory("test");
+	}
+	
+	@Test
+	public void testSearchBookByAuthor(){
+		Author author = new Author();
+		author.setName("A");
+		author.setNationality("b");
+		List<Author> list = new ArrayList<>();
+		list.add(author);
+		Category category = new Category();
+		category.setDescription("des");
+		Book bookA = new Book();
+		bookA.setTitle("livro");
+		bookA.setLocation("l");
+		bookA.setAuthorsList(list);
+		bookA.setCategory(category);
+		bookA.setAcquisition(d.getConvertedDate("10/06/2000"));
+		booksInMemory.create(bookA);
+		List<Book> listBook = new ArrayList<>();
+		listBook.add(bookA);
+		assertEquals(booksInMemory.searchByAuthor("A"),listBook);
+	}
+	
+	
+	@Test(expected = CreateRecordException.class)
+	public void testSearchBookByAuthorNotFound() throws RuntimeException {
+		booksInMemory.searchByAuthor("test");
 	}
 
 	@Test(expected = CreateRecordException.class)
-	public void testDeleteAuthor() throws RuntimeException{
+	public void testDeleteBook() throws RuntimeException{
 		Author author = new Author();
-		author.setName("Alana");
-		booksInMemory.create(author);
-		assertTrue(booksInMemory.delete("Alana"));
-		booksInMemory.search("Alana");
+		author.setName("Alana4");
+		author.setNationality("b4");
+		List<Author> list = new ArrayList<>();
+		list.add(author);
+		Category category = new Category();
+		category.setDescription("descricao categori4a");
+		Book book = new Book();
+		book.setTitle("livroExcluir");
+		book.setLocation("Local");
+		book.setAuthorsList(list);
+		book.setCategory(category);
+		assertTrue(booksInMemory.create(book));
+		assertTrue(booksInMemory.delete("livroExcluir"));
+		booksInMemory.searchByTitle("livroExcluir");
 	}
 
 	@Test
-	public void testDeleteAuthorNotExists(){
+	public void testDeleteBookNotExists(){
 		assertFalse(booksInMemory.delete("teste nao remove"));
 	}
 	
 	@Test
-	public void testCheckIfAuthorExists(){
+	public void testCheckIfBookExists(){
 		Author author = new Author();
-		author.setName("Alana");
-		author.setNationality("b");
-		booksInMemory.create(author);
-		assertFalse(booksInMemory.checkIfAuthorExists("Alana")==-1);
+		author.setName("Alana5");
+		author.setNationality("b5");
+		List<Author> list = new ArrayList<>();
+		list.add(author);
+		Category category = new Category();
+		category.setDescription("descricao categoria5");
+		Book book = new Book();
+		book.setTitle("livro5");
+		book.setLocation("Local");
+		book.setAuthorsList(list);
+		book.setCategory(category);
+		assertTrue(booksInMemory.create(book));
+		int n=book.getSequentialCode();
+		assertFalse(booksInMemory.checkIfBookExists(n)==-1);
 	}
 	
 	@Test
-	public void testCheckIfCategoryNotExists(){
-		assertTrue(booksInMemory.checkIfAuthorExists("teste nao existe")==-1);
-	}*/
+	public void testCheckIfBookNotExists(){
+		assertTrue(booksInMemory.checkIfBookExists(500000)==-1);
+	}
 	
 }

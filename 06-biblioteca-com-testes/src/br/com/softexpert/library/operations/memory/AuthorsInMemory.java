@@ -22,7 +22,7 @@ public class AuthorsInMemory implements Authors{
 	@Override
 	public boolean update(Author author, int position){
 		if(author.getName().isEmpty()){
-
+			throw new CreateRecordException("Não foi possível auterar o autor. Preencha o campo Nome.");
 		}else{
 			repository.getAuthors().get(position).setName(author.getName());  
 		}

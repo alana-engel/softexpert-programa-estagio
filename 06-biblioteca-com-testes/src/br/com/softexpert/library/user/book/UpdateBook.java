@@ -3,13 +3,12 @@ package br.com.softexpert.library.user.book;
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Book;
-import br.com.softexpert.library.interfaces.Books;
 import br.com.softexpert.library.library.DateOperations;
 import br.com.softexpert.library.operations.memory.BooksInMemory;
 
 public class UpdateBook{
 
-	private Books books= new BooksInMemory();
+	private BooksInMemory books= new BooksInMemory();
 	private DateOperations dateOperations = new DateOperations();
 
 	public void update() {
@@ -30,7 +29,9 @@ public class UpdateBook{
 			}
 			book.setLocation(JOptionPane.showInputDialog("Digite o Local:"));
 			getAcquisition(book);
-			if(books.update(book, exist)==true){
+			book.setAuthorsList(books.addAuthor(books.qAuthors()));
+			book.setCategory(books.addCategory());
+			if(books.update(book, cod)==true){
 				JOptionPane.showMessageDialog(null, "Livro alterado.");
 			}else{
 				JOptionPane.showMessageDialog(null, "Livro não alterado, os campos Titulo e Local devem ser preenchidos.");

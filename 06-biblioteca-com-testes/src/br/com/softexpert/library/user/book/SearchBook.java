@@ -15,12 +15,12 @@ public class SearchBook{
 	public void searchByCode(){
 		Book book =new Book();
 		int n=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));
-		book=books.searchByCode(n);
-		boolean found=books.found();
-		if (!found){
+		int found=books.checkIfBookExists(n);
+		if (found==-1){
 			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o livro.");
 		}
 		else{
+			book=books.searchByCode(n);
 			JOptionPane.showMessageDialog(null, book);
 		}
 	}
@@ -28,8 +28,7 @@ public class SearchBook{
 		String title=(JOptionPane.showInputDialog("Digite o titulo do livro: "));
 		List<Book> list = new ArrayList<Book>();
 		list=books.searchByTitle(title);
-		boolean found=books.found();
-		if (!found){
+		if (list==null){
 			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o livro.");
 		}
 		else{
@@ -46,8 +45,7 @@ public class SearchBook{
 		String description=(JOptionPane.showInputDialog("Digite a categoria do livro: "));
 		List<Book> list = new ArrayList<Book>();
 		list=books.searchByCategory(description);
-		boolean found=books.found();
-		if (!found){
+		if (list==null){
 			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o livro.");
 		}
 		else{
@@ -65,8 +63,7 @@ public class SearchBook{
 		List<Book> list = new ArrayList<>();
 		list=books.searchByAuthor(n);
 		String print=new String();
-		boolean found=books.found();
-		if (!found){
+		if (list==null){
 			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o livro.");
 		}else{
 			for (int cont=0;cont<list.size();cont++){

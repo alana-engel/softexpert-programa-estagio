@@ -26,26 +26,26 @@ public class DateOperations implements Serializable{
 	}  
 	public boolean dateConverter(String date){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		
+
 		try {
 			sdf.parse(date);
 		} catch (ParseException e) {
 			return false;
 		}
 		return true;
-}
+	}
 	public Date getConvertedDate(String data){
-	
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date d = null;
 		try {
 			d =sdf.parse(data);
 		} catch (ParseException e) {
-		
+
 		}
 		return d;
-		
-}
+
+	}
 	public boolean CompareDate(Date date) {  
 
 		Calendar dateC = Calendar.getInstance(); 

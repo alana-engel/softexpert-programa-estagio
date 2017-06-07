@@ -16,14 +16,13 @@ import br.com.softexpert.library.user.category.CreateCategory;
 public class BooksInMemory implements Books {
 	
 	private CreateAuthor createAuthor = new CreateAuthor();
-	private boolean found = true;
-	private QAuthors pages = new QAuthors();
+	private QAuthors qAuthors = new QAuthors();
 	Repository repository = new Repository();
 	
 	@Override
 	public boolean create(Book book) {
 		SequentialCode cod = new SequentialCode();
-		book.setCodLivro(cod.bookCode());
+		book.setSequencialCode(cod.bookCode());
 		book.setBarcode(cod.barcode());
 		if (book.getTitle().isEmpty() || book.getLocation().isEmpty()|| book.getAuthorsList()==null || book.getCategory().getDescription()==null){
 				throw new CreateRecordException("Não foi possível cadastrar o Livro. Verifique os campos preenchidos.");
@@ -34,33 +33,39 @@ public class BooksInMemory implements Books {
 		return true;
 	}
 
-	public String qPages() {
-		String q = pages.getQuantityOfAuthors();
+	public String qAuthors() {
+		String q = qAuthors.getQuantityOfAuthors();
 		if(q.isEmpty()){
 			do{
-				q = pages.getQuantityOfAuthors();
+				q = qAuthors.getQuantityOfAuthors();
 			}while(q.isEmpty());
 		}
 		return q;
 	}
 
 	public List<Author> addAuthor(String qnt){
-		AuthorsInMemory authorOperations= new AuthorsInMemory();
+	
 		Author a = new Author();
 		List<Author> authorsList = new ArrayList<>();
 		int q=Integer.parseInt(qnt);
 		for(int i=0;i<q;i++){
-			String nome = createAuthor.getName();
-			int p=authorOperations.checkIfAuthorExists(nome);
-			if(p!=-1){
-				a = repository.getAuthors().get(p);
-			}
-			else{
-				a = createAuthor(a,p, nome);
-			}
+			a = checkAuthors(a);
 			authorsList.add(a);
 		}
 		return authorsList;
+	}
+
+	private Author checkAuthors( Author a) {
+		AuthorsInMemory authorOperations= new AuthorsInMemory();
+		String nome = createAuthor.getName();
+		int p=authorOperations.checkIfAuthorExists(nome);
+		if(p!=-1){
+			a = repository.getAuthors().get(p);
+		}
+		else{
+			a = createAuthor(a,p, nome);
+		}
+		return a;
 	}
 	private Author createAuthor(Author a, int p, String name) {
 		createAuthor.returnMessage();
@@ -68,7 +73,6 @@ public class BooksInMemory implements Books {
 		for (int j=0;j<repository.getAuthors().size();j++){
 			if (repository.getAuthors().get(j).getName().equalsIgnoreCase(name)) {
 				a = repository.getAuthors().get(j);
-				found = true;
 			}
 		}
 		return a;
@@ -102,7 +106,6 @@ public class BooksInMemory implements Books {
 		for (int i=0;i<repository.getCategories().size();i++){
 			if (repository.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
 				c1= repository.getCategories().get(i);
-				found = true;
 			}
 		}
 		return c1;
@@ -120,21 +123,21 @@ public class BooksInMemory implements Books {
 	}
 	
 	@Override
-	public boolean update(Book book, int position){
-		if(book.getTitle().isEmpty()){
-			return false;
+	public boolean update(Book book, int cod){
+		int exist = checkIfBookExists(cod);
+		if (book.getTitle().isEmpty() || book.getLocation().isEmpty()|| book.getAuthorsList()==null || book.getCategory().getDescription()==null){
+			throw new CreateRecordException("Não foi possível auterar o Livro. Verifique os campos preenchidos.");
 		}else{
-			repository.getBooks().get(position).setTitle(book.getTitle());
-			repository.getBooks().get(position).setSummary(book.getSummary());
-			repository.getBooks().get(position).setPages(book.getPages());
-			repository.getBooks().get(position).setLocation(book.getLocation());
-			repository.getBooks().get(position).setAcquisition(book.getAcquisition());
-			repository.getBooks().get(position).setAuthorsList(addAuthor(qPages()));
-			repository.getBooks().get(position).setCategory(addCategory());
+			repository.getBooks().get(exist).setTitle(book.getTitle());
+			repository.getBooks().get(exist).setSummary(book.getSummary());
+			repository.getBooks().get(exist).setPages(book.getPages());
+			repository.getBooks().get(exist).setLocation(book.getLocation());
+			repository.getBooks().get(exist).setAcquisition(book.getAcquisition());
+			repository.getBooks().get(exist).setAuthorsList(book.getAuthorsList());
+			repository.getBooks().get(exist).setCategory(book.getCategory());
 			return true;
 		}
 	}
-
 
 	@Override
 	public Book search(String title) {
@@ -142,18 +145,20 @@ public class BooksInMemory implements Books {
 	}
 
 	public Book searchByCode(int code){
+		boolean found = false;
 		Book book = new Book();
-		found=false;
 		for (int i=0;i<repository.getBooks().size();i++){
 			if (repository.getBooks().get(i).getSequentialCode()==code) {
 				book = repository.getBooks().get(i);
 				found = true;
 			}
 		}
+		if(found== false) 
+			throw new CreateRecordException("Não foi possível encontrar o livro.");
 		return book;
 	}
 	public List<Book> searchByTitle(String title){
-		found=false;
+		boolean found = false;
 		List<Book> listByTitle = new ArrayList<>();
 		for (int i=0;i<repository.getBooks().size();i++){
 			if (repository.getBooks().get(i).getTitle().contains(title)) {
@@ -161,10 +166,12 @@ public class BooksInMemory implements Books {
 				found = true;
 			}
 		}
+		if(found== false) 
+			throw new CreateRecordException("Não foi possível encontrar o livro.");
 		return listByTitle;
 	} 
 	public List<Book> searchByCategory(String category){
-		found=false;
+		boolean found = false;
 		List<Book> listByCategory = new ArrayList<>();
 		for (int i=0;i<repository.getBooks().size();i++){
 			if (repository.getBooks().get(i).getCategory().getDescription().equalsIgnoreCase(category)) {
@@ -172,28 +179,31 @@ public class BooksInMemory implements Books {
 				found = true;
 			}
 		}
+		if(found== false) 
+			throw new CreateRecordException("Não foi possível encontrar o livro.");
 		return listByCategory;
 	}
 	public List<Book> searchByAuthor(String name){
+		boolean found = false;
 		List<Book> listByAuthor = new ArrayList<>();
 		List<Author> list = new ArrayList<>();
-		found = false;
 		for (int i=0;i<repository.getBooks().size();i++){
 			list=repository.getBooks().get(i).getAuthorsList();
-			buscaNomeAutor(name, listByAuthor, list, i);
+			Author a;
+			for (int j=0;j<list.size();j++){
+				a=list.get(j);
+				if (a.getName().equalsIgnoreCase(name)) {
+					listByAuthor.add(repository.getBooks().get(i));
+					found = true;
+				}
+			}
+			
 		}
+		if(found== false) 
+			throw new CreateRecordException("Não foi possível encontrar o livro.");
 		return listByAuthor;
 	}
-	private void buscaNomeAutor(String name, List<Book> listByAuthor, List<Author> list, int i) {
-		Author a;
-		for (int j=0;j<list.size();j++){
-			a=list.get(j);
-			if (a.getName().equalsIgnoreCase(name)) {
-				listByAuthor.add(repository.getBooks().get(i));
-				found = true;
-			}
-		}
-	}
+
 	public int checkIfBookExists(int n){
 		for (int i=0;i<repository.getBooks().size();i++){
 			if (repository.getBooks().get(i).getSequentialCode()==n) {
@@ -203,9 +213,4 @@ public class BooksInMemory implements Books {
 		}
 		return -1;
 	}
-
-	public boolean found(){
-		return found;
-	}
-
 }

@@ -15,7 +15,5 @@ public interface Books extends Operations<Book>{
 	List<Book> searchByAuthor(String n);
 	
 	int checkIfBookExists(int n);
-	
-	boolean found();
-	
+
 }
