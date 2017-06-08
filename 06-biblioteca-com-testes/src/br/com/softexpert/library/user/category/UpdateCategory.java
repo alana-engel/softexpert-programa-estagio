@@ -19,11 +19,13 @@ public class UpdateCategory{
 		else{
 			description=JOptionPane.showInputDialog("Digite a nova descrição da categoria: ");
 			category.setDescription(description);
-			if(categories.update(category, exist)){
-				JOptionPane.showMessageDialog(null, "Categoria alterada.");
-			}else{
+			try {
+				categories.update(category, exist);
+					JOptionPane.showMessageDialog(null, "Categoria alterada.");
+			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "O campo Categoria deve ser preenchido.");
 				update();
+				e.printStackTrace();
 			}
 		}
 	}}

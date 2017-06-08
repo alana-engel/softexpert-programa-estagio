@@ -2,13 +2,13 @@ package br.com.softexpert.library.interfaces;
 
 public interface Operations<T> {
 
-	boolean create(T record);
+	boolean create(T record) throws Exception;
 
 	boolean delete(String record);
 
-	boolean update(T record, int position);
+	void update(T record, int position) throws Exception;
 
-	T search(String name);
+	T search(String name) throws Exception;
 
 	
 }

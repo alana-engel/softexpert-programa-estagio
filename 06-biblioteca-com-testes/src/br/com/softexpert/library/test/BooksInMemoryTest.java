@@ -6,11 +6,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import br.com.softexpert.library.library.CreateRecordException;
+
 import org.junit.Test;
 
 import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.entity.Category;
+import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.entity.Book;
 
 import br.com.softexpert.library.library.DateOperations;
@@ -20,7 +21,7 @@ public class BooksInMemoryTest {
 	BooksInMemory booksInMemory= new BooksInMemory();
 	DateOperations d = new DateOperations();
 	@Test
-	public void testCreateBook(){ 
+	public void testCreateBook() throws RecordException{ 
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
@@ -36,8 +37,8 @@ public class BooksInMemoryTest {
 		assertTrue(booksInMemory.create(book));
 	}
 	
-	@Test(expected = CreateRecordException.class)
-	public void testCreatBookWithoutCategory() throws RuntimeException{	
+	@Test(expected = RecordException.class)
+	public void testCreatBookWithoutCategory() throws Exception{	
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
@@ -53,8 +54,8 @@ public class BooksInMemoryTest {
 		assertTrue(booksInMemory.create(book));
 	}
 	
-	@Test(expected = CreateRecordException.class)
-	public void testCreatBookWithoutAutors() throws RuntimeException{	
+	@Test(expected = RecordException.class)
+	public void testCreatBookWithoutAutors() throws Exception{	
 		Category category = new Category();
 		category.setDescription("descricao categoria");
 		Book book = new Book();
@@ -69,8 +70,8 @@ public class BooksInMemoryTest {
 	}
 	
 	
-	@Test(expected = CreateRecordException.class)
-	public void testCreatBookWithoutTitle() throws RuntimeException{	
+	@Test(expected = RecordException.class)
+	public void testCreatBookWithoutTitle() throws Exception {	
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
@@ -87,8 +88,8 @@ public class BooksInMemoryTest {
 		booksInMemory.create(book);
 	}
 	
-	@Test(expected = CreateRecordException.class)
-	public void testCreatBookWithoutLocation() throws RuntimeException{	
+	@Test(expected = RecordException.class)
+	public void testCreatBookWithoutLocation() throws Exception{	
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
@@ -105,18 +106,8 @@ public class BooksInMemoryTest {
 		booksInMemory.create(book);
 	}
 	
-	@Test 
-	public void testAddAuthor(){
-		
-	}
-	
-	@Test 
-	public void testAddCategory(){
-		
-	}
-	
 	@Test//
-	public void testUpdateBook() {//
+	public void testUpdateBook() throws RecordException {//
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
@@ -136,12 +127,12 @@ public class BooksInMemoryTest {
 		book2.setLocation("Local2");
 		book2.setAuthorsList(list);
 		book2.setCategory(category);
-		assertTrue(booksInMemory.update(book2,n));
+		booksInMemory.update(book2,n);
 		booksInMemory.searchByTitle("titulo2");
 	}
 
-	@Test (expected = CreateRecordException.class)
-	public void testNotUpdateAuthor()throws RuntimeException{
+	@Test (expected = RecordException.class)
+	public void testNotUpdateAuthor()throws RecordException{
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
@@ -161,11 +152,11 @@ public class BooksInMemoryTest {
 		book2.setLocation("");
 		book2.setAuthorsList(list);
 		book2.setCategory(category);
-		assertTrue(booksInMemory.update(book2,n));
+		booksInMemory.update(book2,n);
 	}
 	
 	@Test
-	public void testSearchBookByCode(){
+	public void testSearchBookByCode() throws RecordException{
 		Author author1 = new Author();
 		author1.setName("Ana");
 		author1.setNationality("b");
@@ -178,19 +169,18 @@ public class BooksInMemoryTest {
 		book2.setLocation("Local");
 		book2.setAuthorsList(listAuthors);
 		book2.setCategory(category1);
-		//book2.setSequencialCode(cod.bookCode());
 		booksInMemory.create(book2);
 		int n=book2.getSequentialCode();
 		assertEquals(booksInMemory.searchByCode(n),book2);
 	}
 	
-	@Test(expected = CreateRecordException.class)
-	public void testSearchBookByCodeNotFound() throws RuntimeException {
+	@Test(expected = RecordException.class)
+	public void testSearchBookByCodeNotFound() throws RecordException {
 		booksInMemory.searchByCode(500000);
 	}
 	
 	@Test
-	public void testSearchBookByTitle(){
+	public void testSearchBookByTitle() throws Exception{
 		Author author = new Author();
 		author.setName("Alana2");
 		author.setNationality("b2");
@@ -210,13 +200,13 @@ public class BooksInMemoryTest {
 		assertEquals(booksInMemory.searchByTitle("livro2"),listBook);
 	}
 	
-	@Test(expected = CreateRecordException.class)
-	public void testSearchBookByTitleNotFound() throws RuntimeException {
+	@Test(expected = RecordException.class)
+	public void testSearchBookByTitleNotFound() throws RecordException {
 		booksInMemory.searchByTitle("test");
 	}
 
 	@Test
-	public void testSearchBookByCategory(){
+	public void testSearchBookByCategory() throws Exception{
 		Author author = new Author();
 		author.setName("Alana3");
 		author.setNationality("b3");
@@ -236,13 +226,13 @@ public class BooksInMemoryTest {
 		assertEquals(booksInMemory.searchByCategory("des3"),listBook);
 	}
 	
-	@Test(expected = CreateRecordException.class)
-	public void testSearchBookByCategoryNotFound() throws RuntimeException {
+	@Test(expected = RecordException.class)
+	public void testSearchBookByCategoryNotFound() throws RecordException {
 		booksInMemory.searchByCategory("test");
 	}
 	
 	@Test
-	public void testSearchBookByAuthor(){
+	public void testSearchBookByAuthor() throws Exception{
 		Author author = new Author();
 		author.setName("A");
 		author.setNationality("b");
@@ -263,13 +253,13 @@ public class BooksInMemoryTest {
 	}
 	
 	
-	@Test(expected = CreateRecordException.class)
-	public void testSearchBookByAuthorNotFound() throws RuntimeException {
+	@Test(expected = RecordException.class)
+	public void testSearchBookByAuthorNotFound() throws RecordException {
 		booksInMemory.searchByAuthor("test");
 	}
 
-	@Test(expected = CreateRecordException.class)
-	public void testDeleteBook() throws RuntimeException{
+	@Test(expected = RecordException.class)
+	public void testDeleteBook() throws RecordException{
 		Author author = new Author();
 		author.setName("Alana4");
 		author.setNationality("b4");
@@ -293,7 +283,7 @@ public class BooksInMemoryTest {
 	}
 	
 	@Test
-	public void testCheckIfBookExists(){
+	public void testCheckIfBookExists() throws RecordException{
 		Author author = new Author();
 		author.setName("Alana5");
 		author.setNationality("b5");

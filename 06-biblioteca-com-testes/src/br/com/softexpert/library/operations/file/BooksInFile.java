@@ -12,13 +12,10 @@ import br.com.softexpert.library.entity.Book;
 import br.com.softexpert.library.repository.Repository;
 
 public class BooksInFile {
-	Repository repository = new Repository();
-
-	
 	void saveBooksInFile() {
 		try{
 			ObjectOutputStream s = new ObjectOutputStream(new FileOutputStream("books.dat"));
-			s.writeObject(repository.getBooks());
+			s.writeObject(Repository.getBooks());
 			s.close();
 		}
 		catch(Exception e){
@@ -31,7 +28,7 @@ public class BooksInFile {
 		try{
 			FileInputStream book= new FileInputStream("books.dat");
 			ObjectInputStream books = new ObjectInputStream(book);
-			repository.setBooks((ArrayList<Book>) books.readObject());
+			Repository.setBooks((ArrayList<Book>) books.readObject());
 			books.close();
 		}
 		catch(Exception e){

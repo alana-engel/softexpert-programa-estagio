@@ -8,29 +8,29 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import br.com.softexpert.library.entity.Author;
-import br.com.softexpert.library.library.CreateRecordException;
+import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.operations.memory.AuthorsInMemory;
 
 public class AuthorsInMemoryTest {
 	AuthorsInMemory authorsInMemory = new AuthorsInMemory();
 
 	@Test
-	public void testCreateAuthor(){
+	public void testCreateAuthor() throws Exception{
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
 		assertTrue(authorsInMemory.create(author));
 	}
 
-	@Test(expected = CreateRecordException.class)
-	public void testNotCreateAuthor() throws RuntimeException{	
+	@Test(expected = RecordException.class)
+	public void testNotCreateAuthor() throws Exception{	
 		Author author = new Author();
 		author.setName("");
-		assertTrue(authorsInMemory.create(author));
+		authorsInMemory.create(author);
 	}
 
 	@Test
-	public void testSearchAuthor(){
+	public void testSearchAuthor() throws Exception{
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");
@@ -38,34 +38,34 @@ public class AuthorsInMemoryTest {
 		assertEquals(authorsInMemory.search("Alana"),author);
 	}
 	
-	@Test(expected = CreateRecordException.class)
-	public void testAuthorNotFound() throws RuntimeException {
+	@Test(expected = RecordException.class)
+	public void testAuthorNotFound() throws RecordException {
 		authorsInMemory.search("test");
 	}
 
-	@Test(expected = CreateRecordException.class)
-	public void testUpdateAuthor() throws RuntimeException{
+	@Test(expected = RecordException.class)
+	public void testUpdateAuthor() throws Exception{
 		Author author = new Author();
 		author.setName("Alana");
 		authorsInMemory.create(author);
 		Author author2 = new Author();
 		author2.setName("Ana");
-		assertTrue(authorsInMemory.update(author2,0));
+		authorsInMemory.update(author2,0);
 		authorsInMemory.search("Alana");
 	}
 
-	@Test(expected = CreateRecordException.class)
-	public void testNotUpdateAuthor()throws RuntimeException{
+	@Test(expected = RecordException.class)
+	public void testNotUpdateAuthor()throws Exception{
 		Author author = new Author();
 		author.setName("Alana");
 		authorsInMemory.create(author);
 		Author author2 = new Author();
 		author2.setName("");
-		assertTrue(authorsInMemory.update(author2,0));
+		authorsInMemory.update(author2,0);
 	}
 
-	@Test(expected = CreateRecordException.class)
-	public void testDeleteAuthor() throws RuntimeException{
+	@Test(expected = RecordException.class)
+	public void testDeleteAuthor() throws Exception{
 		Author author = new Author();
 		author.setName("Alana");
 		authorsInMemory.create(author);
@@ -79,7 +79,7 @@ public class AuthorsInMemoryTest {
 	}
 	
 	@Test
-	public void testCheckIfAuthorExists(){
+	public void testCheckIfAuthorExists() throws Exception{
 		Author author = new Author();
 		author.setName("Alana");
 		author.setNationality("b");

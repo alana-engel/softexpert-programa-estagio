@@ -1,16 +1,17 @@
 package br.com.softexpert.library.entity;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import br.com.softexpert.library.library.DateOperations;
 public class Author implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int sequentialCode;
 	private String name;
 	private Date birthday;
 	private String nationality;
-	
+
 	public Author(){
-		
+
 	}
 	public int getSequentialCode() {
 		return sequentialCode;
@@ -37,9 +38,9 @@ public class Author implements Serializable{
 		this.nationality = nationality;
 	}
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String birthday=sdf.format(getBirthday());
-		if(sdf.format(getBirthday()).equals("01/01/0001"))
+		DateOperations op = new DateOperations();
+		String birthday=op.convertDateToString(getBirthday());
+		if(birthday.equals("01/01/0001"))
 			birthday="";
 		String author="";
 		author=author+"Código do Autor: "+getSequentialCode()

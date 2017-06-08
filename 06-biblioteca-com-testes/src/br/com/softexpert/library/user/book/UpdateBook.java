@@ -1,8 +1,9 @@
 package br.com.softexpert.library.user.book;
-
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Book;
+import br.com.softexpert.library.exception.DateException;
+import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.library.DateOperations;
 import br.com.softexpert.library.operations.memory.BooksInMemory;
 
@@ -31,10 +32,13 @@ public class UpdateBook{
 			getAcquisition(book);
 			book.setAuthorsList(books.addAuthor(books.qAuthors()));
 			book.setCategory(books.addCategory());
-			if(books.update(book, cod)==true){
+			try {
+				books.update(book, cod);
 				JOptionPane.showMessageDialog(null, "Livro alterado.");
-			}else{
+
+			} catch (RecordException e) {
 				JOptionPane.showMessageDialog(null, "Livro não alterado, os campos Titulo e Local devem ser preenchidos.");
+				e.printStackTrace();
 			}
 		}
 	}

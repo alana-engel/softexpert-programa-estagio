@@ -4,28 +4,7 @@ public class Barcode {
 	private String countryCode;
 	private String companyCode;
 	private String productCode;
-	
-	private String getCountryCode(){
-		countryCode = "789";
-		return countryCode;
-	}
-	
-	private String getCompanyCode(){
-		companyCode = "12345";
-		return companyCode;
-	}
 
-	private String getProductCode(int n){
-		String cod ="0"+n;
-		int len = cod.length();  
-		while(len<4){
-		       cod="0"+cod;
-		       len++;
-		   }
-		productCode = cod;
-		return productCode;
-	}
-	
 	public String getBarcode(int n){
 		String all =getCountryCode()+getCompanyCode()+getProductCode(n);
 		char nine = all.charAt(8);
@@ -44,6 +23,26 @@ public class Barcode {
 		String checker =""+c;
 		String barcode=getCountryCode()+" "+getCompanyCode()+" "+getProductCode(n)+" "+checker;
 		return barcode;
-	
+	}
+
+	private String getCountryCode(){
+		countryCode = "789";
+		return countryCode;
+	}
+
+	private String getCompanyCode(){
+		companyCode = "12345";
+		return companyCode;
+	}
+
+	private String getProductCode(int n){
+		String cod =""+n;
+		int len = cod.length();  
+		while(len<4){
+			cod="0"+cod;
+			len++;
+		}
+		productCode = cod;
+		return productCode;
 	}
 }

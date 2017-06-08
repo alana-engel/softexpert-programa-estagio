@@ -20,17 +20,6 @@ public class Code {
 			System.exit(1);
 		}
 	}
-	void saveInFileBarcodeAuthor() {
-		try{
-			ObjectOutputStream grava = new ObjectOutputStream(new FileOutputStream("BCode.dat"));
-			grava.writeObject(code.barcode());
-			grava.close();
-		}
-		catch(Exception e){
-			System.out.print("Erro: " + e);
-			System.exit(1);
-		}
-	}
 	void saveInFileCodeBook() {
 		try{
 			ObjectOutputStream grava = new ObjectOutputStream(new FileOutputStream("CodeB.dat"));
@@ -50,20 +39,6 @@ public class Code {
 		}
 		catch(Exception e){
 			System.out.print("Erro: " + e);
-			System.exit(1);
-		}
-	}
-	
-	
-	void getBarcode() {
-		try{
-			FileInputStream cod= new FileInputStream("BCode.dat");
-			ObjectInputStream codS = new ObjectInputStream(cod);
-			code.barcode();
-			codS.close();
-		}
-		catch(Exception e){
-			System.out.print("Erro----->: " + e);
 			System.exit(1);
 		}
 	}

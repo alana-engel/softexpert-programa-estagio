@@ -1,11 +1,11 @@
 package br.com.softexpert.library.user.author;
-
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.interfaces.Authors;
 import br.com.softexpert.library.library.DateOperations;
 import br.com.softexpert.library.operations.memory.AuthorsInMemory;
+
 
 public class UpdateAuthor{
 	private Authors authors= new AuthorsInMemory();
@@ -25,10 +25,12 @@ public class UpdateAuthor{
 				author.setName(n);
 				getBirthday(author);
 				author.setNationality((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
-				if(authors.update(author, exist)){
+				try {
+					authors.update(author, exist);
 					JOptionPane.showMessageDialog(null, "Autor Cadastrado.");
-				}else{
+				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "O Campo Nome do autor deve ser preenchido.");
+					e.printStackTrace();
 				}
 			}
 		}

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import br.com.softexpert.library.entity.Category;
-import br.com.softexpert.library.library.CreateRecordException;
+import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.operations.memory.CategoriesInMemory;
 
 public class CategoriesInMemoryTest {
@@ -25,36 +25,36 @@ public class CategoriesInMemoryTest {
 	}
 
 	@Test
-	public void testSearchCategory(){
+	public void testSearchCategory() throws RecordException{
 		Category c2 = new Category();	
 		c2.setDescription("d");
 		categoriesInMemory.create(c2);
 		assertEquals(categoriesInMemory.search("d"),c2);
 	}
 	
-	@Test(expected = CreateRecordException.class)
-	public void testCategoryNotFound() throws RuntimeException {
+	@Test(expected = RecordException.class)
+	public void testCategoryNotFound() throws RecordException {
 		categoriesInMemory.search("test");
 	}
 
 	@Test
-	public void testUpdateCategory(){
+	public void testUpdateCategory() throws RecordException{
 		Category c = new Category();
 		c.setDescription("Descricão");
 		categoriesInMemory.create(c);
 		Category c1 = new Category();
 		c1.setDescription("Descrição alterada");
-		assertTrue(categoriesInMemory.update(c1,0));
+		categoriesInMemory.update(c1,0);
 	}
 
-	@Test
-	public void testNotUpdateCategory(){
+	@Test(expected = RecordException.class)
+	public void testNotUpdateCategory() throws RecordException{
 		Category c = new Category();
 		c.setDescription("Descricão");
 		categoriesInMemory.create(c);
 		Category c1 = new Category();
 		c1.setDescription("");
-		assertFalse(categoriesInMemory.update(c1,0));
+		categoriesInMemory.update(c1,0);
 	}
 
 	@Test

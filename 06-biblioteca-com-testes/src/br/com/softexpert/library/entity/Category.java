@@ -5,9 +5,9 @@ public class Category implements Serializable{
 	private static final long serialVersionUID = -9098599194068402992L;
 	private int sequentialCode;
 	private String description;
-	
+
 	public Category(){
-		
+
 	}
 	public int getSequentialCode() {
 		return sequentialCode;

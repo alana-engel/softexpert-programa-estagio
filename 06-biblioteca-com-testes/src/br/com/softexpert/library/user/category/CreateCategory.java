@@ -1,7 +1,6 @@
 package br.com.softexpert.library.user.category;
 
 import javax.swing.JOptionPane;
-
 import br.com.softexpert.library.entity.Category;
 import br.com.softexpert.library.interfaces.Operations;
 import br.com.softexpert.library.operations.memory.CategoriesInMemory;
@@ -18,11 +17,13 @@ public class CreateCategory{
 			JOptionPane.showMessageDialog(null,"A categoria ja está cadastrado.");
 		}else{
 			c.setDescription(category);
-			if(categories.create(c)){
-				JOptionPane.showMessageDialog(null, "Categoria cadastrada.");
-			}else{
+			try {
+				if(categories.create(c))
+					JOptionPane.showMessageDialog(null, "Categoria cadastrada.");
+			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "O campo Categoria deve ser preenchido.");
 				create();
+				e.printStackTrace();
 			}
 		}
 	}

@@ -1,15 +1,13 @@
 package br.com.softexpert.library.operations.memory;
 
 import br.com.softexpert.library.entity.Category;
+import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.interfaces.Categories;
-import br.com.softexpert.library.library.CreateRecordException;
 import br.com.softexpert.library.repository.Repository;
 
 
 public class CategoriesInMemory implements Categories{
-	
-	Repository repository = new Repository();
-	
+
 	@Override
 	public boolean create(Category c){
 		SequentialCode cod = new SequentialCode();
@@ -17,34 +15,33 @@ public class CategoriesInMemory implements Categories{
 		if (c.getDescription().isEmpty()) {
 			return false;
 		}else{
-			repository.getCategories().add(c);
+			Repository.getCategories().add(c);
 		}
 		return true;
 	}
 	@Override
-	public boolean update(Category c, int position){
+	public void update(Category c, int position) throws RecordException{
 		if(c.getDescription().isEmpty())
-			return false;
-		repository.getCategories().get(position).setDescription(c.getDescription());  
-		return true;
+			throw new RecordException("Não foi possível auterar o Livro. Verifique os campos preenchidos.");
+		Repository.getCategories().get(position).setDescription(c.getDescription());  
 	}
 	@Override
-	public Category search(String description){
+	public Category search(String description) throws RecordException{
 		boolean found = false;
 		Category c = new Category();
-		for (int i=0;i<repository.getCategories().size();i++){
-			if (repository.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
-				c = repository.getCategories().get(i);
+		for (int i=0;i<Repository.getCategories().size();i++){
+			if (Repository.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
+				c = Repository.getCategories().get(i);
 				found = true;
 			}
 		}
 		if(found== false) 
-			throw new CreateRecordException("Não foi possível encontrar a categoria.");
+			throw new RecordException("Não foi possível encontrar a categoria.");
 		return c;
 	}
 	public int checkIfCategoryExists(String description){
-		for (int i=0;i<repository.getCategories().size();i++){
-			if (repository.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
+		for (int i=0;i<Repository.getCategories().size();i++){
+			if (Repository.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
 				return i;
 			}
 		}
@@ -54,9 +51,9 @@ public class CategoriesInMemory implements Categories{
 	@Override
 	public boolean delete(String description){
 
-		for (int i=0;i<repository.getCategories().size();i++){
-			if (repository.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
-				repository.getCategories().remove(i);
+		for (int i=0;i<Repository.getCategories().size();i++){
+			if (Repository.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
+				Repository.getCategories().remove(i);
 				return true;
 			}
 		}

@@ -1,9 +1,11 @@
 
 package br.com.softexpert.library.entity;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.softexpert.library.library.DateOperations;
+
 import java.util.Date;
 public class Book  implements Comparable<Book>, Serializable{
 	private static final long serialVersionUID = 1L;
@@ -20,7 +22,6 @@ public class Book  implements Comparable<Book>, Serializable{
 	public Book(){
 		category.setSequentialCode(0);
 		category.setDescription(null);
-		
 	}
 	public int getSequentialCode() {
 		return sequentialCode;
@@ -78,14 +79,14 @@ public class Book  implements Comparable<Book>, Serializable{
 	}
 	@Override
 	public int compareTo(Book o) {
-		Book e = (Book) o; return this.title.compareToIgnoreCase(e.getTitle());
+		return this.title.compareToIgnoreCase(o.getTitle());
 	}
 	@Override
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String acquisition=sdf.format(getAcquisition());
+		DateOperations op = new DateOperations();
+		String acquisition = op.convertDateToString(getAcquisition());
 		String print="";
-		if(sdf.format(getAcquisition()).equals("01/01/0001"))
+		if(acquisition.equals("01/01/0001"))
 			acquisition="";
 		print=print+"Código do livro: "+getSequentialCode()+"\n"+"Titulo do livro: "+getTitle()
 		+"\n"+"Resumo do livro: "+getSummary()+"\n"+"Código de Barras: "+getBarcode()

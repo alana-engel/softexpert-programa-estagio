@@ -12,7 +12,6 @@ public class CreateAuthor{
 	private DateOperations date = new DateOperations();
 
 	public void create(){
-		boolean checkDate=false;
 		String birthday;
 		Author author = new Author();
 		String n = getName();
@@ -20,6 +19,7 @@ public class CreateAuthor{
 			JOptionPane.showMessageDialog(null,"O autor ja está cadastrado.");
 		}else{
 			author.setName(n);
+			boolean checkDate;
 			do{
 				birthday = JOptionPane.showInputDialog("Digite a data de nascimento no formato dd/MM/yyyy:");
 				if(birthday.isEmpty()){
@@ -31,30 +31,27 @@ public class CreateAuthor{
 			}while(checkDate==false);
 			if(date.CompareDate(date.getConvertedDate(birthday))){
 				author.setBirthday(date.getConvertedDate(birthday));
+				author.setNationality((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
+				try {
+					if(authors.create(author)){
+						JOptionPane.showMessageDialog(null, "Autor cadastrado.");
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "O Campo Nome do autor deve ser preenchido.");
+					create();
+					e.printStackTrace();
+				}
 			}else{
 				JOptionPane.showMessageDialog(null,"A data de nascimento não pode ser superior a data atual.");
 			}
-			author.setNationality((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
 
-			if(authors.create(author)){
-				JOptionPane.showMessageDialog(null, "Autor cadastrado.");
-			}else{
-				JOptionPane.showMessageDialog(null, "O Campo Nome do autor deve ser preenchido.");
-				create();
-			}
 		}
 	}
-
 	public void returnMessage(){
 		JOptionPane.showMessageDialog(null,"Não foi possível encontrar o autor, um novo autor será cadastrado.");
-
 	}
 	public String getName(){
 		String name=(JOptionPane.showInputDialog("Digite o nome do autor: "));
-		if (name.isEmpty()){
-			JOptionPane.showMessageDialog(null, "O campo Nome do autor deve ser preenchido.");
-			getName();
-		}
 		return name;
 	}
 }

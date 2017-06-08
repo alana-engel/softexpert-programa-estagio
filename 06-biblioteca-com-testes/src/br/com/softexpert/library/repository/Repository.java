@@ -12,27 +12,27 @@ public class Repository {
 	private static List<Book> books = new ArrayList<Book>();
 	private static List<Category> categories = new ArrayList<Category>();
 	
-	public List<Author> getAuthors() {
+	public static List<Author> getAuthors() {
 		return authors;
 	}
 
-	public void setAuthors(List<Author> authors) {
+	public static void setAuthors(List<Author> authors) {
 		Repository.authors = authors;
 	}
 
-	public List<Book> getBooks() {
+	public static List<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(List<Book> books) {
+	public static void setBooks(List<Book> books) {
 		Repository.books = books;
 	}
 
-	public List<Category> getCategories() {
+	public static List<Category> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<Category> categories) {
+	public static void setCategories(List<Category> categories) {
 		Repository.categories = categories;
 	}
 }

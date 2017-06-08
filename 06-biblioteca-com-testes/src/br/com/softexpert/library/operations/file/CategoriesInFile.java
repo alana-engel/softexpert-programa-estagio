@@ -11,12 +11,11 @@ import br.com.softexpert.library.repository.Repository;
 
 public class CategoriesInFile {
 
-	Repository repository = new Repository();
 	void saveCategoryInFile() {
 		
 		try{
 			ObjectOutputStream s = new ObjectOutputStream(new FileOutputStream("categories.dat"));
-			s.writeObject(repository.getCategories());
+			s.writeObject(Repository.getCategories());
 			s.close();
 		}
 		catch(Exception e){
@@ -31,7 +30,7 @@ public class CategoriesInFile {
 		try{
 			FileInputStream category= new FileInputStream("categories.dat");
 			ObjectInputStream categories = new ObjectInputStream(category);
-			repository.setCategories((ArrayList<Category>) categories.readObject());
+			Repository.setCategories((ArrayList<Category>) categories.readObject());
 			categories.close();
 		}
 		catch(Exception e){
