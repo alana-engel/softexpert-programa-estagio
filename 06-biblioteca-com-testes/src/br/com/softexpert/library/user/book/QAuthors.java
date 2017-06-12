@@ -4,10 +4,10 @@ import javax.swing.JOptionPane;
 
 public class QAuthors {
 	public String getQuantityOfAuthors(){
-		String pages=JOptionPane.showInputDialog("Digite a quantidade de autores: ");
-		if(pages.isEmpty()){
+		String qAuthors=JOptionPane.showInputDialog("Digite a quantidade de autores: ");
+		if(qAuthors.isEmpty()){
 			JOptionPane.showMessageDialog(null, "Preencha a quantidade de autores.");
 		}
-		return pages;
+		return qAuthors;
 	}
 }

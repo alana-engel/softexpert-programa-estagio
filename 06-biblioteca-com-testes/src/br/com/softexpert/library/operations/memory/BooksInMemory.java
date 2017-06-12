@@ -128,7 +128,7 @@ public class BooksInMemory implements Books {
 	public void update(Book book, int cod) throws RecordException{
 		int exist = checkIfBookExists(cod);
 		if (book.getTitle().isEmpty() || book.getLocation().isEmpty()|| book.getAuthorsList()==null || book.getCategory().getDescription()==null){
-			throw new RecordException("Não foi possível auterar o Livro. Verifique os campos preenchidos.");
+			throw new RecordException("Não foi possível alterar o Livro. Verifique os campos preenchidos.");
 		}else{
 			Repository.getBooks().get(exist).setTitle(book.getTitle());
 			Repository.getBooks().get(exist).setSummary(book.getSummary());
@@ -198,7 +198,6 @@ public class BooksInMemory implements Books {
 					found = true;
 				}
 			}
-
 		}
 		if(found== false) 
 			throw new RecordException("Não foi possível encontrar o livro.");

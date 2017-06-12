@@ -2,14 +2,20 @@ package br.com.softexpert.library.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import br.com.softexpert.library.entity.Category;
 import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.operations.memory.CategoriesInMemory;
 
 public class CategoriesInMemoryTest {
 	CategoriesInMemory categoriesInMemory = new CategoriesInMemory();
-
+	
+	@Rule
+    public ExpectedException thrown = ExpectedException.none();
+	
 	@Test
 	public void testCreateCategory(){
 		Category c = new Category();
@@ -32,8 +38,10 @@ public class CategoriesInMemoryTest {
 		assertEquals(categoriesInMemory.search("d"),c2);
 	}
 	
-	@Test(expected = RecordException.class)
+	@Test
 	public void testCategoryNotFound() throws RecordException {
+		thrown.expect(RecordException.class);
+        thrown.expectMessage("Não foi possível encontrar a categoria.");
 		categoriesInMemory.search("test");
 	}
 
@@ -47,8 +55,10 @@ public class CategoriesInMemoryTest {
 		categoriesInMemory.update(c1,0);
 	}
 
-	@Test(expected = RecordException.class)
+	@Test
 	public void testNotUpdateCategory() throws RecordException{
+		thrown.expect(RecordException.class);
+        thrown.expectMessage("Não foi possível alterar a Categoria. Verifique os campos preenchidos.");
 		Category c = new Category();
 		c.setDescription("Descricão");
 		categoriesInMemory.create(c);

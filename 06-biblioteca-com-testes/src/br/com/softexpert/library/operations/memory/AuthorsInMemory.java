@@ -20,7 +20,7 @@ public class AuthorsInMemory implements Authors{
 	@Override
 	public void update(Author author, int position) throws RecordException{
 		if(author.getName().isEmpty()){
-			throw new RecordException("Não foi possível auterar o autor. Preencha o campo Nome.");
+			throw new RecordException("Não foi possível alterar o autor. Preencha o campo Nome.");
 		}else{
 			Repository.getAuthors().get(position).setName(author.getName());  
 		}

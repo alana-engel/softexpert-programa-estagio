@@ -4,8 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.exception.RecordException;
@@ -13,7 +14,10 @@ import br.com.softexpert.library.operations.memory.AuthorsInMemory;
 
 public class AuthorsInMemoryTest {
 	AuthorsInMemory authorsInMemory = new AuthorsInMemory();
-
+	
+	@Rule
+    public ExpectedException thrown = ExpectedException.none();
+	
 	@Test
 	public void testCreateAuthor() throws Exception{
 		Author author = new Author();
@@ -22,8 +26,10 @@ public class AuthorsInMemoryTest {
 		assertTrue(authorsInMemory.create(author));
 	}
 
-	@Test(expected = RecordException.class)
+	@Test
 	public void testNotCreateAuthor() throws Exception{	
+		thrown.expect(RecordException.class);
+        thrown.expectMessage("Não foi possível cadastrar o autor. Preencha o campo Nome.");
 		Author author = new Author();
 		author.setName("");
 		authorsInMemory.create(author);
@@ -38,8 +44,10 @@ public class AuthorsInMemoryTest {
 		assertEquals(authorsInMemory.search("Alana"),author);
 	}
 	
-	@Test(expected = RecordException.class)
+	@Test
 	public void testAuthorNotFound() throws RecordException {
+		thrown.expect(RecordException.class);
+        thrown.expectMessage("Não foi possível encontrar o autor.");
 		authorsInMemory.search("test");
 	}
 
@@ -54,8 +62,10 @@ public class AuthorsInMemoryTest {
 		authorsInMemory.search("Alana");
 	}
 
-	@Test(expected = RecordException.class)
+	@Test
 	public void testNotUpdateAuthor()throws Exception{
+		thrown.expect(RecordException.class);
+        thrown.expectMessage("Não foi possível alterar o autor. Preencha o campo Nome.");
 		Author author = new Author();
 		author.setName("Alana");
 		authorsInMemory.create(author);
@@ -64,8 +74,10 @@ public class AuthorsInMemoryTest {
 		authorsInMemory.update(author2,0);
 	}
 
-	@Test(expected = RecordException.class)
+	@Test
 	public void testDeleteAuthor() throws Exception{
+		thrown.expect(RecordException.class);
+        thrown.expectMessage("Não foi possível encontrar o autor.");
 		Author author = new Author();
 		author.setName("Alana");
 		authorsInMemory.create(author);

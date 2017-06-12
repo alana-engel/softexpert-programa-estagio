@@ -22,7 +22,7 @@ public class CategoriesInMemory implements Categories{
 	@Override
 	public void update(Category c, int position) throws RecordException{
 		if(c.getDescription().isEmpty())
-			throw new RecordException("Não foi possível auterar o Livro. Verifique os campos preenchidos.");
+			throw new RecordException("Não foi possível alterar a Categoria. Verifique os campos preenchidos.");
 		Repository.getCategories().get(position).setDescription(c.getDescription());  
 	}
 	@Override
