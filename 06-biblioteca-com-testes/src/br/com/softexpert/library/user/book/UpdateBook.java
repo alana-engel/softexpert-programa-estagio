@@ -2,7 +2,6 @@ package br.com.softexpert.library.user.book;
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Book;
-import br.com.softexpert.library.exception.DateException;
 import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.library.DateOperations;
 import br.com.softexpert.library.operations.memory.BooksInMemory;
