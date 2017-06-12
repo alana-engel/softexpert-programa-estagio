@@ -103,7 +103,6 @@ public class BooksInMemory implements Books {
 		CreateCategory createCategory = new CreateCategory();
 		Category c1 = new Category();
 		createCategory.returnMessage();
-
 		createCategory.create();
 		for (int i=0;i<Repository.getCategories().size();i++){
 			if (Repository.getCategories().get(i).getDescription().equalsIgnoreCase(description)) {
