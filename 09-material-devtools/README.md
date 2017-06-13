@@ -6,51 +6,13 @@ Cada exercício/desafio estará em um diretório dentro deste repositório, com 
 
 ## Como devo proceder?
 
-Cada um deverá _forkear_ este repositório e fazer as modificações (push) em sua própria cópia. Estando logado em sua conta, no canto superior direito do github vai aparecer o botão conforme imagem:
+Prezados(as), 
 
-![fork.png](https://pichoster.net/images/2017/04/28/2031862c63ec135aa4d4a2fd1af2c6f2.png)
+Neste material: https://developers.google.com/web/tools/chrome-devtools/javascript/?hl=pt-br disponibilizado e traduzido pela comunidade, é possível adquirir em um cenário controlado os passos básicos depurar JavaScript no Chrome DevTools.
+Objetivo do conteúdo:
+- Conhecimento do Atalho e botão para simular responsivo.
+- Adicionar BreakPoints.
+- Percorrer o código via atalho e botão.
+- Executar alternativas (console.log, parse) no console em estado de debug.
 
-Após isso, você será redirecionado para sua conta, com a cópia do repositório pronta para você usar. Feito isso, clique no botão "Clone or download" e copie o link:
-
-![clone.png](https://pichoster.net/images/2017/04/28/18fce3b38623bf01fe1cb091c26d21d9.png)
-
-Lembrando que a url deverá neste ponto estar apontando para a sua conta (Ex `https://github.com/SEU-USUARIO/softexpert-programa-estagio.git`).
-
-Abra o terminal do git (Git Bash), navegue até o diretório local onde você quer deixar o repositório e digite o seguinte comando (não esquecendo de alterar o link do repositório):
-
-```sh
-git clone https://github.com/SEU-USUARIO/softexpert-programa-estagio.git
-```
-
-Após executar este comando, uma pasta `softexpert-programa-estagio` será criada, entre dentro dela
-
-```sh
-cd softexpert-programa-estagio
-```
-
-Adicione o repositório original na lista de repositórios remotos. Aqui deixe a url exatamente como está, e **não a url do seu repositório**:
-
-```sh
-git remote add softexpert https://github.com/klutzer/softexpert-programa-estagio.git
-```
-
-Agora confira os repositórios:
-
-```sh
-git remote -v
-```
-
-Você deve ver isso:
-
-```sh
-origin      https://github.com/SEU-USUARIO/softexpert-programa-estagio.git (fetch)
-origin      https://github.com/SEU-USUARIO/softexpert-programa-estagio.git (push)
-softexpert  https://github.com/klutzer/softexpert-programa-estagio.git (fetch)
-softexpert  https://github.com/klutzer/softexpert-programa-estagio.git (push)
-```
-
-Pronto, agora para deixar o seu repositório sempre atualizado conforme vamos inserindo novas atividades/desafios basta executar:
-
-```sh
-git pull softexpert master
-```
+Extras: https://developers.google.com/web/tools/chrome-devtools/javascript/step-code?hl=pt-br#stepping_in_action e demais documentações. 
