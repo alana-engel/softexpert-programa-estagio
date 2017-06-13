@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+
+    	<meta charset="utf-8">
+    	<title>Desafio</title>
+  		<link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
+       	<link href="https://fonts.googleapis.com/css?family=Teko:400,700" rel="stylesheet">
+       	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+       	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+  		<link rel="stylesheet" href="css/desafio.css">	
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
+  		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+  		<script src="http://www.jasny.net/bootstrap/dist/js/jasny-bootstrap.min.js" type="text/javascript"></script>
+
+  	</head>
+  	<body>
+
+	<section id="contact">
+		<div class="section-content">
+			<h1 class="section-header">Sinta-se desafiado(a) <span class="content-header wow fadeIn" data-wow-delay="0.2s" data-wow-duration="2s"> e faça</span></h1>
+			<h3>você é capaz, se acreditar que é.</h3>
+		</div>
+		<div class="contact-section">
+			<div class="container">
+				<form>
+					<div class="col-md-6 form-line">
+						<div class="form-group">
+							<label for="exampleInputUsername">Razão Social:</label>
+							<input type="text" class="form-control" id="" placeholder="Informa a razão social">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail">CNPJ:</label>
+							<input type="text" class="form-control" id="exampleInputEmail" placeholder="Informe seu cnpj" data-mask="99.999.999/9999-99">
+						</div>
+						<div class="form-group">
+							<label for="telephone">Telefone:</label>
+							<input type="text" class="form-control" id="telephone" placeholder="Informe (ddd) + número" data-mask="999 9999 9999">
+						</div>
+						<div class="form-group">
+							<label for="telephone">Situação:</label>
+							<div class="btn-group" data-toggle="buttons" id="modelselect">
+								<label class="btn btn-primary active">
+									<input type="radio" name="options" id="" value="" /> Pago
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="options" id="" value="" /> Pendente
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="options" id="" value="" /> Cancelado
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="site">Site:</label>
+							<input type="text" class="form-control" id="site" placeholder="Informe o site da empresa">
+						</div>
+						<div class="form-group">
+							<label for="description">Descrição da empresa:</label>
+							<textarea class="form-control" id="description" placeholder="Informe a descrição da sua empresa"></textarea>
+						</div>
+						<div>
+							<button type="button" class="btn btn-default submit"><i class="fa fa-paper-plane" aria-hidden="true"></i> Salvar </button>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="cep">CEP:</label>
+							<div class="input-group">
+								<input type="text" class="form-control" id="cep" placeholder="Informe o cep da empresa">
+								<span class="input-group-btn"><button class="btn btn-default" id="find" type="button">Buscar!</button></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="description">Como chegar:</label>
+							<textarea class="form-control gray" id="findResult" placeholder="Para chegar ao CEP X, pegue um avião em direção ao estado de Y, um ônibus para a cidade de W e encontre de carro no bairro O a rua Z" disabled></textarea>
+						</div>
+					</div>
+				</form>            
+			</div>
+		</div>
+	</section>
+	<hr class="style12">
+	<section id="contacts">
+		<div class="section-content">
+			<h1 class="section-header"><span class="content-header wow fadeIn" data-wow-delay="0.2s" data-wow-duration="2s">Escolha e experimente</span> outra fonte</h1>
+			<h3><a href="https://fonts.googleapis.com">aqui</a></h3>
+		</div>
+		<div class="contact-section">
+			<div class="container">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="pull-right">
+								<div class="btn-group">
+									<button type="button" class="btn btn-success btn-filter" data-target="pago">Pago</button>
+									<button type="button" class="btn btn-warning btn-filter" data-target="pendente">Pendente</button>
+									<button type="button" class="btn btn-danger btn-filter" data-target="cancelado">Cancelado</button>
+									<button type="button" class="btn btn-default btn-filter" data-target="all">Todos</button>
+								</div>
+							</div>
+							<div class="table-container">
+								<table class="table table-filter">
+									<tbody>
+										<tr data-status="pago">
+											<td>
+												<div class="ckbox">
+													<input type="checkbox" id="checkbox1">
+													<label for="checkbox1"></label>
+												</div>
+											</td>
+											<td>
+												<a href="javascript:;" class="star">
+													<i class="glyphicon glyphicon-star"></i>
+												</a>
+											</td>
+											<td>
+												<div class="media">
+													<a href="#" class="pull-left">
+														<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+													</a>
+													<div class="media-body">
+														<span class="media-meta pull-right">Janeiro 13, 2016</span>
+														<h4 class="title">
+															Softexpert Software S.A.
+															<span class="pull-right pago">(Pago)</span>
+														</h4>
+														<p class="summary">04.967.666/0001-74</p>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr data-status="pendente">
+											<td>
+												<div class="ckbox">
+													<input type="checkbox" id="checkbox3">
+													<label for="checkbox3"></label>
+												</div>
+											</td>
+											<td>
+												<a href="javascript:;" class="star">
+													<i class="glyphicon glyphicon-star"></i>
+												</a>
+											</td>
+											<td>
+												<div class="media">
+													<a href="#" class="pull-left">
+														<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+													</a>
+													<div class="media-body">
+														<span class="media-meta pull-right">Janeiro 13, 2016</span>
+														<h4 class="title">
+															Softexpert Software S.A.
+															<span class="pull-right pendente">(Pendente)</span>
+														</h4>
+														<p class="summary">04.967.666/0001-74</p>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr data-status="cancelado">
+											<td>
+												<div class="ckbox">
+													<input type="checkbox" id="checkbox2">
+													<label for="checkbox2"></label>
+												</div>
+											</td>
+											<td>
+												<a href="javascript:;" class="star">
+													<i class="glyphicon glyphicon-star"></i>
+												</a>
+											</td>
+											<td>
+												<div class="media">
+													<a href="#" class="pull-left">
+														<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+													</a>
+													<div class="media-body">
+														<span class="media-meta pull-right">Janeiro 13, 2016</span>
+														<h4 class="title">
+															Softexpert Software S.A.
+															<span class="pull-right cancelado">(Cancelado)</span>
+														</h4>
+														<p class="summary">04.967.666/0001-74</p>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr data-status="pago" class="selected">
+											<td>
+												<div class="ckbox">
+													<input type="checkbox" id="checkbox4" checked>
+													<label for="checkbox4"></label>
+												</div>
+											</td>
+											<td>
+												<a href="javascript:;" class="star star-checked">
+													<i class="glyphicon glyphicon-star"></i>
+												</a>
+											</td>
+											<td>
+												<div class="media">
+													<a href="#" class="pull-left">
+														<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+													</a>
+													<div class="media-body">
+														<span class="media-meta pull-right">Janeiro 13, 2016</span>
+														<h4 class="title">
+															Softexpert Software S.A.
+															<span class="pull-right pago">(Pago)</span>
+														</h4>
+														<p class="summary">04.967.666/0001-74</p>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr data-status="pendente">
+											<td>
+												<div class="ckbox">
+													<input type="checkbox" id="checkbox5">
+													<label for="checkbox5"></label>
+												</div>
+											</td>
+											<td>
+												<a href="javascript:;" class="star">
+													<i class="glyphicon glyphicon-star"></i>
+												</a>
+											</td>
+											<td>
+												<div class="media">
+													<a href="#" class="pull-left">
+														<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+													</a>
+													<div class="media-body">
+														<span class="media-meta pull-right">Janeiro 13, 2016</span>
+														<h4 class="title">
+															Softexpert Software S.A.
+															<span class="pull-right pendente">(Pendente)</span>
+														</h4>
+														<p class="summary">04.967.666/0001-74</p>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="content-footer">
+						<p>
+							seunomeaqui.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="js/cep.js"></script>
+	<script src="js/tabela.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			startCep();
+			startTabela();
+		});
+	</script>
+  	</body>
+</html>
