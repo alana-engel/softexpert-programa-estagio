@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+    	<title>Desafio</title>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    	<link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/estilos.css">
+        <link href="https://fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Teko:300" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <section class="background">
+        	<div class="title">
+        	    <h1>Sinta-se desafiado(a)<span class="titleFont"> e faça</span></h1>
+        		<h3>você é capaz, se acreditar que é.</h3>
+        	</div>
+            <div class="container">
+        		<form> 
+            		<div class="row letters">
+            			<fieldset class="col-md-6">
+            				<div class="form-group">
+                                <div class="form-group">
+                                    <label for="Razão Social">Razão Social:</label>
+                                    <input type="text" class="form-control" id="razaoSocial" name="razaoSocial" placeholder="Informe a razão social" autofocus required>
+                                </div>
+            					<div class="form-group">
+                                    <label for="cnpj">CNPJ:</label>
+                                    <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Informe seu cnpj" data-mask="99.999.999/9999-99" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefone">Telefone:</label>
+                                    <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Informe (ddd) + número" data-mask="999 9999 9999" required>
+                                </div>
+                                <label>Situação:
+            					    <div class="btn-group" data-toggle="buttons" id="modelselect">
+                                        <label class="btn btn-primary active">
+                                            <input type="radio" name="options" id="" value=""/>Pago
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="" value=""/>Pendente
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="" value=""/>Cancelado
+                                        </label>
+                                    </div>
+            					</label> 
+            				</div> 
+            			</fieldset>
+            		    <fieldset class="col-md-6 verticalLine">
+                			<div class="form-group">
+                                <label for="site">Site:</label>
+                                <input type="text" class="form-control" id="site" name="site" 
+                                placeholder="Informe o site da empresa">  
+                            </div>
+                            <div class="form-group">
+                                <label for="descriao">Descrição da empresa:</label>
+                                <textarea class="form-control" rows="5" id="site" name="site" placeholder="Informe a descrição da empresa"></textarea>
+                            </div>
+                			<button type="submit" class="btn btn-link pull-right buttonShape">
+                                <i class="fa fa-paper-plane"></i>    Salvar
+                            </button>
+                		    </div>
+                            </fieldset>
+                    	<div class="row letters">
+                    		<fieldset class="col-md-12">
+                    			<div class="form-group">
+                                    <label for="cep">CEP:</label>
+                                    <div class="input-group">
+                    				    <input type="text" id="cep" class="form-control" placeholder="Informe o CEP da empresa" data-mask="99.999-999">
+                    				    <span class="input-group-btn letraCampo">
+                        				<button class="btn btn-default" type="button" id="find">Buscar!</button>
+                      					</span>
+                    				</div>
+                    			</div>
+                                <div class="form-group">
+                                    <label for="comochegar">Como Chegar:</label>
+                                    <output class="form-control letraCampo1" id="comochegar" name="comochegar" style="height: 100px;"></output>
+                                </div>
+                		    </fieldset>	
+                		</div>
+                    </div>
+            	</form> 
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <div class="line"> - </div>
+          		<div class="title title2">
+        		    <h1><span class="titleFont">Escolha e experimente</span><span class="titleFont2"> outra fonte</span></h1>
+        	    	<h2><a href="https://fonts.google.com/">aqui</a></h2>
+        		</div>
+            </div>
+            <div class="panel panel-default container row">
+                <div class="panel-body ">
+                   <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success btn-filter" data-target="pago">Pago</button>
+                            <button type="button" class="btn btn-warning btn-filter" data-target="pendente">Pendente</button>
+                            <button type="button" class="btn btn-danger btn-filter" data-target="cancelado">Cancelado</button>
+                            <button type="button" class="btn btn-default btn-filter" data-target="all">Todos</button>
+                        </div>
+                    </div>
+                </div>
+                <table id="myTable" class="table-filter" >
+                    <tr data-status="cancelado">
+                        <td width=20> 
+                            <div class="c">
+                                <input type="checkbox" value="None" id="c" name="check" />
+                                <label for="c"></label>
+                            </div>
+                        </td >
+                        <td>
+                            <a href="javascript:;" class="star">
+                                <i class="glyphicon glyphicon-star"></i>
+                            </a>
+                        </td>
+                        <td width=20>
+                            <img class="alinhamento" src="img/imagem.jpg">
+                        </td>
+                        <td>
+                            <div class="space">
+                                <dt class="letterColor">Softexpert Software S.A.</dt>
+                                <dd>04.967.666/0001.74</dd>
+                            </div>
+                        </td>
+                        <td class="dt" width=160>
+                            <span class="option1">(Cancelado)</span>Janeiro 13, 2016
+                        </td>
+                    </tr>
+                    <tr data-status="pendente">
+                        <td width=20> 
+                            <div class="c">
+                                <input type="checkbox" value="None" id="c1" name="check" />
+                                <label for="c1"></label>
+                            </div>
+                        </td >
+                        <td>
+                            <a href="javascript:;" class="star">
+                                <i class="glyphicon glyphicon-star"></i>
+                            </a>
+                        </td>
+                        <td width=20>
+                            <img class="alinhamento" src="img/imagem.jpg">
+                        </td>
+                        <td>
+                            <div class="space">
+                                <dt class="letterColor">Softexpert Software S.A.</dt>
+                                <dd>04.967.666/0001.74</dd>
+                            </div>
+                        </td>
+                        <td class="dt" width=160>
+                            <span class="option2">(Pendente)</span>Janeiro 13, 2016
+                        </td>
+                    </tr>
+                    <tr data-status="pago">
+                        <td width=20> 
+                            <div class="c">
+                                <input type="checkbox" value="None" id="c2" name="check" />
+                                <label for="c2"></label>
+                            </div>
+                        </td >
+                        <td>
+                            <a href="javascript:;" class="star">
+                                <i class="glyphicon glyphicon-star"></i>
+                            </a>
+                        </td>
+                        <td width=20>
+                            <img class="alinhamento" src="img/imagem.jpg">
+                        </td>
+                        <td>
+                            <div class="space">
+                                <dt class="letterColor">Softexpert Software S.A.</dt>
+                                <dd>04.967.666/0001.74</dd>
+                            </div>
+                        </td>
+                        <td class="dt" width=160>
+                            <span class="option">(Pago)</span>Janeiro 13, 2016
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div class="container">
+                <p>Alana Engel</p>
+            </div>
+        </section>
+        <script src="js/jquery.js" ></script>
+        <script src="js/filtro.js"></script>
+        <script src="js/estrela.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/inputmask-plugin.js"></script>
+        <script src="js/cep.js"></script>
+    </body>
+</html>

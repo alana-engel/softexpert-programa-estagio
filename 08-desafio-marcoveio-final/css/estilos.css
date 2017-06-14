@@ -1,0 +1,146 @@
+
+.container { 
+  margin: 0 auto;
+  width: 1300px;
+}
+.background{ 
+	background:linear-gradient(to right,#862740,#44587C);
+}
+.title{ 
+	padding-bottom: 50px;
+	text-align: center;
+	color:#ffffff;
+	padding-top: 60px;
+}
+.title2{
+	padding-top: 0px;
+}
+.titleFont{
+	font-family: 'Oleo Script', cursive;
+	color: #E9B80A;
+}
+.titleFont2{
+	font-family: 'Reenie Beanie', cursive;
+	color: #000;
+}
+.letters{
+	font-family: 'Teko', sans-serif;
+	color:#ffffff;
+	font-size: 20px;
+}
+.buttonShape{
+	border: solid 1px;
+	padding: 5px 15px; 
+	border-radius: 3px;
+	margin-right: 0px;
+	border-color: #ffffff;
+	color: #ffffff;
+}
+table{
+	border-top: 1px:;
+}
+.letterColor{
+	color: #26BDDF;
+	text-align: left;
+}
+#myTable {
+    border-collapse: collapse; 
+    width: 100%; /* Full-width */
+    border-top: 1px solid #ddd; 
+ 
+}
+#myTable th, #myTable td {
+    padding-top: 12px; 
+    padding-bottom: 12px;
+}
+
+#myTable tr {
+    border-bottom: 1px solid #ddd; 
+}
+.table-filter tbody tr:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+.option{
+	font-size: 10px;
+	color: green;
+	float: left;  
+}
+.option1{
+	font-size: 10px;
+	color: red;
+	float: left;
+}
+.option2{
+	font-size: 10px;
+	color: orange;
+	float: left;
+}
+.dt{
+	font-size: 10px;
+	color:gray;
+	text-align: right;
+	float: right;
+}
+.star {
+  color: #ccc;
+  text-align: center;
+  display: block;
+  padding-left: 7px;
+  padding-bottom:6px; 
+}
+.star.star-checked {
+  color: #F0AD4E;
+}
+.star:hover {
+  color: #ccc;
+}
+.star.star-checked:hover {
+  color: #F0AD4E;
+}
+.space{
+	padding-left: 10px;
+}
+input[type=checkbox] {
+	visibility: hidden;*/
+}
+.c label {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	border-radius: 2px;
+	border: 1px solid #ddd;
+	background: #fcfff4;
+	padding-top: 10px;	
+}
+.c label:after {
+	content: '';
+	position: absolute;
+	width: 7px;
+	height: 5px;
+	background: transparent;
+	top: 4px;
+	left: 4px;
+	border: 3px solid #fcfff4; 
+	border-top: none;
+	border-right: none;
+	transform: rotate(-45deg);
+
+}
+.c input[type=checkbox]:checked + label{
+	background: #26BDDF;
+}
+.verticalLine {
+  height: 250px;
+  border-left: 1px solid;
+  border-color: #BBBBBB;
+}
+.line {
+	background-image: url("../img/linha.png"); 
+	background-repeat: repeat-x; 
+	margin: 20px;
+	margin-left: -5px;
+	margin-right: 0px;
+}
+
+
