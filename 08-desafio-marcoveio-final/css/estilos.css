@@ -28,6 +28,13 @@
 	color:#ffffff;
 	font-size: 20px;
 }
+
+.letters input, .letters output, .letters textarea{
+	font-family: 'Teko', sans-serif;
+	color:gray;
+	font-size: 20px;
+}
+
 .buttonShape{
 	border: solid 1px;
 	padding: 5px 15px; 
@@ -82,20 +89,21 @@ table{
 	text-align: right;
 	float: right;
 }
-.star {
+
+.table-filter .star {
   color: #ccc;
   text-align: center;
   display: block;
   padding-left: 7px;
   padding-bottom:6px; 
 }
-.star.star-checked {
+.table-filter .star.star-checked {
   color: #F0AD4E;
 }
-.star:hover {
+.table-filter .star:hover {
   color: #ccc;
 }
-.star.star-checked:hover {
+.table-filter .star.star-checked:hover {
   color: #F0AD4E;
 }
 .space{
@@ -142,5 +150,7 @@ input[type=checkbox] {
 	margin-left: -5px;
 	margin-right: 0px;
 }
-
+.table-filter .photo{ 
+  width: 35px;
+}
 
