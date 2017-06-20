@@ -15,21 +15,21 @@
 .title2{
 	padding-top: 0px;
 }
-.titleFont{
+.title-content{
 	font-family: 'Oleo Script', cursive;
 	color: #E9B80A;
 }
-.titleFont2{
+.title-content2{
 	font-family: 'Reenie Beanie', cursive;
 	color: #000;
 }
-.letters{
+.content{
 	font-family: 'Teko', sans-serif;
 	color:#ffffff;
 	font-size: 20px;
 }
 
-.letters input, .letters output, .letters textarea{
+.content input, .content output, .content textarea{
 	font-family: 'Teko', sans-serif;
 	color:gray;
 	font-size: 20px;
@@ -112,7 +112,7 @@ table{
 input[type=checkbox] {
 	visibility: hidden;*/
 }
-.c label {
+.ckbox label {
 	position: absolute;
 	width: 16px;
 	height: 16px;
@@ -121,7 +121,7 @@ input[type=checkbox] {
 	background: #fcfff4;
 	padding-top: 10px;	
 }
-.c label:after {
+.ckbox label:after {
   top: 0px;
   left: 3px;
   content: '\e013';
@@ -131,7 +131,7 @@ input[type=checkbox] {
   position: absolute;
 
 }
-.c input[type=checkbox]:checked + label{
+.ckbox input[type=checkbox]:checked + label{
 	background: #26BDDF;
 }
 .verticalLine {
