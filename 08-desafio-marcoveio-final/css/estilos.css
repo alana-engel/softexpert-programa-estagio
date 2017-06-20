@@ -70,18 +70,16 @@ table{
 }
 .option{
 	font-size: 10px;
-	color: green;
 	float: left;  
 }
-.option1{
-	font-size: 10px;
-	color: red;
-	float: left;
+.green {
+	color: green;
 }
-.option2{
-	font-size: 10px;
+.red{
+	color: red;
+}
+.orange{
 	color: orange;
-	float: left;
 }
 .dt{
 	font-size: 10px;
