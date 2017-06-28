@@ -18,13 +18,13 @@ public class BookInMemoryRepository extends InMemoryRepository<Book> implements 
         book.validate();
         return super.save(book);
     }
-    
+
     @Override
     public boolean update(Book book) {
         book.validate();
         return super.update(book);
     }
-    
+
     @Override
     public List<Book> listAll() {
         return data.values()
@@ -59,16 +59,18 @@ public class BookInMemoryRepository extends InMemoryRepository<Book> implements 
 
         return data.values()
                 .stream()
-                .filter(livro -> {
-                    for (Author author : authorsByName) {
-                        if (livro.getAuthors().contains(author)) {
-                            return true;
-                        }
-                    }
-                    return false;
-                })
+                .filter(book -> bookContainsAnyAuthor(book, authorsByName))
                 .sorted((book1, book2) -> book1.getTitle().compareTo(book2.getTitle()))
                 .collect(Collectors.toList());
     }
-    
+
+    private boolean bookContainsAnyAuthor(Book book, List<Author> authors) {
+        for (Author author : authors) {
+            if (book.getAuthors().contains(author)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

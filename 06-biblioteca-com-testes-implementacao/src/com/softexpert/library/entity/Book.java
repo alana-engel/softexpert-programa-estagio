@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.softexpert.library.barcode.BarcodeGenerator;
 import com.softexpert.library.repository.InvalidEntityException;
 import com.softexpert.library.utils.DateConverter;
 
@@ -17,6 +18,7 @@ public class Book extends BasicEntity {
     private Date acquisition;
     private Category category;
     private Set<Author> authors = new HashSet<>();
+    private BarcodeGenerator generator = new BarcodeGenerator();
 
     public String getTitle() {
         return this.title;
@@ -94,25 +96,25 @@ public class Book extends BasicEntity {
             throw new InvalidEntityException("O Livro deve conter pelo menos um autor!");
         }
         if (!containsBarCode()) {
-            throw new InvalidEntityException("O Livro deve conter um código de barras!");            
+            throw new InvalidEntityException("O Livro deve conter um código de barras!");
         }
         if (category == null) {
             throw new InvalidEntityException("O Livro deve pertencer a uma categoria!");
         }
         if (acquisition == null) {
-            throw new InvalidEntityException("O Livro deve possuir uma data de aquisição");          
+            throw new InvalidEntityException("O Livro deve possuir uma data de aquisição");
         }
         if (acquisition.after(new Date())) {
-            throw new InvalidEntityException("O Livro não pode possuir uma data de aquisição no futuro");            
+            throw new InvalidEntityException("O Livro não pode possuir uma data de aquisição no futuro");
         }
     }
 
     public boolean containsTitle() {
         return title != null && !title.trim().isEmpty();
     }
-    
+
     public boolean containsBarCode() {
-        return barcode != null && !barcode.trim().isEmpty();        
+        return barcode != null && !barcode.trim().isEmpty();
     }
 
     public boolean hasAtLeastOneAuthor() {
@@ -120,19 +122,18 @@ public class Book extends BasicEntity {
     }
 
     public void generateBarCode() {
-        int randomNumber = (int) Math.random() * 1000000;
-        barcode = String.valueOf(System.nanoTime() + randomNumber);
+        generator.generateFullBarcodeFor(this);
     }
-    
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Título: "+title+" - "+pages+" páginas"+" ("+id+")");
-        builder.append("\nResumo: "+summary);
-        builder.append("\nCódigo de barras: "+barcode);
-        builder.append("\nData de aquisição: "+DateConverter.asString(acquisition));
-        builder.append("\nCategoria: "+category);
-        builder.append("\nAutor(es): "+authors);
+        builder.append("Título: " + title + " - " + pages + " páginas" + " (" + id + ")");
+        builder.append("\nResumo: " + summary);
+        builder.append("\nCódigo de barras: " + barcode);
+        builder.append("\nData de aquisição: " + DateConverter.asString(acquisition));
+        builder.append("\nCategoria: " + category);
+        builder.append("\nAutor(es): " + authors);
         return builder.toString();
     }
 
