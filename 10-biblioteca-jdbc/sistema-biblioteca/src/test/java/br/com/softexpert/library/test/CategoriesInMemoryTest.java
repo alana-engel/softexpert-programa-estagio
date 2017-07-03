@@ -52,7 +52,7 @@ public class CategoriesInMemoryTest {
 		categoriesInMemory.create(c);
 		Category c1 = new Category();
 		c1.setDescription("Descrição alterada");
-		categoriesInMemory.update(c1,0);
+		categoriesInMemory.update(c, c1);
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class CategoriesInMemoryTest {
 		categoriesInMemory.create(c);
 		Category c1 = new Category();
 		c1.setDescription("");
-		categoriesInMemory.update(c1,0);
+		categoriesInMemory.update(c, c1);
 	}
 
 	@Test

@@ -2,6 +2,7 @@ package br.com.softexpert.library.main;
 
 import javax.swing.JOptionPane;
 
+import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.user.author.CreateAuthor;
 import br.com.softexpert.library.user.author.DeleteAuthor;
 import br.com.softexpert.library.user.author.SearchAuthor;
@@ -38,7 +39,11 @@ public class Menu1 {
 					+ "3-Cadastrar Autor\n"
 					+ "4-Voltar"));
 			switch(option){
-			case 1:createBook.create();break;
+			case 1:try {
+					createBook.create();
+				} catch (RecordException e) {
+					e.printStackTrace();
+				}break;
 			case 2:createCategory .create();break;
 			case 3:createAuthor.create();break;
 			}

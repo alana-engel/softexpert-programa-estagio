@@ -124,20 +124,21 @@ public class BooksInMemory implements Books {
 	}
 
 	@Override
-	public void update(Book book, int cod) throws RecordException{
-		int exist = checkIfExists(cod);
-		if (book.getTitle().isEmpty() || book.getLocation().isEmpty()|| book.getAuthorsList()==null || book.getCategory().getDescription()==null){
+	public void update(Book book, Book nBook) throws RecordException{
+	
+		if (nBook.getTitle().isEmpty() || nBook.getLocation().isEmpty()|| nBook.getAuthorsList()==null || nBook.getCategory().getDescription()==null){
 			throw new RecordException("Não foi possível alterar o Livro. Verifique os campos preenchidos.");
 		}else{
-			Repository.getBooks().get(exist).setTitle(book.getTitle());
-			Repository.getBooks().get(exist).setSummary(book.getSummary());
-			Repository.getBooks().get(exist).setPages(book.getPages());
-			Repository.getBooks().get(exist).setLocation(book.getLocation());
-			Repository.getBooks().get(exist).setAcquisition(book.getAcquisition());
-			Repository.getBooks().get(exist).setAuthorsList(book.getAuthorsList());
-			Repository.getBooks().get(exist).setCategory(book.getCategory());
+			book.setTitle(nBook.getTitle());
+			book.setSummary(nBook.getSummary());
+			book.setPages(nBook.getPages());
+			book.setLocation(nBook.getLocation());
+			book.setAcquisition(nBook.getAcquisition());
+			book.setAuthorsList(nBook.getAuthorsList());
+			book.setCategory(nBook.getCategory());
 		}
 	}
+
 
 	@Override
 	public Book search(String title) {
@@ -211,10 +212,5 @@ public class BooksInMemory implements Books {
 			}
 		}
 		return -1;
-	}
-	@Override
-	public int checkIfExists(String T) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }

@@ -58,7 +58,7 @@ public class AuthorsInMemoryTest {
 		authorsInMemory.create(author);
 		Author author2 = new Author();
 		author2.setName("Ana");
-		authorsInMemory.update(author2,0);
+		authorsInMemory.update(author ,author2);
 		authorsInMemory.search("Alana");
 	}
 
@@ -71,7 +71,7 @@ public class AuthorsInMemoryTest {
 		authorsInMemory.create(author);
 		Author author2 = new Author();
 		author2.setName("");
-		authorsInMemory.update(author2,0);
+		authorsInMemory.update(author ,author2);
 	}
 
 	@Test

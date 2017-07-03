@@ -2,7 +2,6 @@ package br.com.softexpert.library.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import br.com.softexpert.library.library.DateOperations;
 public class Author implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int sequentialCode;
@@ -28,6 +27,10 @@ public class Author implements Serializable{
 	public Date getBirthday() {
 		return birthday;
 	}
+	public Long getBirthdayInTime() {
+
+		return birthday.getTime();
+	}
 	public void setBirthday(Date date) {
 		this.birthday = date;
 	}
@@ -37,11 +40,8 @@ public class Author implements Serializable{
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
+	@Override
 	public String toString() {
-		DateOperations op = new DateOperations();
-		String birthday=op.convertDateToString(getBirthday());
-		if(birthday.equals("01/01/0001"))
-			birthday="";
 		String author="";
 		author=author+"Código do Autor: "+getSequentialCode()
 		+"\n"+"Nome do Autor: "+getName()+"\n"
@@ -49,6 +49,5 @@ public class Author implements Serializable{
 		+"\n"+"Nacionalidade: "+getNationality();
 		return author;
 	}
-
 }
 

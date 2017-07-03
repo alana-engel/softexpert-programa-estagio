@@ -18,14 +18,14 @@ public class AuthorsInMemory implements Authors{
 	}
 
 	@Override
-	public void update(Author author, int position) throws RecordException{
-		if(author.getName().isEmpty()){
+	public void update(Author author, Author nAuthor) throws RecordException{
+		if(nAuthor.getName().isEmpty()){
 			throw new RecordException("Não foi possível alterar o autor. Preencha o campo Nome.");
 		}else{
-			Repository.getAuthors().get(position).setName(author.getName());  
+					author.setName(nAuthor.getName());
+					author.setBirthday(nAuthor.getBirthday());
+					author.setNationality(nAuthor.getNationality());
 		}
-		Repository.getAuthors().get(position).setBirthday(author.getBirthday());
-		Repository.getAuthors().get(position).setNationality(author.getNationality());
 	}
 
 	@Override

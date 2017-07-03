@@ -2,7 +2,9 @@ package br.com.softexpert.library.interfaces;
 
 import java.util.List;
 
+import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.entity.Book;
+import br.com.softexpert.library.entity.Category;
 import br.com.softexpert.library.exception.RecordException;
 
 public interface Books extends Operations<Book>{
@@ -14,5 +16,11 @@ public interface Books extends Operations<Book>{
 	List<Book> searchByCategory(String category) throws Exception;
 	
 	List<Book> searchByAuthor(String n) throws Exception;
+
+	String qAuthors();
+
+	Category addCategory();
+
+	List<Author> addAuthor(String qAuthors);
 
 }

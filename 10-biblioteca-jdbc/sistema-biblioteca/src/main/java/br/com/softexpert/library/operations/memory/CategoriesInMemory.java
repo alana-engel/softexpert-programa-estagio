@@ -20,10 +20,10 @@ public class CategoriesInMemory implements Categories{
 		return true;
 	}
 	@Override
-	public void update(Category c, int position) throws RecordException{
-		if(c.getDescription().isEmpty())
+	public void update(Category c, Category nc) throws RecordException{
+		if(nc.getDescription().isEmpty())
 			throw new RecordException("Não foi possível alterar a Categoria. Verifique os campos preenchidos.");
-		Repository.getCategories().get(position).setDescription(c.getDescription());  
+				c.setDescription(nc.getDescription());  
 	}
 	@Override
 	public Category search(String description) throws RecordException{

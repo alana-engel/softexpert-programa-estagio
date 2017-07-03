@@ -6,11 +6,7 @@ public interface Operations<T> {
 
 	boolean delete(String record);
 
-	void update(T record, int position) throws Exception;
+	void update(T record, T newRecord) throws Exception;
 
 	T search(String name) throws Exception;
-
-	int checkIfExists(String T);
-
-	
 }

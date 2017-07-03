@@ -112,13 +112,12 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		int n=book.getSequentialCode();
 		Book book2 = new Book();
 		book2.setTitle("titulo2");
 		book2.setLocation("Local2");
 		book2.setAuthorsList(createAuthor());
 		book2.setCategory(createCategory());
-		booksInMemory.update(book2,n);
+		booksInMemory.update(book, book2);
 		booksInMemory.searchByTitle("titulo2");
 	}
 
@@ -130,13 +129,12 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		int n=book.getSequentialCode();
 		Book book2 = new Book();
 		book2.setTitle("titulo2");
 		book2.setLocation("");
 		book2.setAuthorsList(createAuthor());
 		book2.setCategory(createCategory());
-		booksInMemory.update(book2,n);
+		booksInMemory.update(book, book2);
 	}
 	
 	@Test (expected = RecordException.class)
@@ -147,12 +145,11 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		int n=book.getSequentialCode();
 		Book book2 = new Book();
 		book2.setTitle("titulo2");
 		book2.setLocation("l");
 		book2.setAuthorsList(createAuthor());
-		booksInMemory.update(book2,n);
+		booksInMemory.update(book, book2);
 	}
 	
 	@Test (expected = RecordException.class)
@@ -163,13 +160,12 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		int n=book.getSequentialCode();
 		Book book2 = new Book();
 		book2.setTitle("titulo2");
 		book2.setLocation("l");
 		book2.setCategory(createCategory());
 		book2.setAuthorsList(null);
-		booksInMemory.update(book2,n);
+		booksInMemory.update(book, book2);
 	}
 	
 	@Test (expected = RecordException.class)
@@ -180,13 +176,12 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		int n=book.getSequentialCode();
 		Book book2 = new Book();
 		book2.setTitle("");
 		book2.setLocation("l");
 		book2.setAuthorsList(createAuthor());
 		book2.setCategory(createCategory());
-		booksInMemory.update(book2,n);
+		booksInMemory.update(book, book2);
 	} 
 	
 	@Test

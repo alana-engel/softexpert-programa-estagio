@@ -7,6 +7,7 @@ import br.com.softexpert.library.interfaces.Operations;
 import br.com.softexpert.library.operations.memory.CategoriesInMemory;
 
 
+
 public class DeleteCategory{
 	private Operations<Category> categories= new CategoriesInMemory();
 	public void delete(){

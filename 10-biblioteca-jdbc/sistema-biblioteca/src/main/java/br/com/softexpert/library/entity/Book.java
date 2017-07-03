@@ -3,9 +3,6 @@ package br.com.softexpert.library.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.softexpert.library.library.DateOperations;
-
 import java.util.Date;
 public class Book  implements Comparable<Book>, Serializable{
 	private static final long serialVersionUID = 1L;
@@ -82,11 +79,7 @@ public class Book  implements Comparable<Book>, Serializable{
 	}
 	@Override
 	public String toString() {
-		DateOperations op = new DateOperations();
-		String acquisition = op.convertDateToString(getAcquisition());
 		String print="";
-		if(acquisition.equals("01/01/0001"))
-			acquisition="";
 		print=print+"Código do livro: "+getSequentialCode()+"\n"+"Titulo do livro: "+getTitle()
 		+"\n"+"Resumo do livro: "+getSummary()+"\n"+"Código de Barras: "+getBarcode()
 		+"\n"+"Quantidade de páginas: "+getPages()+"\n"+"Local: "+getLocation()

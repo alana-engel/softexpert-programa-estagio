@@ -7,7 +7,7 @@ public class Category implements Serializable{
 	private String description;
 
 	public Category(){
-
+	
 	}
 	public int getSequentialCode() {
 		return sequentialCode;
