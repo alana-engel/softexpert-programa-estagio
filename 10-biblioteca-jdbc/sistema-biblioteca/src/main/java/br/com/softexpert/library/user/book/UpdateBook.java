@@ -14,27 +14,26 @@ public class UpdateBook{
 	private DateOperations dateOperations = new DateOperations();
 	public void update() {
 		Book book =new Book();
-		Book nBook =new Book();
 		int cod=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));
 		try {
 			book=books.searchByCode(cod);
 		} catch (RecordException e1) {
 			e1.printStackTrace();
 		}
-		nBook.setTitle(JOptionPane.showInputDialog("Digite o titulo do livro: "));
-		nBook.setSummary(JOptionPane.showInputDialog("Digite o resumo do livro: "));
+		book.setTitle(JOptionPane.showInputDialog("Digite o titulo do livro: "));
+		book.setSummary(JOptionPane.showInputDialog("Digite o resumo do livro: "));
 		String pag=JOptionPane.showInputDialog("Digite a quantidade de páginas: ");
 		if(pag.isEmpty()){
-			nBook.setPages(0);
+			book.setPages(0);
 		}else{
-			nBook.setPages(Integer.parseInt(pag));
+			book.setPages(Integer.parseInt(pag));
 		}
-		nBook.setLocation(JOptionPane.showInputDialog("Digite o Local:"));
-		getAcquisition(nBook);
-		nBook.setAuthorsList(books.addAuthor(books.qAuthors()));
-		nBook.setCategory(books.addCategory());
+		book.setLocation(JOptionPane.showInputDialog("Digite o Local:"));
+		getAcquisition(book);
+		book.setAuthorsList(books.addAuthor(books.quantityOfAuthors()));
+		book.setCategory(books.addCategory());
 		try {
-			books.update(book, nBook);
+			books.update(book);
 			JOptionPane.showMessageDialog(null, "Livro alterado.");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Não foi possível alterar o Livro.");

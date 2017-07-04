@@ -17,7 +17,7 @@ public interface Books extends Operations<Book>{
 	
 	List<Book> searchByAuthor(String n) throws Exception;
 
-	String qAuthors();
+	String quantityOfAuthors();
 
 	Category addCategory();
 

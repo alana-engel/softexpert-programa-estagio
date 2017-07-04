@@ -112,12 +112,12 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		Book book2 = new Book();
-		book2.setTitle("titulo2");
-		book2.setLocation("Local2");
-		book2.setAuthorsList(createAuthor());
-		book2.setCategory(createCategory());
-		booksInMemory.update(book, book2);
+		
+		book.setTitle("titulo2");
+		book.setLocation("Local2");
+		book.setAuthorsList(createAuthor());
+		book.setCategory(createCategory());
+		booksInMemory.update(book);
 		booksInMemory.searchByTitle("titulo2");
 	}
 
@@ -129,12 +129,12 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		Book book2 = new Book();
-		book2.setTitle("titulo2");
-		book2.setLocation("");
-		book2.setAuthorsList(createAuthor());
-		book2.setCategory(createCategory());
-		booksInMemory.update(book, book2);
+	
+		book.setTitle("titulo2");
+		book.setLocation("");
+		book.setAuthorsList(createAuthor());
+		book.setCategory(createCategory());
+		booksInMemory.update(book);
 	}
 	
 	@Test (expected = RecordException.class)
@@ -145,11 +145,12 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		Book book2 = new Book();
-		book2.setTitle("titulo2");
-		book2.setLocation("l");
-		book2.setAuthorsList(createAuthor());
-		booksInMemory.update(book, book2);
+	
+		book.setTitle("titulo2");
+		book.setLocation("l");
+		book.setCategory(null);
+		book.setAuthorsList(createAuthor());
+		booksInMemory.update(book);
 	}
 	
 	@Test (expected = RecordException.class)
@@ -160,12 +161,12 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		Book book2 = new Book();
-		book2.setTitle("titulo2");
-		book2.setLocation("l");
-		book2.setCategory(createCategory());
-		book2.setAuthorsList(null);
-		booksInMemory.update(book, book2);
+	
+		book.setTitle("titulo2");
+		book.setLocation("l");
+		book.setCategory(createCategory());
+		book.setAuthorsList(null);
+		booksInMemory.update(book);
 	}
 	
 	@Test (expected = RecordException.class)
@@ -176,12 +177,12 @@ public class BooksInMemoryTest {
 		book.setAuthorsList(createAuthor());
 		book.setCategory(createCategory());
 		assertTrue(booksInMemory.create(book));
-		Book book2 = new Book();
-		book2.setTitle("");
-		book2.setLocation("l");
-		book2.setAuthorsList(createAuthor());
-		book2.setCategory(createCategory());
-		booksInMemory.update(book, book2);
+
+		book.setTitle("");
+		book.setLocation("l");
+		book.setAuthorsList(createAuthor());
+		book.setCategory(createCategory());
+		booksInMemory.update(book);
 	} 
 	
 	@Test

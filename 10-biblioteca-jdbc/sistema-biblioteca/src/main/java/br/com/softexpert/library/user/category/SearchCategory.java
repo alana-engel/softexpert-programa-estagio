@@ -4,11 +4,11 @@ import javax.swing.JOptionPane;
 import br.com.softexpert.library.entity.Category;
 
 import br.com.softexpert.library.interfaces.Operations;
-import br.com.softexpert.library.operations.memory.CategoriesInMemory;
+import br.com.softexpert.library.operations.db.CategoryDao;
 
 
 public class SearchCategory{
-	private Operations<Category> categories= new CategoriesInMemory();
+	private Operations<Category> categories= new CategoryDao();
 
 	public void search(){
 		String description=(JOptionPane.showInputDialog("Digite a categoria: "));

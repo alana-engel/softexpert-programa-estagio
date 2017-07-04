@@ -11,7 +11,7 @@ import br.com.softexpert.library.interfaces.Books;
 import br.com.softexpert.library.library.Barcode;
 import br.com.softexpert.library.repository.Repository;
 import br.com.softexpert.library.user.author.CreateAuthor;
-import br.com.softexpert.library.user.book.QAuthors;
+import br.com.softexpert.library.user.book.QuantityOfAuthors;
 import br.com.softexpert.library.user.category.CreateCategory;
 
 public class BooksInMemory implements Books {
@@ -34,8 +34,8 @@ public class BooksInMemory implements Books {
 		Barcode bcode=new Barcode();
 		book.setBarcode(bcode.getBarcode(code));
 	}
-	public String qAuthors() {
-		QAuthors qAuthors = new QAuthors();
+	public String quantityOfAuthors() {
+		QuantityOfAuthors qAuthors = new QuantityOfAuthors();
 		String q = qAuthors.getQuantityOfAuthors();
 		if(q.isEmpty()){
 			do{
@@ -124,18 +124,18 @@ public class BooksInMemory implements Books {
 	}
 
 	@Override
-	public void update(Book book, Book nBook) throws RecordException{
+	public void update(Book book) throws RecordException{
 	
-		if (nBook.getTitle().isEmpty() || nBook.getLocation().isEmpty()|| nBook.getAuthorsList()==null || nBook.getCategory().getDescription()==null){
+		if (book.getTitle().isEmpty() || book.getLocation().isEmpty()|| book.getAuthorsList()==null || book.getCategory()==null){
 			throw new RecordException("Não foi possível alterar o Livro. Verifique os campos preenchidos.");
 		}else{
-			book.setTitle(nBook.getTitle());
-			book.setSummary(nBook.getSummary());
-			book.setPages(nBook.getPages());
-			book.setLocation(nBook.getLocation());
-			book.setAcquisition(nBook.getAcquisition());
-			book.setAuthorsList(nBook.getAuthorsList());
-			book.setCategory(nBook.getCategory());
+			book.setTitle(book.getTitle());
+			book.setSummary(book.getSummary());
+			book.setPages(book.getPages());
+			book.setLocation(book.getLocation());
+			book.setAcquisition(book.getAcquisition());
+			book.setAuthorsList(book.getAuthorsList());
+			book.setCategory(book.getCategory());
 		}
 	}
 

@@ -50,9 +50,9 @@ public class CategoriesInMemoryTest {
 		Category c = new Category();
 		c.setDescription("Descricão");
 		categoriesInMemory.create(c);
-		Category c1 = new Category();
-		c1.setDescription("Descrição alterada");
-		categoriesInMemory.update(c, c1);
+
+		c.setDescription("Descrição alterada");
+		categoriesInMemory.update(c);
 	}
 
 	@Test
@@ -62,9 +62,9 @@ public class CategoriesInMemoryTest {
 		Category c = new Category();
 		c.setDescription("Descricão");
 		categoriesInMemory.create(c);
-		Category c1 = new Category();
-		c1.setDescription("");
-		categoriesInMemory.update(c, c1);
+		
+		c.setDescription("");
+		categoriesInMemory.update(c);
 	}
 
 	@Test

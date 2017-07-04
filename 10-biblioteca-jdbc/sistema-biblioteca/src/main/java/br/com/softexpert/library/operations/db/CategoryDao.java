@@ -10,23 +10,21 @@ import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.interfaces.Categories;
 
 public class CategoryDao implements Categories{
-	private Connection connection;
+	static final String sqlCreate = "insert into tbl_category (description) values (?)";
+	static final String sqlDelete = "delete from tbl_category where sequentialCode=?";
+	static final String sqlUpdate = "update tbl_category set description=? where sequentialCode=?";
+	static final String sqlSearch = "select * from tbl_category where description=?";
 
 	public CategoryDao() {
-		this.connection = new ConnectionFactory().getConnection();
+		
 	}
 
 	@Override
 	public boolean create(Category category) throws Exception {
-	
-		String sql = "insert into tbl_category " +
-				"(description)" +
-				" values (?)";
-		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+		try (Connection connection = new ConnectionFactory().getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sqlCreate);) {
 			stmt.setString(1,category.getDescription());
 			stmt.execute();
-			stmt.close();
 			return true;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -38,36 +36,29 @@ public class CategoryDao implements Categories{
 		try {
 			c = search(category);
 		} catch (Exception e1) {
-			e1.printStackTrace();
+			return false;
 		}
-		try {
-
-			PreparedStatement stmt = connection
-					.prepareStatement("delete from tbl_category where sequentialCode=?");
+		try (Connection connection = new ConnectionFactory().getConnection();
+				PreparedStatement stmt = connection
+				.prepareStatement(sqlDelete);){
 			stmt.setInt(1, c.getSequentialCode());
 			stmt.execute();
-			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
-
+			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public void update(Category c, Category nc) throws Exception { 
-		if(nc.getDescription().isEmpty())
+	public void update(Category c) throws Exception { 
+		if(c.getDescription().isEmpty())
 			throw new RecordException("Não foi possível alterar a Categoria. Verifique os campos preenchidos.");
-		
-		String sql = "update tbl_category set description=? where sequentialCode=?";
-
-		try {
-			PreparedStatement stmt = connection
-					.prepareStatement(sql);
-			stmt.setString(1, nc.getDescription());
+		try (Connection connection = new ConnectionFactory().getConnection();
+				PreparedStatement stmt = connection
+				.prepareStatement(sqlUpdate);){
+			stmt.setString(1, c.getDescription());
 			stmt.setInt(2, c.getSequentialCode());
 			stmt.execute();
-			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -78,12 +69,13 @@ public class CategoryDao implements Categories{
 	public Category search(String name) throws Exception {
 		boolean found = false;
 		
-		try {
-			PreparedStatement stmt = this.connection.
-					prepareStatement("select * from tbl_category where description=?");
+		try (Connection connection = new ConnectionFactory().getConnection();
+				PreparedStatement stmt = connection.
+				prepareStatement(sqlSearch);
+				){
 			stmt.setString(1, name);
-			ResultSet rs = stmt.executeQuery();
 			Category c = new Category();
+			try (ResultSet rs = stmt.executeQuery();){
 			while (rs.next()) {
 				c.setSequentialCode(rs.getInt("sequentialCode"));
 				c.setDescription(rs.getString("description"));
@@ -94,8 +86,7 @@ public class CategoryDao implements Categories{
 					c.setDescription(null);
 				}
 			}
-			rs.close();
-			stmt.close();
+			}
 			if(found== false) 
 				throw new RecordException("Não foi possível encontrar a categoria.");
 			return c;

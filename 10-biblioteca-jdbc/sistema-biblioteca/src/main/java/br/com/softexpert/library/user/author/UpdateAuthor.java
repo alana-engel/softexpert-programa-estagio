@@ -13,7 +13,6 @@ public class UpdateAuthor{
 
 	public void update(){ 
 		Author author = new Author();
-		Author nAuthor = new Author();
 		String name=(JOptionPane.showInputDialog("Digite o nome do autor: "));
 		try {
 			author=authors.search(name);
@@ -24,11 +23,11 @@ public class UpdateAuthor{
 			return;
 		}
 		String n=JOptionPane.showInputDialog("Digite o nome do autor: ");
-		nAuthor.setName(n);
-		getBirthday(nAuthor);
-		nAuthor.setNationality((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
+		author.setName(n);
+		getBirthday(author);
+		author.setNationality((JOptionPane.showInputDialog("Digite a nacionalidade: ")));
 		try {
-			authors.update(author, nAuthor);
+			authors.update(author);
 			JOptionPane.showMessageDialog(null, "Autor Alterado.");
 		} catch (Exception e) {
 			if(author.getName().isEmpty()){

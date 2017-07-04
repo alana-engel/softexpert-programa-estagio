@@ -38,7 +38,7 @@ public class CreateBook{
 				create();
 				return;
 			}
-		book.setAuthorsList(books.addAuthor(books.qAuthors()));
+		book.setAuthorsList(books.addAuthor(books.quantityOfAuthors()));
 		book.setCategory(books.addCategory());
 		try {
 			if(books.create(book))
