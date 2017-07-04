@@ -16,7 +16,6 @@ import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.interfaces.Books;
 import br.com.softexpert.library.library.Barcode;
 import br.com.softexpert.library.user.author.CreateAuthor;
-import br.com.softexpert.library.user.book.QuantityOfAuthors;
 import br.com.softexpert.library.user.category.CreateCategory;
 
 public class BookDao implements Books{
@@ -71,13 +70,12 @@ public class BookDao implements Books{
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
 				prepareStatement(sqlSelectBooks);){
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			Book b = new Book();
 			while (rs.next()) {
 				b.setTitle(rs.getString("title"));
 				if(b.getTitle().equals(book.getTitle()))
 					book.setSequencialCode(rs.getInt("sequentialCode"));
-			}
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -177,7 +175,7 @@ public class BookDao implements Books{
 				prepareStatement(sqlSearchByCode);) {
 			stmt.setInt(1, n);
 			List<Book> booksList = new ArrayList<Book>();
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			Book b = new Book();
 			while (rs.next()) {
 				b.setSequencialCode(rs.getInt("sequentialCode"));
@@ -192,7 +190,6 @@ public class BookDao implements Books{
 				b.setAuthorsList(getAuthorsBook(getCodeAuthor(rs.getInt("sequentialCode"))));
 				booksList.add(b);
 				found = true;
-			}
 			}
 			if(found== false) 
 				throw new RecordException("Não foi possível encontrar o livro.");
@@ -210,7 +207,7 @@ public class BookDao implements Books{
 				prepareStatement(sqlSearchByTitle);){
 			stmt.setString(1, "%"+title+"%");
 			List<Book> booksList = new ArrayList<Book>();
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Book b = new Book();
 				b.setSequencialCode(rs.getInt("sequentialCode"));
@@ -225,7 +222,6 @@ public class BookDao implements Books{
 				b.setAuthorsList(getAuthorsBook(getCodeAuthor(rs.getInt("sequentialCode"))));
 				booksList.add(b);
 				found = true;
-			}
 			}
 			if(found== false) 
 				throw new RecordException("Não foi possível encontrar o livro.");
@@ -242,7 +238,7 @@ public class BookDao implements Books{
 				prepareStatement(sqlSearchByCategory);){
 			stmt.setString(1, category);
 			List<Book> booksList = new ArrayList<Book>();
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			Category c = new Category();
 			while (rs.next()) {
 				c.setSequentialCode(rs.getInt("sequentialCode"));
@@ -250,7 +246,6 @@ public class BookDao implements Books{
 				int code = c.getSequentialCode();
 				booksList=getListBook(code);
 				found = true;
-			}
 			}
 			if(found== false) 
 				throw new RecordException("Não foi possível encontrar o livro.");
@@ -265,7 +260,7 @@ public class BookDao implements Books{
 				prepareStatement(sqlSelectListBook);){
 			stmt.setInt(1, code);
 			List<Book> booksList = new ArrayList<Book>();
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Book b = new Book();
 				b.setSequencialCode(rs.getInt("sequentialCode"));
@@ -279,7 +274,6 @@ public class BookDao implements Books{
 				b.setCategory(c);
 				b.setAuthorsList(getAuthorsBook(getCodeAuthor(rs.getInt("sequentialCode"))));
 				booksList.add(b);
-			}
 			}
 			return booksList;
 		} catch (SQLException e) {
@@ -295,7 +289,7 @@ public class BookDao implements Books{
 				PreparedStatement stmt = connection.
 				prepareStatement(sqlSearchByAuthor);){
 			stmt.setString(1, n);
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			Author a = new Author();
 			while (rs.next()) {
 				a.setSequentialCode(rs.getInt("sequentialCode"));
@@ -312,7 +306,6 @@ public class BookDao implements Books{
 					a.setName(null);
 				}
 			}
-			}
 			if(found== false) 
 				throw new RecordException("Não foi possível encontrar o livro.");
 			return listBook;
@@ -326,14 +319,13 @@ public class BookDao implements Books{
 				PreparedStatement stmt = connection.
 				prepareStatement(sqlSelectCodeBooks);) {
 			stmt.setInt(1, codeA);
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				int codeAuthor=rs.getInt("codeAuthor");
 				int codeBook=rs.getInt("codeBook");
 				if(codeA==codeAuthor){
 					list.add(codeBook);
 				}
-			}
 			}
 			return list;
 		} catch (SQLException e) {
@@ -353,11 +345,11 @@ public class BookDao implements Books{
 	}
 	@Override
 	public String quantityOfAuthors() {
-		QuantityOfAuthors qAuthors = new QuantityOfAuthors();
-		String q = qAuthors.getQuantityOfAuthors();
+		CreateAuthor createAuthor = new CreateAuthor();
+		String q = createAuthor.getQuantityOfAuthors();
 		if(q.isEmpty()){
 			do{
-				q = qAuthors.getQuantityOfAuthors();
+				q = createAuthor.getQuantityOfAuthors();
 			}while(q.isEmpty());
 		}
 		return q;
@@ -426,11 +418,10 @@ public class BookDao implements Books{
 				prepareStatement(sqlSelectCategoryBook);){
 			stmt.setInt(1, code);
 			Category c = new Category();
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				c.setSequentialCode(rs.getInt("sequentialCode"));
 				c.setDescription(rs.getString("description"));
-			}
 			}
 			return c;
 		} catch (SQLException e) {
@@ -442,7 +433,7 @@ public class BookDao implements Books{
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
 				prepareStatement("select * from tbl_author");){
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				for (int i=0;i<code.size();i++){
 					int codeA=code.get(i);
@@ -455,7 +446,6 @@ public class BookDao implements Books{
 						authorsList.add(a);
 				}
 			}
-			}
 			return authorsList;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -467,11 +457,10 @@ public class BookDao implements Books{
 				PreparedStatement stmt = connection.
 				prepareStatement(sqlSelectCodeAuthor);){
 			stmt.setInt(1, code);
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				int codeAuthor = rs.getInt("codeAuthor");
 				codeAuthorsList.add(codeAuthor);
-			}
 			}
 			return codeAuthorsList;
 		} catch (SQLException e) {

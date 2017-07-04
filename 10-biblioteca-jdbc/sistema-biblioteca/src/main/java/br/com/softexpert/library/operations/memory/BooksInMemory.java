@@ -11,7 +11,6 @@ import br.com.softexpert.library.interfaces.Books;
 import br.com.softexpert.library.library.Barcode;
 import br.com.softexpert.library.repository.Repository;
 import br.com.softexpert.library.user.author.CreateAuthor;
-import br.com.softexpert.library.user.book.QuantityOfAuthors;
 import br.com.softexpert.library.user.category.CreateCategory;
 
 public class BooksInMemory implements Books {
@@ -35,11 +34,10 @@ public class BooksInMemory implements Books {
 		book.setBarcode(bcode.getBarcode(code));
 	}
 	public String quantityOfAuthors() {
-		QuantityOfAuthors qAuthors = new QuantityOfAuthors();
-		String q = qAuthors.getQuantityOfAuthors();
+		String q = createAuthor.getQuantityOfAuthors();
 		if(q.isEmpty()){
 			do{
-				q = qAuthors.getQuantityOfAuthors();
+				q = createAuthor.getQuantityOfAuthors();
 			}while(q.isEmpty());
 		}
 		return q;

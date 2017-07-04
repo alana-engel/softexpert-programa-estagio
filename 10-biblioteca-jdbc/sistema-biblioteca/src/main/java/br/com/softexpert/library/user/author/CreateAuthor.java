@@ -54,4 +54,11 @@ public class CreateAuthor{
 
 		return name;
 	}
+	public String getQuantityOfAuthors(){
+		String qAuthors=JOptionPane.showInputDialog("Digite a quantidade de autores: ");
+		if(qAuthors.isEmpty()){
+			JOptionPane.showMessageDialog(null, "Preencha a quantidade de autores.");
+		}
+		return qAuthors;
+	}
 }

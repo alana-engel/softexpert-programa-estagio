@@ -75,7 +75,7 @@ public class CategoryDao implements Categories{
 				){
 			stmt.setString(1, name);
 			Category c = new Category();
-			try (ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				c.setSequentialCode(rs.getInt("sequentialCode"));
 				c.setDescription(rs.getString("description"));
@@ -85,7 +85,6 @@ public class CategoryDao implements Categories{
 				}else{
 					c.setDescription(null);
 				}
-			}
 			}
 			if(found== false) 
 				throw new RecordException("Não foi possível encontrar a categoria.");

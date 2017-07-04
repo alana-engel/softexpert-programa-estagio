@@ -86,14 +86,13 @@ public class AuthorDao implements Operations<Author>{
 				prepareStatement(sqlSearch);){
 			stmt.setString(1, name);
 			Author a = new Author();
-			try(ResultSet rs = stmt.executeQuery();){
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				a.setSequentialCode(rs.getInt("sequentialCode"));
 				a.setName(rs.getString("name"));
 				a.setBirthday(rs.getDate("birthday"));
 				a.setNationality(rs.getString("nationality"));
 				found = true;
-			}
 			}
 			if(found== false) 
 				throw new RecordException("Não foi possível encontrar o autor.");
