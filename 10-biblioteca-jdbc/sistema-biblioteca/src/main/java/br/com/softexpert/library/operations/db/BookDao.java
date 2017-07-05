@@ -1,6 +1,5 @@
 package br.com.softexpert.library.operations.db;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -8,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.entity.Book;
 import br.com.softexpert.library.entity.Category;
@@ -25,13 +23,12 @@ public class BookDao implements Books{
 	static final String sqlDelete = "delete from tbl_books where title=?";
 	static final String sqlUpdate = "update tbl_books set title=?,summary=?,barcode=?,pages=?,bookLocation=?,acquisition=?,categoryBook=? where sequentialCode=?";
 	static final String sqlUpdateAuthor = "update tbl_author_book set codeAuthor=? where codeBook=?";
-	static final String sqlSearchByCode = "select * from tbl_books where sequentialCode=?";
-	static final String sqlSearchByTitle = "select * from tbl_books where title like ?";
-	static final String sqlSearchByCategory = "select * from tbl_category where description= ?";
-	static final String sqlSearchByAuthor = "select * from tbl_author where name=?";
-	static final String sqlSelectCodeBooks = "select * from tbl_author_book where codeAuthor=?";
-	static final String sqlSelectListBook = "select * from tbl_books where categoryBook=?";
-	static final String sqlSelectCategoryBook = "select * from tbl_category where sequentialCode=?";
+	static final String sqlSearchByCode = "SELECT * FROM tbl_category INNER JOIN (tbl_books INNER JOIN (tbl_author_book INNER JOIN tbl_author ON tbl_author_book.codeAuthor = tbl_author.sequentialCode)"
+			+ "  ON tbl_books.sequentialCode = tbl_author_book.codeBook) on tbl_category.sequentialCode = tbl_books.categoryBook where codeBook=?;";
+	static final String sqlSearchByTitle = "SELECT * FROM tbl_books INNER JOIN tbl_category ON tbl_books.categoryBook = tbl_category.sequentialCode where title like ?";
+	static final String sqlSearchByCategory = "SELECT * FROM tbl_books INNER JOIN tbl_category ON tbl_books.categoryBook = tbl_category.sequentialCode Where description =?";
+	static final String sqlSearchByAuthor = "SELECT * FROM tbl_category INNER JOIN (tbl_books INNER JOIN (tbl_author_book INNER JOIN tbl_author ON tbl_author_book.codeAuthor = tbl_author.sequentialCode)"
+			+ "  ON tbl_books.sequentialCode = tbl_author_book.codeBook) on tbl_category.sequentialCode = tbl_books.categoryBook where name = ?";
 	static final String sqlSelectCodeAuthor = "select * from tbl_author_book where codeBook=?"; 
 	
 	public BookDao() {
@@ -40,6 +37,7 @@ public class BookDao implements Books{
 
 	@Override
 	public boolean create(Book book) throws Exception {
+		
 		if (book.getTitle().isEmpty() || book.getLocation().isEmpty()|| book.getAuthorsList()==null || book.getCategory().getDescription()==null){
 			throw new RecordException("Não foi possível cadastrar o Livro. Verifique os campos preenchidos.");
 		}
@@ -178,16 +176,18 @@ public class BookDao implements Books{
 			ResultSet rs = stmt.executeQuery();
 			Book b = new Book();
 			while (rs.next()) {
-				b.setSequencialCode(rs.getInt("sequentialCode"));
+				b.setSequencialCode(rs.getInt("codeBook"));
 				b.setTitle(rs.getString("title"));
 				b.setSummary(rs.getString("summary"));
 				b.setPages(rs.getInt("pages"));
 				b.setLocation(rs.getString("bookLocation"));
 				b.setAcquisition(rs.getDate("acquisition"));
+				b.setBarcode(rs.getString("barcode"));
 				Category c = new Category();
-				c=getCategoryBook(rs.getInt("categoryBook"));
+				c.setSequentialCode(rs.getInt("categoryBook"));
+				c.setDescription(rs.getString("description"));
 				b.setCategory(c);
-				b.setAuthorsList(getAuthorsBook(getCodeAuthor(rs.getInt("sequentialCode"))));
+				b.setAuthorsList(getAuthorsBook(getCodeAuthor(rs.getInt("codeBook"))));
 				booksList.add(b);
 				found = true;
 			}
@@ -216,8 +216,10 @@ public class BookDao implements Books{
 				b.setPages(rs.getInt("pages"));
 				b.setLocation(rs.getString("bookLocation"));
 				b.setAcquisition(rs.getDate("acquisition"));
+				b.setBarcode(rs.getString("barcode"));
 				Category c = new Category();
-				c=getCategoryBook(rs.getInt("categoryBook"));
+				c.setSequentialCode(rs.getInt("categoryBook"));
+				c.setDescription(rs.getString("description"));
 				b.setCategory(c);
 				b.setAuthorsList(getAuthorsBook(getCodeAuthor(rs.getInt("sequentialCode"))));
 				booksList.add(b);
@@ -239,12 +241,21 @@ public class BookDao implements Books{
 			stmt.setString(1, category);
 			List<Book> booksList = new ArrayList<Book>();
 			ResultSet rs = stmt.executeQuery();
-			Category c = new Category();
 			while (rs.next()) {
-				c.setSequentialCode(rs.getInt("sequentialCode"));
+				Book b = new Book();
+				b.setSequencialCode(rs.getInt("sequentialCode"));
+				b.setTitle(rs.getString("title"));
+				b.setSummary(rs.getString("summary"));
+				b.setPages(rs.getInt("pages"));
+				b.setLocation(rs.getString("bookLocation"));
+				b.setAcquisition(rs.getDate("acquisition"));
+				b.setBarcode(rs.getString("barcode"));
+				Category c = new Category();
+				c.setSequentialCode(rs.getInt("categoryBook"));
 				c.setDescription(rs.getString("description"));
-				int code = c.getSequentialCode();
-				booksList=getListBook(code);
+				b.setCategory(c);
+				b.setAuthorsList(getAuthorsBook(getCodeAuthor(rs.getInt("sequentialCode"))));
+				booksList.add(b);
 				found = true;
 			}
 			if(found== false) 
@@ -254,53 +265,38 @@ public class BookDao implements Books{
 			throw new RuntimeException(e);
 		}
 	}
-	private List<Book> getListBook(int code){
-		try (Connection connection = new ConnectionFactory().getConnection();
-				PreparedStatement stmt = connection.
-				prepareStatement(sqlSelectListBook);){
-			stmt.setInt(1, code);
-			List<Book> booksList = new ArrayList<Book>();
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				Book b = new Book();
-				b.setSequencialCode(rs.getInt("sequentialCode"));
-				b.setTitle(rs.getString("title"));
-				b.setSummary(rs.getString("summary"));
-				b.setPages(rs.getInt("pages"));
-				b.setLocation(rs.getString("bookLocation"));
-				b.setAcquisition(rs.getDate("acquisition"));
-				Category c = new Category();
-				c=getCategoryBook(rs.getInt("categoryBook"));
-				b.setCategory(c);
-				b.setAuthorsList(getAuthorsBook(getCodeAuthor(rs.getInt("sequentialCode"))));
-				booksList.add(b);
-			}
-			return booksList;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
 	@Override
 	public List<Book> searchByAuthor(String n) throws Exception {
 		boolean found = false;
-		List<Integer> list = new ArrayList<Integer>();
 		List<Book> listBook = new ArrayList<Book>();
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
 				prepareStatement(sqlSearchByAuthor);){
 			stmt.setString(1, n);
 			ResultSet rs = stmt.executeQuery();
-			Author a = new Author();
+		
 			while (rs.next()) {
-				a.setSequentialCode(rs.getInt("sequentialCode"));
+				Author a = new Author();
+				Book b = new Book();
+				a.setSequentialCode(rs.getInt("codeAuthor"));
 				a.setName(rs.getString("name"));
 				a.setBirthday(rs.getDate("birthday"));
 				a.setNationality(rs.getString("nationality"));
 				if(a.getName().equals(n)){
-					int codeA= rs.getInt("sequentialCode");
-					list=getCodeBooks(codeA);
-					listBook = getBooks(list);
-					found = true;
+					b.setSequencialCode(rs.getInt("codeBook"));
+					b.setTitle(rs.getString("title"));
+					b.setSummary(rs.getString("summary"));
+					b.setPages(rs.getInt("pages"));
+					b.setLocation(rs.getString("bookLocation"));
+					b.setAcquisition(rs.getDate("acquisition"));
+					b.setBarcode(rs.getString("barcode"));
+					Category c = new Category();
+					c.setSequentialCode(rs.getInt("categoryBook"));
+					c.setDescription(rs.getString("description"));
+					b.setCategory(c);
+					b.setAuthorsList(getAuthorsBook(getCodeAuthor(rs.getInt("codeBook"))));
+					listBook.add(b);
+					found=true;
 				}
 				else{
 					a.setName(null);
@@ -312,36 +308,6 @@ public class BookDao implements Books{
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-	}
-	private List<Integer> getCodeBooks(int codeA){
-		List<Integer> list = new ArrayList<Integer>();
-		try(Connection connection = new ConnectionFactory().getConnection();
-				PreparedStatement stmt = connection.
-				prepareStatement(sqlSelectCodeBooks);) {
-			stmt.setInt(1, codeA);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				int codeAuthor=rs.getInt("codeAuthor");
-				int codeBook=rs.getInt("codeBook");
-				if(codeA==codeAuthor){
-					list.add(codeBook);
-				}
-			}
-			return list;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	private List<Book> getBooks(List<Integer> code){
-		List<Book> listBook = new ArrayList<Book>();
-		for (int i=0;i<code.size();i++){
-			try {
-				listBook.add(searchByCode(code.get(i)));
-			} catch (RecordException e) {
-				e.printStackTrace();
-			}
-		}
-		return listBook;
 	}
 	@Override
 	public String quantityOfAuthors() {
@@ -412,22 +378,7 @@ public class BookDao implements Books{
 		}
 		return authorsList;
 	}
-	private Category getCategoryBook(int code){
-		try (Connection connection = new ConnectionFactory().getConnection();
-				PreparedStatement stmt = connection.
-				prepareStatement(sqlSelectCategoryBook);){
-			stmt.setInt(1, code);
-			Category c = new Category();
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				c.setSequentialCode(rs.getInt("sequentialCode"));
-				c.setDescription(rs.getString("description"));
-			}
-			return c;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+
 	private List<Author> getAuthorsBook(List<Integer> code){
 		List<Author> authorsList = new ArrayList<Author>();
 		try (Connection connection = new ConnectionFactory().getConnection();

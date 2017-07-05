@@ -8,10 +8,11 @@ import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.interfaces.Operations;
 import br.com.softexpert.library.library.DateOperations;
 import br.com.softexpert.library.operations.db.AuthorDao;
+import br.com.softexpert.library.operations.memory.AuthorsInMemory;
 
 
 public class CreateAuthor{
-	private Operations<Author> authors= new AuthorDao();
+	private Operations<Author> authors= new AuthorsInMemory();
 	private DateOperations date = new DateOperations();
 
 	public void create(){
