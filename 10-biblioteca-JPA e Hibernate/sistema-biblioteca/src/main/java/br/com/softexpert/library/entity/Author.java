@@ -2,8 +2,15 @@ package br.com.softexpert.library.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Author implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
 	private int sequentialCode;
 	private String name;
 	private Date birthday;

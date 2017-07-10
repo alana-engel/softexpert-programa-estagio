@@ -3,27 +3,30 @@ package br.com.softexpert.library.user.book;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Book;
-import br.com.softexpert.library.exception.RecordException;
-import br.com.softexpert.library.interfaces.Books;
-import br.com.softexpert.library.operations.db.BookDao;
+import br.com.softexpert.library.operations.db.hibernate.BookJPA;
 
 
 public class SearchBook{
-	private Books books= new BookDao();
+	EntityManagerFactory factory = Persistence.
+			createEntityManagerFactory("library");
+	EntityManager manager = factory.createEntityManager();
+	private BookJPA books= new BookJPA(manager);
 
 	public void searchByCode(){
 		Book book =new Book();
 		int n=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));
 		try {
 			book=books.searchByCode(n);
-			JOptionPane.showMessageDialog(null, book);
-		} catch (RecordException e) {
-			JOptionPane.showMessageDialog(null,"Não foi possível encontrar o livro.");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		JOptionPane.showMessageDialog(null, book);
 	}
 	public void searchByTitle(){
 		String title=(JOptionPane.showInputDialog("Digite o titulo do livro: "));

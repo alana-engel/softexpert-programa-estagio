@@ -1,17 +1,23 @@
 package br.com.softexpert.library.user.book;
 import java.awt.HeadlessException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Book;
 import br.com.softexpert.library.exception.RecordException;
-import br.com.softexpert.library.interfaces.Books;
 import br.com.softexpert.library.library.DateOperations;
-import br.com.softexpert.library.operations.db.BookDao;
+import br.com.softexpert.library.operations.db.hibernate.BookJPA;
 
 public class CreateBook{
+	EntityManagerFactory factory = Persistence.
+			createEntityManagerFactory("library");
+	EntityManager manager = factory.createEntityManager();
+	private BookJPA books= new BookJPA(manager);
+
 	private DateOperations dateOperations = new DateOperations();
-	private Books books= new BookDao();
 
 	public void create() throws RecordException{
 		String date;
@@ -38,8 +44,8 @@ public class CreateBook{
 				create();
 				return;
 			}
-		book.setAuthorsList(books.addAuthor(books.quantityOfAuthors()));
-		book.setCategory(books.addCategory());
+		book.setAuthorsList(books.addAuthor(books.quantityOfAuthors(), manager));
+		book.setCategory(books.addCategory(manager));
 		try {
 			if(books.create(book))
 				JOptionPane.showMessageDialog(null, "Livro cadastrado.");

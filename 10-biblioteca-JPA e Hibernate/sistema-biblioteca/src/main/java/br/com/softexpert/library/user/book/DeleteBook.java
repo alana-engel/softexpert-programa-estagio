@@ -1,13 +1,17 @@
 package br.com.softexpert.library.user.book;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
-
-import br.com.softexpert.library.entity.Book;
-import br.com.softexpert.library.interfaces.Operations;
-import br.com.softexpert.library.operations.db.BookDao;
+import br.com.softexpert.library.operations.db.hibernate.BookJPA;
 
 public class DeleteBook{
-	private Operations<Book> books= new BookDao();
+	EntityManagerFactory factory = Persistence.
+			createEntityManagerFactory("library");
+	EntityManager manager = factory.createEntityManager();
+	private BookJPA books= new BookJPA(manager);
+
 	public void delete(){
 		String title=(JOptionPane.showInputDialog("Digite titulo do livro a ser removido.")); 
 		if(books.delete(title)){

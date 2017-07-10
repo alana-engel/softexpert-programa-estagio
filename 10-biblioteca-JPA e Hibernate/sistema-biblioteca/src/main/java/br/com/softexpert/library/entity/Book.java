@@ -2,10 +2,20 @@
 package br.com.softexpert.library.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Book  implements Comparable<Book>, Serializable{
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
 	private int sequentialCode;
 	private String title;
 	private String summary;
@@ -13,7 +23,9 @@ public class Book  implements Comparable<Book>, Serializable{
 	private int pages;
 	private String location;
 	private Date acquisition;
+	@ManyToMany
 	private List<Author> authorsList = new ArrayList<Author>();
+	@ManyToOne
 	private Category category = new Category();
 
 	public Book(){

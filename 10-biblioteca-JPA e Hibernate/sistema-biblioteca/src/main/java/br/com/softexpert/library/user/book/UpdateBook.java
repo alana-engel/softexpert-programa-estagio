@@ -1,24 +1,28 @@
 package br.com.softexpert.library.user.book;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Book;
-import br.com.softexpert.library.exception.RecordException;
-import br.com.softexpert.library.interfaces.Books;
 import br.com.softexpert.library.library.DateOperations;
-import br.com.softexpert.library.operations.db.BookDao;
+import br.com.softexpert.library.operations.db.hibernate.BookJPA;
 
 
 public class UpdateBook{
 
-	private Books books= new BookDao();
+	EntityManagerFactory factory = Persistence.
+			createEntityManagerFactory("library");
+	EntityManager manager = factory.createEntityManager();
+	private BookJPA books= new BookJPA(manager);
 	private DateOperations dateOperations = new DateOperations();
 	public void update() {
 		Book book =new Book();
 		int cod=Integer.parseInt(JOptionPane.showInputDialog("Digite o código do livro: "));
 		try {
 			book=books.searchByCode(cod);
-		} catch (RecordException e1) {
-			e1.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		book.setTitle(JOptionPane.showInputDialog("Digite o titulo do livro: "));
 		book.setSummary(JOptionPane.showInputDialog("Digite o resumo do livro: "));
@@ -30,8 +34,8 @@ public class UpdateBook{
 		}
 		book.setLocation(JOptionPane.showInputDialog("Digite o Local:"));
 		getAcquisition(book);
-		book.setAuthorsList(books.addAuthor(books.quantityOfAuthors()));
-		book.setCategory(books.addCategory());
+		book.setAuthorsList(books.addAuthor(books.quantityOfAuthors(), manager));
+		book.setCategory(books.addCategory(manager));
 		try {
 			books.update(book);
 			JOptionPane.showMessageDialog(null, "Livro alterado.");

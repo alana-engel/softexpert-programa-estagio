@@ -2,17 +2,22 @@ package br.com.softexpert.library.user.author;
 
 import java.awt.HeadlessException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.interfaces.Operations;
 import br.com.softexpert.library.library.DateOperations;
-import br.com.softexpert.library.operations.db.AuthorDao;
-import br.com.softexpert.library.operations.memory.AuthorsInMemory;
+import br.com.softexpert.library.operations.db.hibernate.AuthorJPA;
 
 
 public class CreateAuthor{
-	private Operations<Author> authors= new AuthorsInMemory();
+	EntityManagerFactory factory = Persistence.
+			createEntityManagerFactory("library");
+	EntityManager manager = factory.createEntityManager();
+	private Operations<Author> authors= new AuthorJPA(manager);
 	private DateOperations date = new DateOperations();
 
 	public void create(){
