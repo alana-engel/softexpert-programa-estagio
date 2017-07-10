@@ -17,19 +17,19 @@ import br.com.softexpert.library.user.author.CreateAuthor;
 import br.com.softexpert.library.user.category.CreateCategory;
 
 public class BookDao implements Books{
-	static final String sqlCreate = "insert into tbl_books (title,summary,barcode,pages,bookLocation,acquisition,categoryBook) values (?,?,?,?,?,?,?)";
-	static final String sqlSelectBooks = "select * from tbl_books";
-	static final String sqlCreateAuthorBook = "insert into tbl_author_book (codeBook,codeAuthor) values (?,?)";
-	static final String sqlDelete = "delete from tbl_books where title=?";
-	static final String sqlUpdate = "update tbl_books set title=?,summary=?,barcode=?,pages=?,bookLocation=?,acquisition=?,categoryBook=? where sequentialCode=?";
-	static final String sqlUpdateAuthor = "update tbl_author_book set codeAuthor=? where codeBook=?";
-	static final String sqlSearchByCode = "SELECT * FROM tbl_category INNER JOIN (tbl_books INNER JOIN (tbl_author_book INNER JOIN tbl_author ON tbl_author_book.codeAuthor = tbl_author.sequentialCode)"
+	static final String SQL_CREATE = "insert into tbl_books (title,summary,barcode,pages,bookLocation,acquisition,categoryBook) values (?,?,?,?,?,?,?)";
+	static final String SQL_SELECT_BOOKS = "select * from tbl_books";
+	static final String SQL_CREATE_AUTHOR_BOOK = "insert into tbl_author_book (codeBook,codeAuthor) values (?,?)";
+	static final String SQL_DELETE = "delete from tbl_books where title=?";
+	static final String SQL_UPDATE = "update tbl_books set title=?,summary=?,barcode=?,pages=?,bookLocation=?,acquisition=?,categoryBook=? where sequentialCode=?";
+	static final String SQL_UPDATE_AUTHOR = "update tbl_author_book set codeAuthor=? where codeBook=?";
+	static final String SQL_SEARCH_BY_CODE= "SELECT * FROM tbl_category INNER JOIN (tbl_books INNER JOIN (tbl_author_book INNER JOIN tbl_author ON tbl_author_book.codeAuthor = tbl_author.sequentialCode)"
 			+ "  ON tbl_books.sequentialCode = tbl_author_book.codeBook) on tbl_category.sequentialCode = tbl_books.categoryBook where codeBook=?;";
-	static final String sqlSearchByTitle = "SELECT * FROM tbl_books INNER JOIN tbl_category ON tbl_books.categoryBook = tbl_category.sequentialCode where title like ?";
-	static final String sqlSearchByCategory = "SELECT * FROM tbl_books INNER JOIN tbl_category ON tbl_books.categoryBook = tbl_category.sequentialCode Where description =?";
-	static final String sqlSearchByAuthor = "SELECT * FROM tbl_category INNER JOIN (tbl_books INNER JOIN (tbl_author_book INNER JOIN tbl_author ON tbl_author_book.codeAuthor = tbl_author.sequentialCode)"
+	static final String SQL_SEARCH_BY_TITLE = "SELECT * FROM tbl_books INNER JOIN tbl_category ON tbl_books.categoryBook = tbl_category.sequentialCode where title like ?";
+	static final String SQL_SEARCH_BY_CATEGORY = "SELECT * FROM tbl_books INNER JOIN tbl_category ON tbl_books.categoryBook = tbl_category.sequentialCode Where description =?";
+	static final String SQL_SEARCH_BY_AUTHOR = "SELECT * FROM tbl_category INNER JOIN (tbl_books INNER JOIN (tbl_author_book INNER JOIN tbl_author ON tbl_author_book.codeAuthor = tbl_author.sequentialCode)"
 			+ "  ON tbl_books.sequentialCode = tbl_author_book.codeBook) on tbl_category.sequentialCode = tbl_books.categoryBook where name = ?";
-	static final String sqlSelectCodeAuthor = "select * from tbl_author_book where codeBook=?"; 
+	static final String SQL_SELECT_CODE_AUTHOR = "select * from tbl_author_book where codeBook=?"; 
 	
 	public BookDao() {
 	
@@ -42,7 +42,7 @@ public class BookDao implements Books{
 			throw new RecordException("Não foi possível cadastrar o Livro. Verifique os campos preenchidos.");
 		}
 		try (Connection connection = new ConnectionFactory().getConnection();
-				PreparedStatement stmt = connection.prepareStatement(sqlCreate);){
+				PreparedStatement stmt = connection.prepareStatement(SQL_CREATE);){
 			stmt.setString(1,book.getTitle());
 			stmt.setString(2,book.getSummary());
 			stmt.setString(3,book.getBarcode());
@@ -67,7 +67,7 @@ public class BookDao implements Books{
 	private void getCode(Book book) {
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
-				prepareStatement(sqlSelectBooks);){
+				prepareStatement(SQL_SELECT_BOOKS);){
 			ResultSet rs = stmt.executeQuery();
 			Book b = new Book();
 			while (rs.next()) {
@@ -84,7 +84,7 @@ public class BookDao implements Books{
 		List<Author> authors = book.getAuthorsList();
 		for (int i=0;i<authors.size();i++){
 		try(Connection connection = new ConnectionFactory().getConnection();
-				PreparedStatement stmt = connection.prepareStatement(sqlCreateAuthorBook);) {
+				PreparedStatement stmt = connection.prepareStatement(SQL_CREATE_AUTHOR_BOOK);) {
 				Author a= authors.get(i);
 				stmt.setInt(1,book.getSequentialCode());
 				stmt.setInt(2,a.getSequentialCode());
@@ -112,7 +112,7 @@ public class BookDao implements Books{
 	public boolean delete(String book) {
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection
-				.prepareStatement(sqlDelete);){
+				.prepareStatement(SQL_DELETE);){
 			stmt.setString(1, book);
 			stmt.execute();
 		} catch (SQLException e) {
@@ -124,7 +124,7 @@ public class BookDao implements Books{
 	@Override
 	public void update(Book book) throws Exception {
 		try(Connection connection = new ConnectionFactory().getConnection();
-				PreparedStatement stmt = connection.prepareStatement(sqlUpdate);) {
+				PreparedStatement stmt = connection.prepareStatement(SQL_UPDATE);) {
 			stmt.setString(1,book.getTitle());
 			stmt.setString(2,book.getSummary());
 			stmt.setString(3,book.getBarcode());
@@ -147,7 +147,7 @@ public class BookDao implements Books{
 
 	private void updateAuthor(Book nBook) {
 		try(Connection connection = new ConnectionFactory().getConnection();
-				PreparedStatement stmt = connection.prepareStatement(sqlUpdateAuthor);) {
+				PreparedStatement stmt = connection.prepareStatement(SQL_UPDATE_AUTHOR);) {
 			List<Author> authors = nBook.getAuthorsList();
 			for (int i=0;i<authors.size();i++){
 				Author a= authors.get(i);
@@ -170,7 +170,7 @@ public class BookDao implements Books{
 		boolean found = false;
 		try(Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
-				prepareStatement(sqlSearchByCode);) {
+				prepareStatement(SQL_SEARCH_BY_CODE);) {
 			stmt.setInt(1, n);
 			List<Book> booksList = new ArrayList<Book>();
 			ResultSet rs = stmt.executeQuery();
@@ -204,7 +204,7 @@ public class BookDao implements Books{
 		boolean found = false;
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
-				prepareStatement(sqlSearchByTitle);){
+				prepareStatement(SQL_SEARCH_BY_TITLE);){
 			stmt.setString(1, "%"+title+"%");
 			List<Book> booksList = new ArrayList<Book>();
 			ResultSet rs = stmt.executeQuery();
@@ -237,7 +237,7 @@ public class BookDao implements Books{
 		boolean found = false;
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
-				prepareStatement(sqlSearchByCategory);){
+				prepareStatement(SQL_SEARCH_BY_CATEGORY);){
 			stmt.setString(1, category);
 			List<Book> booksList = new ArrayList<Book>();
 			ResultSet rs = stmt.executeQuery();
@@ -271,7 +271,7 @@ public class BookDao implements Books{
 		List<Book> listBook = new ArrayList<Book>();
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
-				prepareStatement(sqlSearchByAuthor);){
+				prepareStatement(SQL_SEARCH_BY_AUTHOR);){
 			stmt.setString(1, n);
 			ResultSet rs = stmt.executeQuery();
 		
@@ -406,7 +406,7 @@ public class BookDao implements Books{
 		List<Integer> codeAuthorsList = new ArrayList<Integer>();
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
-				prepareStatement(sqlSelectCodeAuthor);){
+				prepareStatement(SQL_SELECT_CODE_AUTHOR);){
 			stmt.setInt(1, code);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {

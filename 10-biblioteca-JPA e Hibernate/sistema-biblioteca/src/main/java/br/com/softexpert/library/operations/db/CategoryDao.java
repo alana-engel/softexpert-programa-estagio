@@ -10,11 +10,11 @@ import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.interfaces.Categories;
 
 public class CategoryDao implements Categories{
-	static final String sqlCreate = "insert into tbl_category (description) values (?)";
-	static final String sqlDelete = "delete from tbl_category where sequentialCode=?";
-	static final String sqlUpdate = "update tbl_category set description=? where sequentialCode=?";
-	static final String sqlSearch = "select * from tbl_category where description=?";
-
+	static final String SQL_CREATE = "insert into tbl_category (description) values (?)";
+	static final String SQL_DELETE = "delete from tbl_category where sequentialCode=?";
+	static final String SQL_UPDATE = "update tbl_category set description=? where sequentialCode=?";
+	static final String SQL_SEARCH = "select * from tbl_category where description=?";
+	
 	public CategoryDao() {
 		
 	}
@@ -22,7 +22,7 @@ public class CategoryDao implements Categories{
 	@Override
 	public boolean create(Category category) throws Exception {
 		try (Connection connection = new ConnectionFactory().getConnection();
-				PreparedStatement stmt = connection.prepareStatement(sqlCreate);) {
+				PreparedStatement stmt = connection.prepareStatement(SQL_CREATE);) {
 			stmt.setString(1,category.getDescription());
 			stmt.execute();
 			return true;
@@ -40,7 +40,7 @@ public class CategoryDao implements Categories{
 		}
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection
-				.prepareStatement(sqlDelete);){
+				.prepareStatement(SQL_DELETE);){
 			stmt.setInt(1, c.getSequentialCode());
 			stmt.execute();
 		} catch (SQLException e) {
@@ -55,7 +55,7 @@ public class CategoryDao implements Categories{
 			throw new RecordException("Não foi possível alterar a Categoria. Verifique os campos preenchidos.");
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection
-				.prepareStatement(sqlUpdate);){
+				.prepareStatement(SQL_UPDATE);){
 			stmt.setString(1, c.getDescription());
 			stmt.setInt(2, c.getSequentialCode());
 			stmt.execute();
@@ -71,7 +71,7 @@ public class CategoryDao implements Categories{
 		
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
-				prepareStatement(sqlSearch);
+				prepareStatement(SQL_SEARCH);
 				){
 			stmt.setString(1, name);
 			Category c = new Category();

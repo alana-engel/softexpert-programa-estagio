@@ -10,10 +10,10 @@ import br.com.softexpert.library.exception.RecordException;
 import br.com.softexpert.library.interfaces.Operations;
 
 public class AuthorDao implements Operations<Author>{
-	static final String sqlCreate = "insert into tbl_author (name,birthday,nationality) values (?,?,?)";
-	static final String sqlDelete = "delete from tbl_author where sequentialCode=?";
-	static final String sqlUpdate = "update tbl_author set name=?, birthday=?, nationality=? where sequentialCode=?";
-	static final String sqlSearch = "select * from tbl_author where name=?";
+	static final String SQL_CREATE = "insert into tbl_author (name,birthday,nationality) values (?,?,?)";
+	static final String SQL_DELETE = "delete from tbl_author where sequentialCode=?";
+	static final String SQL_UPDATE = "update tbl_author set name=?, birthday=?, nationality=? where sequentialCode=?";
+	static final String SQL_SEARCH = "select * from tbl_author where name=?";
 	
 	public AuthorDao() {
 	
@@ -22,7 +22,7 @@ public class AuthorDao implements Operations<Author>{
 	@Override
 	public boolean create(Author author) throws Exception {	
 		try (Connection connection = new ConnectionFactory().getConnection();
-			PreparedStatement stmt = connection.prepareStatement(sqlCreate);){
+			PreparedStatement stmt = connection.prepareStatement(SQL_CREATE);){
 			stmt.setString(1,author.getName());
 			if(author.getBirthday() == null){
 				stmt.setDate(2,null);	
@@ -47,7 +47,7 @@ public class AuthorDao implements Operations<Author>{
 		}
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection
-				.prepareStatement(sqlDelete);){
+				.prepareStatement(SQL_DELETE);){
 			stmt.setInt(1, a.getSequentialCode());
 			stmt.execute();
 		} catch (SQLException e) {
@@ -63,7 +63,7 @@ public class AuthorDao implements Operations<Author>{
 		}
 		try (Connection connection = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = connection
-				.prepareStatement(sqlUpdate);){
+				.prepareStatement(SQL_UPDATE);){
 			stmt.setString(1,author.getName());
 			if(author.getBirthday() == null){
 				stmt.setDate(2,null);	
@@ -83,7 +83,7 @@ public class AuthorDao implements Operations<Author>{
 		boolean found = false;
 		try (Connection connection = new ConnectionFactory().getConnection();
 				PreparedStatement stmt = connection.
-				prepareStatement(sqlSearch);){
+				prepareStatement(SQL_SEARCH);){
 			stmt.setString(1, name);
 			Author a = new Author();
 			ResultSet rs = stmt.executeQuery();
