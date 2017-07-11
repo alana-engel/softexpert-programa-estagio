@@ -2,22 +2,18 @@ package br.com.softexpert.library.user.author;
 
 import java.awt.HeadlessException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.interfaces.Operations;
 import br.com.softexpert.library.library.DateOperations;
 import br.com.softexpert.library.operations.db.hibernate.AuthorJPA;
+import br.com.softexpert.library.operations.db.hibernate.Manager;
 
 
 public class CreateAuthor{
-	EntityManagerFactory factory = Persistence.
-			createEntityManagerFactory("library");
-	EntityManager manager = factory.createEntityManager();
-	private Operations<Author> authors= new AuthorJPA(manager);
+	
+	private Operations<Author> authors= new AuthorJPA(Manager.getEntityManager());
 	private DateOperations date = new DateOperations();
 
 	public void create(){
@@ -57,7 +53,10 @@ public class CreateAuthor{
 	}
 	public String getName(){
 		String name=(JOptionPane.showInputDialog("Digite o nome do autor: "));
-
+		if (name.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "O campo nome deve ser preenchido.");
+			getName();
+		}
 		return name;
 	}
 	public String getQuantityOfAuthors(){

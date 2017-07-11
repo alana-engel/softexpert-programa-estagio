@@ -1,17 +1,13 @@
 package br.com.softexpert.library.operations.db.hibernate;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.entity.Book;
-import br.com.softexpert.library.entity.Category;
 import br.com.softexpert.library.interfaces.Operations;
 import br.com.softexpert.library.user.author.CreateAuthor;
-import br.com.softexpert.library.user.category.CreateCategory;
+
 
 public class BookJPA implements Operations<Book>{
 
@@ -124,63 +120,5 @@ public class BookJPA implements Operations<Book>{
 			}while(q.isEmpty());
 		}
 		return q;
-	}
-
-
-	public Category addCategory(EntityManager manager) {
-		Category c = new Category();
-		CreateCategory createCategory = new CreateCategory();
-		CategoryJPA cdb = new CategoryJPA(manager);
-		String description=createCategory.getDescription();
-		if(description.isEmpty()){
-			do{
-				description=createCategory.getDescription();
-			}while(description.isEmpty());
-		}
-		try {
-			c=cdb.search(description);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		if(c.getDescription() ==null || c.getDescription().isEmpty()){
-			createCategory.returnMessage();
-			createCategory.create();
-			try {
-				c=cdb.search(description);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return c;
-	}
-
-
-	public List<Author> addAuthor(String qAuthors, EntityManager manager) {
-		CreateAuthor createAuthor = new CreateAuthor();
-		Author a = new Author();
-		AuthorJPA adb = new AuthorJPA(manager);
-		List<Author> authorsList = new ArrayList<Author>();
-		int q=Integer.parseInt(qAuthors);
-		for(int i=0;i<q;i++){
-			String name = createAuthor.getName();
-			try {
-				a=adb.search(name);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			if(a.getName() ==null || a.getName().isEmpty()){
-				createAuthor.returnMessage();
-				createAuthor.create();
-				try {
-					a=adb.search(name);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				authorsList.add(a);
-			}else{
-				authorsList.add(a);
-			}
-		}
-		return authorsList;
 	}
 }

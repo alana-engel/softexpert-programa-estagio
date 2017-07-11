@@ -1,19 +1,14 @@
 package br.com.softexpert.library.user.author;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 import br.com.softexpert.library.entity.Author;
 import br.com.softexpert.library.interfaces.Operations;
 import br.com.softexpert.library.operations.db.hibernate.AuthorJPA;
+import br.com.softexpert.library.operations.db.hibernate.Manager;
 
 public class DeleteAuthor{
-	EntityManagerFactory factory = Persistence.
-			createEntityManagerFactory("library");
-	EntityManager manager = factory.createEntityManager();
-	private Operations<Author> authors= new AuthorJPA(manager);
+	private Operations<Author> authors= new AuthorJPA(Manager.getEntityManager());
 
 	public void delete(){
 		String name=(JOptionPane.showInputDialog("Digite o nome do autor a ser removido."));
