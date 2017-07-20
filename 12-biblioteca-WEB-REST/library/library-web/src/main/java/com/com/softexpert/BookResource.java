@@ -1,5 +1,7 @@
 package com.com.softexpert;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +23,7 @@ import br.com.softexpert.library.operations.db.hibernate.Manager;
 @Consumes(MediaType.APPLICATION_JSON)
 public class BookResource {
 	private BookJPA books= new BookJPA(Manager.getEntityManager());
+	
 	/**
 	 * Method handling HTTP GET requests. The returned object will be sent
 	 * to the client as "text/plain" media type.
@@ -32,13 +35,23 @@ public class BookResource {
 
 	@GET
 	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Book search(@PathParam("id") String id) throws NumberFormatException, Exception {
+	public Book search(@PathParam("id") String id) throws Exception {
 		return books.searchByCode(Integer.parseInt(id));
 	}
-
+	
+	@GET
+	@Path("/title/{id}")
+	public List<Book> searchByTitle(@PathParam("id") String id) throws Exception {
+		return books.searchByTitle(id);
+	}
+	
+	@GET
+	@Path("/author/{id}")
+	public List<Book> searchByAuthor(@PathParam("id") String id) throws Exception {
+		return books.searchByAuthor(id);
+	}
+	
 	@POST
-	@Produces(MediaType.APPLICATION_JSON)
 	public Book create(Book b) throws Exception {
 		books.create(b);
 		return b;
@@ -50,7 +63,7 @@ public class BookResource {
 		try {
 			books.update(book);
 			updated = true;
-		} catch (Exception e) {
+		}catch (Exception e){
 			updated = false;
 		}
 		return new EntityResponse(updated, "Livro alterado com sucesso");
@@ -62,6 +75,4 @@ public class BookResource {
 		boolean deleted = books.delete(Integer.parseInt(id));
 		return new EntityResponse(deleted, "Livro excluído com sucesso");	
 	}
-
-
 }
